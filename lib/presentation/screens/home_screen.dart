@@ -1,3 +1,4 @@
+import 'package:bank_app/assets.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -6,14 +7,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-      ),
-      body: const Center(
-        child: Text(
-          'Bienvenido a tu E-Wallet',
-          style: TextStyle(fontSize: 18),
-        ),
+      appBar: AppBar(title: const Text('Dashboard')),
+      body: ListView(
+        children: [
+          Image.asset(Assets.logo),
+          const Text(
+            'Bienvenido a tu E-Wallet',
+            style: TextStyle(fontSize: 18),
+          ),
+        ],
       ),
     );
   }

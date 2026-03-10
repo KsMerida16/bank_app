@@ -90,4 +90,124 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get expiryDate => 'Expira';
+
+  @override
+  String get back => 'Regresar';
+
+  @override
+  String get noBackPage => 'No hay  página anterior';
+
+  @override
+  String get logout => 'Cerrar Sesión';
+
+  @override
+  String get sure => 'Estas seguro de cerrar la sesión?';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get exit => 'Salir';
+
+  @override
+  String get closed => 'Sesión Cerrada';
+
+  @override
+  String get myProfile => 'Mi Perfil';
+
+  @override
+  String get contactus => 'Contáctanos';
+
+  @override
+  String get security => 'Seguridad';
+
+  @override
+  String get changePassword => 'Cambiar contraseña';
+
+  @override
+  String get privatePolicy => 'Política de Privacidad';
+
+  @override
+  String get biometric => 'Biometría';
+
+  @override
+  String get biometricEnable => 'Biometría Habilitada';
+
+  @override
+  String get biometricDisabled => 'Biometría Deshabilitada';
+
+  @override
+  String get language => 'Lenguaje';
+
+  @override
+  String get languageSettings => 'Configuración de Lenguaje';
+
+  @override
+  String get profilePage => 'Página de Perfil';
+
+  @override
+  String get contactPage => 'Página de contacto';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get english => 'Inglés';
+
+  @override
+  String get spanish => 'Español';
+
+  @override
+  String get transfer => 'Transferir';
+
+  @override
+  String get thirdParty => 'Terceros';
+
+  @override
+  String get ach => 'ACH';
+
+  @override
+  String get international => 'Internacional';
+
+  @override
+  String get originAccount => 'Cuenta Origen';
+
+  @override
+  String get checkingAccount => 'Cuenta de Cheques';
+
+  @override
+  String get savingsAccount => 'Cuenta de Ahorros';
+
+  @override
+  String get destContact => 'Seleccionar Contacto';
+
+  @override
+  String get amount => 'Monto';
+
+  @override
+  String get enterAmount => 'Ingrese Monto';
+
+  @override
+  String get note => 'Nota';
+
+  @override
+  String get optionalNote => 'Nota Opcional';
+
+  @override
+  String get selectBank => 'Seccione Banco';
+
+  @override
+  String get accountNumber => 'Número de Cuenta';
+
+  @override
+  String get enterAccount => 'Ingrese Número de Cuenta';
+
+  @override
+  String get country => 'País';
+
+  @override
+  String get swiftCode => 'Código SWIFT';
+
+  @override
+  String get enterSwift => 'Enter SWIFT code';
 }

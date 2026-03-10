@@ -1,3 +1,5 @@
+import 'package:bank_app/l10n/app_localizations.dart';
+import 'package:bank_app/theme/colors_scope.dart';
 import 'package:flutter/material.dart';
 
 class TransferPage extends StatefulWidget {
@@ -9,7 +11,6 @@ class TransferPage extends StatefulWidget {
 
 class _TransferPageState extends State<TransferPage>
     with SingleTickerProviderStateMixin {
-
   late TabController _tabController;
 
   final TextEditingController accountController = TextEditingController();
@@ -39,9 +40,11 @@ class _TransferPageState extends State<TransferPage>
     );
   }
 
-  Widget textField(String hint, TextEditingController controller,
-      {TextInputType type = TextInputType.text}) {
-
+  Widget textField(
+    String hint,
+    TextEditingController controller, {
+    TextInputType type = TextInputType.text,
+  }) {
     return TextField(
       controller: controller,
       keyboardType: type,
@@ -60,7 +63,6 @@ class _TransferPageState extends State<TransferPage>
   }
 
   Widget dropdown(String hint, List<String> items) {
-
     String value = items.first;
 
     return StatefulBuilder(
@@ -79,10 +81,7 @@ class _TransferPageState extends State<TransferPage>
             style: const TextStyle(color: Colors.white),
             iconEnabledColor: Colors.white,
             items: items
-                .map((e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e),
-                    ))
+                .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                 .toList(),
             onChanged: (v) {
               setState(() {
@@ -96,7 +95,6 @@ class _TransferPageState extends State<TransferPage>
   }
 
   Widget sendButton(String type) {
-
     return SizedBox(
       height: 55,
       child: ElevatedButton.icon(
@@ -106,73 +104,66 @@ class _TransferPageState extends State<TransferPage>
           backgroundColor: Colors.blue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
-            
           ),
-        ), 
+        ),
         onPressed: () {
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("$type transfer sent")),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("$type transfer sent")));
         },
       ),
     );
   }
 
-  Widget thirdPartyForm() {
-
+  Widget thirdPartyForm(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView(
         children: [
+          sectionTitle(t.originAccount),
 
-          sectionTitle("From Account"),
+          dropdown("Account", [t.checkingAccount, t.savingsAccount]),
 
-          dropdown("Account", [
-            "Checking Account",
-            "Savings Account",
-          ]),
-
-          sectionTitle("Select Contact"),
+          sectionTitle(t.destContact),
 
           dropdown("Contact", [
             "Camilo Sotomayor",
             "Maria Lopez",
-            "Carlos Perez"
+            "Carlos Perez",
           ]),
 
-          sectionTitle("Amount"),
+          sectionTitle(t.amount),
 
-          textField("Enter amount", amountController,
-              type: TextInputType.number),
+          textField(
+            t.enterAmount,
+            amountController,
+            type: TextInputType.number,
+          ),
 
-          sectionTitle("Note"),
+          sectionTitle(t.note),
 
-          textField("Optional note", noteController),
+          textField(t.optionalNote, noteController),
 
           const SizedBox(height: 30),
 
-          sendButton("Third Party"),
+          sendButton(t.thirdParty),
         ],
       ),
     );
   }
 
-  Widget achForm() {
-
+  Widget achForm(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView(
         children: [
+          sectionTitle(t.originAccount),
 
-          sectionTitle("From Account"),
+          dropdown("Account", [t.checkingAccount, t.savingsAccount]),
 
-          dropdown("Account", [
-            "Checking Account",
-            "Savings Account",
-          ]),
-
-          sectionTitle("Select Bank"),
+          sectionTitle(t.selectBank),
 
           dropdown("Bank", [
             "Banco Industrial",
@@ -186,45 +177,44 @@ class _TransferPageState extends State<TransferPage>
             "Banco Cuscatlan",
             "Interbanco",
             "Ficohsa",
-            ""
+            "",
           ]),
 
-          sectionTitle("Account Number"),
+          sectionTitle(t.accountNumber),
 
-          textField("Enter account number", accountController),
+          textField(t.enterAccount, accountController),
 
-          sectionTitle("Amount"),
+          sectionTitle(t.amount),
 
-          textField("Enter amount", amountController,
-              type: TextInputType.number),
+          textField(
+            t.enterAmount,
+            amountController,
+            type: TextInputType.number,
+          ),
 
-          sectionTitle("Note"),
+          sectionTitle(t.note),
 
-          textField("Optional note", noteController),
+          textField(t.optionalNote, noteController),
 
           const SizedBox(height: 30),
 
-          sendButton("ACH"),
+          sendButton(t.ach),
         ],
       ),
     );
   }
 
-  Widget internationalForm() {
-
+  Widget internationalForm(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: ListView(
         children: [
+          sectionTitle(t.originAccount),
 
-          sectionTitle("From Account"),
+          dropdown("Account", [t.checkingAccount, t.savingsAccount]),
 
-          dropdown("Account", [
-            "Checking Account",
-            "Savings Account",
-          ]),
-
-          sectionTitle("Country"),
+          sectionTitle(t.country),
 
           dropdown("Country", [
             "United States",
@@ -236,26 +226,29 @@ class _TransferPageState extends State<TransferPage>
             "Colombia",
           ]),
 
-          sectionTitle("SWIFT Code"),
+          sectionTitle(t.swiftCode),
 
-          textField("Enter SWIFT code", swiftController),
+          textField(t.enterSwift, swiftController),
 
-          sectionTitle("Account Number"),
+          sectionTitle(t.accountNumber),
 
-          textField("Enter account number", accountController),
+          textField(t.enterAccount, accountController),
 
-          sectionTitle("Amount"),
+          sectionTitle(t.amount),
 
-          textField("Enter amount", amountController,
-              type: TextInputType.number),
+          textField(
+            t.enterAmount,
+            amountController,
+            type: TextInputType.number,
+          ),
 
-          sectionTitle("Note"),
+          sectionTitle(t.note),
 
-          textField("Optional note", noteController),
+          textField(t.optionalNote, noteController),
 
           const SizedBox(height: 30),
 
-          sendButton("International"),
+          sendButton(t.international),
         ],
       ),
     );
@@ -263,42 +256,63 @@ class _TransferPageState extends State<TransferPage>
 
   @override
   Widget build(BuildContext context) {
-
+    final c = AppColorsScope.of(context);
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
-
-      backgroundColor: const Color(0xFF0F1220),
+      backgroundColor: c.background, // const Color(0xFF0F1220),
 
       appBar: AppBar(
-        title: const Text("Transfers", style: TextStyle(color: Colors.white)),
+        title: Text(t.transfer, style: TextStyle(color: Colors.white)),
         centerTitle: true,
-        backgroundColor: const Color(0xFF0F1220),
-        leading: const Icon(Icons.arrow_back_ios, color: Colors.white),
+        backgroundColor: c.background, //const Color(0xFF0F1220),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          tooltip: t.back,
+          onPressed: () {
+            // Si puede volver, hace pop; si no, podrías navegar a Home
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              // Navigator.of(context).pushReplacementNamed('/home');
+              // o muestra un SnackBar:
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(t.noBackPage)));
+            }
+          },
+        ),
+
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.logout, color: Colors.white),
-          )
+          ),
         ],
 
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.blue,
-          labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-          tabs: const [
-
+          labelStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          tabs: [
             Tab(
-              icon: Icon(Icons.people_outline, color: Colors.white),
-              text: "Third Party",
+              icon: const Icon(Icons.people_outline, color: Colors.white),
+              text: t.thirdParty,
             ),
 
             Tab(
-              icon: Icon(Icons.account_balance_outlined, color: Colors.white),
-              text: "ACH",
+              icon: const Icon(
+                Icons.account_balance_outlined,
+                color: Colors.white,
+              ),
+              text: t.ach,
             ),
 
             Tab(
-              icon: Icon(Icons.public_outlined, color: Colors.white),
-              text: "International",
+              icon: const Icon(Icons.public_outlined, color: Colors.white),
+              text: t.international,
             ),
           ],
         ),
@@ -307,11 +321,9 @@ class _TransferPageState extends State<TransferPage>
       body: TabBarView(
         controller: _tabController,
         children: [
-
-          thirdPartyForm(),
-          achForm(),
-          internationalForm(),
-
+          thirdPartyForm(context),
+          achForm(context),
+          internationalForm(context),
         ],
       ),
     );

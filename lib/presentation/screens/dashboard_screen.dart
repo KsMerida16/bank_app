@@ -230,10 +230,10 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
       //   child: _BottomNavMock(c: c),
       // ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF1A1F38),
+        backgroundColor: Colors.transparent,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.white54,
+        selectedItemColor: c.primary,
+        unselectedItemColor: c.textMuted,
         onTap: (index) {
           if (index == 0) {
             Navigator.push(
@@ -251,22 +251,22 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
             );
           }
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: "Home",
+            icon: const Icon(Icons.home_outlined),
+            label: t.home, //  "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.credit_card_outlined),
-            label: "My Cards",
+            icon: const Icon(Icons.credit_card_outlined),
+            label: t.myCards,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pie_chart_outline),
-            label: "Statistics",
+            icon: const Icon(Icons.pie_chart_outline),
+            label: t.statistics, //"Statistics",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: "Settings",
+            icon: const Icon(Icons.settings_outlined),
+            label: t.settings, //"Settings",
           ),
         ],
       ),

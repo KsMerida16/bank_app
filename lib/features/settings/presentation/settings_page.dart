@@ -1,6 +1,7 @@
-import 'package:bank_app/core/network/api_client.dart';
-import 'package:bank_app/features/dashboard/presentation/dashboard_page.dart';
+import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/presentation/screens/dashboard_screen.dart';
+import 'package:bank_app/presentation/screens/start_screen.dart';
+import 'package:bank_app/theme/colors_scope.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -55,67 +56,121 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0F1220),
+    final c = AppColorsScope.of(context);
+    final t = AppLocalizations.of(context)!;
+    final bg = _blend(c.surface, Colors.white.withValues(alpha: 0.03));
 
+    return Scaffold(
+      backgroundColor: c.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F1220),
+        backgroundColor: bg, //const Color(0xFF0F1220),
         elevation: 0,
         centerTitle: true,
-        title: const Text("Settings", style: TextStyle(color: Colors.white)),
-        leading: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.logout, color: Colors.white),
+        title: Text(t.settings, style: const TextStyle(color: Colors.white)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          tooltip: t.back,
+          onPressed: () {
+            // Si puede volver, hace pop; si no, podrías navegar a Home
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              // Navigator.of(context).pushReplacementNamed('/home');
+              // o muestra un SnackBar:
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(t.noBackPage)));
+            }
+          },
+        ),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: t.logout,
+            onPressed: () async {
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text(t.logout),
+                    content: Text(t.sure),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text(t.cancel),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {Navigator.of(context).pop(true)},
+                        child: Text(t.exit),
+                      ),
+                    ],
+                  );
+                },
+              );
+
+              if (confirm == true) {
+                // Aquí haces tu lógica real de signOut
+                // await auth.signOut();
+
+                if (context.mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(t.closed)));
+                  // Navega a login o pantalla inicial
+                  // Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+                }
+              }
+            },
           ),
+          const SizedBox(width: 8),
         ],
       ),
 
       body: ListView(
         children: [
-          sectionTitle("General"),
+          sectionTitle(t.general),
 
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: const Color(0xFF1A1F38),
+              color: bg, //const Color(0xFF1A1F38),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
               children: [
                 settingsItem(
                   context,
-                  "Language",
-                  trailing: "English",
+                  t.language,
+                  trailing: t.english,
                   page: const LanguagePage(),
                 ),
 
                 const Divider(color: Colors.white10),
 
-                settingsItem(context, "My Profile", page: const ProfilePage()),
+                settingsItem(context, t.myProfile, page: const ProfilePage()),
 
                 const Divider(color: Colors.white10),
 
-                settingsItem(context, "Contact Us", page: const ContactPage()),
+                settingsItem(context, t.contactus, page: const ContactPage()),
               ],
             ),
           ),
 
           const SizedBox(height: 20),
-          sectionTitle("Security"),
+          sectionTitle(t.security),
 
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             decoration: BoxDecoration(
-              color: const Color(0xFF1A1F38),
+              color: bg, //const Color(0xFF1A1F38),
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
               children: [
                 settingsItem(
                   context,
-                  "Change Password",
+                  t.changePassword,
                   page: const ChangePasswordPage(),
                 ),
 
@@ -123,16 +178,16 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 settingsItem(
                   context,
-                  "Privacy Policy",
+                  t.privatePolicy,
                   page: const PrivacyPage(),
                 ),
 
                 const Divider(color: Colors.white10),
 
                 ListTile(
-                  title: const Text(
-                    "Biometric",
-                    style: TextStyle(color: Colors.white),
+                  title: Text(
+                    t.biometric,
+                    style: const TextStyle(color: Colors.white),
                   ),
                   trailing: Switch(
                     value: biometricEnabled,
@@ -144,7 +199,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            value ? "Biometric Enabled" : "Biometric Disabled",
+                            value ? t.biometricEnable : t.biometricDisabled,
                           ),
                         ),
                       );
@@ -158,10 +213,10 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF1A1F38),
+        backgroundColor: Colors.transparent,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.white54,
+        selectedItemColor: c.primary,
+        unselectedItemColor: c.textMuted,
         onTap: (index) {
           if (index == 0) {
             Navigator.push(
@@ -179,22 +234,22 @@ class _SettingsPageState extends State<SettingsPage> {
             );
           }
         },
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: "Home",
+            icon: const Icon(Icons.home_outlined),
+            label: t.home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.credit_card_outlined),
-            label: "My Cards",
+            icon: const Icon(Icons.credit_card_outlined),
+            label: t.myCards,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pie_chart_outline),
-            label: "Statistics",
+            icon: const Icon(Icons.pie_chart_outline),
+            label: t.statistics,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: "Settings",
+            icon: const Icon(Icons.settings_outlined),
+            label: t.settings,
           ),
         ],
       ),
@@ -207,9 +262,10 @@ class LanguagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Language')),
-      body: const Center(child: Text("Language Settings")),
+      appBar: AppBar(title: Text(t.language)),
+      body: Center(child: Text(t.languageSettings)),
     );
   }
 }
@@ -219,9 +275,10 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('My Profile')),
-      body: const Center(child: Text("Profile Page")),
+      appBar: AppBar(title: Text(t.myProfile)),
+      body: Center(child: Text(t.profilePage)),
     );
   }
 }
@@ -231,9 +288,10 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Contact Us')),
-      body: const Center(child: Text("Contact Page")),
+      appBar: AppBar(title: Text(t.contactus)),
+      body: Center(child: Text(t.contactPage)),
     );
   }
 }
@@ -243,9 +301,10 @@ class ChangePasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Change Password')),
-      body: const Center(child: Text("Change Password")),
+      appBar: AppBar(title: Text(t.changePassword)),
+      body: Center(child: Text(t.changePassword)),
     );
   }
 }
@@ -255,9 +314,13 @@ class PrivacyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Privacy Policy')),
-      body: const Center(child: Text("Privacy Policy")),
+      appBar: AppBar(title: Text(t.privatePolicy)),
+      body: Center(child: Text(t.privatePolicy)),
     );
   }
 }
+
+// Utilidad para mezclar colores con el surface actual (suaviza fondos).
+Color _blend(Color base, Color overlay) => Color.alphaBlend(overlay, base);

@@ -8,9 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 
-class HomeDashboardPage extends StatelessWidget {
+class HomeDashboardPage extends StatefulWidget {
   const HomeDashboardPage({super.key});
 
+  @override
+  State<HomeDashboardPage> createState() => _HomeDashboardPageState();
+}
+
+class _HomeDashboardPageState extends State<HomeDashboardPage> {
   @override
   Widget build(BuildContext context) {
     final c = AppColorsScope.of(context);
@@ -220,9 +225,50 @@ class HomeDashboardPage extends StatelessWidget {
       ),
 
       // Bottom navigation (mock visual)
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: bottomSafe),
-        child: _BottomNavMock(c: c),
+      // bottomNavigationBar: Padding(
+      //   padding: EdgeInsets.only(bottom: bottomSafe),
+      //   child: _BottomNavMock(c: c),
+      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFF1A1F38),
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.white54,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeDashboardPage(),
+              ),
+            );
+          }
+
+          if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsPage()),
+            );
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.credit_card_outlined),
+            label: "My Cards",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pie_chart_outline),
+            label: "Statistics",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            label: "Settings",
+          ),
+        ],
       ),
     );
   }
@@ -795,6 +841,32 @@ class _BottomNavMock extends StatelessWidget {
         ],
         currentIndex: 0,
         onTap: (int index) {
+          // Home
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeDashboardPage(),
+              ),
+            );
+          }
+
+          // // Cards
+          // if (index == 1) {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => const SettingsPage()),
+          //   );
+          // }
+
+          // Statistics
+          // if (index == 2) {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => const SettingsPage()),
+          //   );
+          // }
+
           if (index == 3) {
             Navigator.push(
               context,

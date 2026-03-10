@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'core/constants/app_theme.dart';
-import 'presentation/screens/home_screen.dart';
+import 'package:bank_app/features/transfers/presentation/transfer_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +14,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'E-Wallet App',
 
-      theme: AppTheme.lightTheme,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
 
-      home: const HomeScreen(),
+      home: const TransferPage(),
+      routes: {
+        '/transfer': (context) => const TransferPage(),
+      },
     );
   }
 }

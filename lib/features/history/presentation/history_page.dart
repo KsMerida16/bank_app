@@ -10,7 +10,7 @@ class HistoryPage extends StatelessWidget {
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: 5,
-        itemBuilder: (_, __) => const Card(
+        itemBuilder: (_, _) => const Card(
           child: ListTile(
             leading: Icon(Icons.swap_horiz),
             title: Text("Transferencia enviada"),

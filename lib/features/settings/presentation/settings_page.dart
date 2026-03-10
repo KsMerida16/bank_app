@@ -1,3 +1,6 @@
+import 'package:bank_app/core/network/api_client.dart';
+import 'package:bank_app/features/dashboard/presentation/dashboard_page.dart';
+import 'package:bank_app/presentation/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -8,7 +11,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   bool biometricEnabled = true;
 
   Widget sectionTitle(String title) {
@@ -32,16 +34,14 @@ class _SettingsPageState extends State<SettingsPage> {
     Widget? page,
   }) {
     return ListTile(
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.white),
-      ),
+      title: Text(title, style: const TextStyle(color: Colors.white)),
       trailing: trailing != null
-          ? Text(
-              trailing,
-              style: const TextStyle(color: Colors.white54),
-            )
-          : const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.white54),
+          ? Text(trailing, style: const TextStyle(color: Colors.white54))
+          : const Icon(
+              Icons.arrow_forward_ios,
+              size: 16,
+              color: Colors.white54,
+            ),
       onTap: () {
         if (page != null) {
           Navigator.push(
@@ -62,16 +62,13 @@ class _SettingsPageState extends State<SettingsPage> {
         backgroundColor: const Color(0xFF0F1220),
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          "Settings",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text("Settings", style: TextStyle(color: Colors.white)),
         leading: const Icon(Icons.arrow_back_ios, color: Colors.white),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Icon(Icons.logout, color: Colors.white),
-          )
+          ),
         ],
       ),
 
@@ -87,7 +84,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             child: Column(
               children: [
-
                 settingsItem(
                   context,
                   "Language",
@@ -97,19 +93,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
                 const Divider(color: Colors.white10),
 
-                settingsItem(
-                  context,
-                  "My Profile",
-                  page: const ProfilePage(),
-                ),
+                settingsItem(context, "My Profile", page: const ProfilePage()),
 
                 const Divider(color: Colors.white10),
 
-                settingsItem(
-                  context,
-                  "Contact Us",
-                  page: const ContactPage(),
-                ),
+                settingsItem(context, "Contact Us", page: const ContactPage()),
               ],
             ),
           ),
@@ -125,7 +113,6 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             child: Column(
               children: [
-
                 settingsItem(
                   context,
                   "Change Password",
@@ -157,9 +144,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            value
-                                ? "Biometric Enabled"
-                                : "Biometric Disabled",
+                            value ? "Biometric Enabled" : "Biometric Disabled",
                           ),
                         ),
                       );
@@ -177,6 +162,23 @@ class _SettingsPageState extends State<SettingsPage> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.white54,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeDashboardPage(),
+              ),
+            );
+          }
+
+          if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsPage()),
+            );
+          }
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),

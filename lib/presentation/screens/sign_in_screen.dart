@@ -1,3 +1,4 @@
+import 'package:bank_app/core/network/api_client.dart';
 import 'package:bank_app/features/dashboard/presentation/dashboard_page.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/presentation/screens/dashboard_screen.dart';
@@ -8,6 +9,16 @@ import 'package:flutter/material.dart';
 
 extension CtxColors on BuildContext {
   AppColors get c => AppColorsScope.of(this);
+}
+
+final api = ApiClient();
+void getUsers() async {
+  try {
+    final response = await api.get("/users");
+    print(response.data);
+  } catch (e) {
+    print(e);
+  }
 }
 
 class SignInPage extends StatelessWidget {

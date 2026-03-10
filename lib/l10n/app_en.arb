@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "signInTitle": "Sign In",
+  "emailLabel": "Email Address",
+  "emailHint": "name@example.com",
+  "passwordLabel": "Password",
+  "passwordHint": "••••••••",
+  "signInCta": "Sign In",
+  "newUser": "I'm a new user.",
+  "newUserLink": "Sign In",
+  "backTooltip": "Back",
+
+  "errors_required": "This field is required",
+  "errors_invalidEmail": "Enter a valid email address",
+
+  "welcomeUser": "Welcome, {userName}!",
+  "transactions": "Transactions",
+  "seeAll": "See All",
+  "sent": "Sent",
+  "receive": "Receive",
+  "loan": "Loan",
+  "topup": "Topup",
+  "home": "Home",
+  "myCards": "My Cards",
+  "statistics": "Statistics",
+  "settings": "Settings",
+  "entertainment": "Entertainment",
+  "music": "Music",
+  "transaction": "transaction",
+  "grocery": "Grocery",
+  "expiryDate": "Expiry Date"
+}

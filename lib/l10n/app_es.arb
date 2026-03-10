@@ -1,0 +1,32 @@
+{
+  "@@locale": "es",
+  "signInTitle": "Iniciar sesión",
+  "emailLabel": "Correo electrónico",
+  "emailHint": "nombre@ejemplo.com",
+  "passwordLabel": "Contraseña",
+  "passwordHint": "••••••••",
+  "signInCta": "Iniciar sesión",
+  "newUser": "Soy un usuario nuevo.",
+  "newUserLink": "Iniciar sesión",
+  "backTooltip": "Volver",
+
+  "errors_required": "Este campo es obligatorio",
+  "errors_invalidEmail": "Ingresa un correo válido",
+
+  "welcomeUser": "¡Bienvenido, {userName}!",
+  "transactions": "Transacciones",
+  "seeAll": "Ver todas",
+  "sent": "Enviar",
+  "receive": "Recibir",
+  "loan": "Prestar",
+  "topup": "Recargar",
+  "home": "Inicio",
+  "myCards": "Mis tarjetas",
+  "statistics": "Estadísticas",
+  "settings": "Configuraciones",
+  "entertainment": "Entretenimiento",
+  "music": "Música",
+  "transaction": "Transacción",
+  "grocery": "Abarrotes",
+  "expiryDate": "Expira"
+}

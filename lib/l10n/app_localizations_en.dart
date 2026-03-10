@@ -90,4 +90,124 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expiryDate => 'Expiry Date';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get noBackPage => 'There\'s no back page';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get sure => 'Are you sure to close session?';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get exit => 'Exit';
+
+  @override
+  String get closed => 'Closed session';
+
+  @override
+  String get myProfile => 'My Profile';
+
+  @override
+  String get contactus => 'Contact Us';
+
+  @override
+  String get security => 'Security';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get privatePolicy => 'Private Policy';
+
+  @override
+  String get biometric => 'Biometric';
+
+  @override
+  String get biometricEnable => 'Biometric Enabled';
+
+  @override
+  String get biometricDisabled => 'Biometric Disabled';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get languageSettings => 'Language Settings';
+
+  @override
+  String get profilePage => 'Profile Page';
+
+  @override
+  String get contactPage => 'Contact Page';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get spanish => 'Spanish';
+
+  @override
+  String get transfer => 'Transfer';
+
+  @override
+  String get thirdParty => 'Third Party';
+
+  @override
+  String get ach => 'ACH';
+
+  @override
+  String get international => 'International';
+
+  @override
+  String get originAccount => 'From Account';
+
+  @override
+  String get checkingAccount => 'Checking Account';
+
+  @override
+  String get savingsAccount => 'Savings Account';
+
+  @override
+  String get destContact => 'Select Contact';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get enterAmount => 'Enter Amount';
+
+  @override
+  String get note => 'Note';
+
+  @override
+  String get optionalNote => 'Optional Note';
+
+  @override
+  String get selectBank => 'Select Bank';
+
+  @override
+  String get accountNumber => 'Account Number';
+
+  @override
+  String get enterAccount => 'Enter Account Number';
+
+  @override
+  String get country => 'Country';
+
+  @override
+  String get swiftCode => 'SWIFT Code';
+
+  @override
+  String get enterSwift => 'Enter SWIFT code';
 }

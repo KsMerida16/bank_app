@@ -256,6 +256,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expiry Date'**
   String get expiryDate;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @noBackPage.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no back page'**
+  String get noBackPage;
+
+  /// No description provided for @logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// No description provided for @sure.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure to close session?'**
+  String get sure;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @exit.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get exit;
+
+  /// No description provided for @closed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed session'**
+  String get closed;
+
+  /// No description provided for @myProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My Profile'**
+  String get myProfile;
+
+  /// No description provided for @contactus.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get contactus;
+
+  /// No description provided for @security.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get security;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @privatePolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Private Policy'**
+  String get privatePolicy;
+
+  /// No description provided for @biometric.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric'**
+  String get biometric;
+
+  /// No description provided for @biometricEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric Enabled'**
+  String get biometricEnable;
+
+  /// No description provided for @biometricDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Biometric Disabled'**
+  String get biometricDisabled;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @languageSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Language Settings'**
+  String get languageSettings;
+
+  /// No description provided for @profilePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile Page'**
+  String get profilePage;
+
+  /// No description provided for @contactPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Page'**
+  String get contactPage;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @english.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// No description provided for @spanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get spanish;
+
+  /// No description provided for @transfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get transfer;
+
+  /// No description provided for @thirdParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Third Party'**
+  String get thirdParty;
+
+  /// No description provided for @ach.
+  ///
+  /// In en, this message translates to:
+  /// **'ACH'**
+  String get ach;
+
+  /// No description provided for @international.
+  ///
+  /// In en, this message translates to:
+  /// **'International'**
+  String get international;
+
+  /// No description provided for @originAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'From Account'**
+  String get originAccount;
+
+  /// No description provided for @checkingAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking Account'**
+  String get checkingAccount;
+
+  /// No description provided for @savingsAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Savings Account'**
+  String get savingsAccount;
+
+  /// No description provided for @destContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Contact'**
+  String get destContact;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @enterAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Amount'**
+  String get enterAmount;
+
+  /// No description provided for @note.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get note;
+
+  /// No description provided for @optionalNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional Note'**
+  String get optionalNote;
+
+  /// No description provided for @selectBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Bank'**
+  String get selectBank;
+
+  /// No description provided for @accountNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Number'**
+  String get accountNumber;
+
+  /// No description provided for @enterAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Account Number'**
+  String get enterAccount;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get country;
+
+  /// No description provided for @swiftCode.
+  ///
+  /// In en, this message translates to:
+  /// **'SWIFT Code'**
+  String get swiftCode;
+
+  /// No description provided for @enterSwift.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter SWIFT code'**
+  String get enterSwift;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

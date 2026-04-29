@@ -1,6 +1,5 @@
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/presentation/screens/dashboard_screen.dart';
-import 'package:bank_app/presentation/screens/start_screen.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:flutter/material.dart';
 

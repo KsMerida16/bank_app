@@ -1,13 +1,37 @@
+import 'package:bank_app/features/auth/presentation/providers/auth_providers.dart';
+import 'package:bank_app/features/auth/presentation/providers/auth_state.dart';
 import 'package:bank_app/presentation/widgets/social_widget.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:bank_app/assets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
 
   @override
+  ConsumerState<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends ConsumerState<LoginView> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ref.listen<AuthState>(authNotifierProvider, (previous, next) {
+      if (next.user != null) {
+        // Navigate to dashboard
+        context.go('/dashboard');
+      }
+    });
+
     return Scaffold(body: ListView(children: [const BodyWidget()]));
   }
 }
@@ -49,12 +73,19 @@ class BodyWidget extends StatelessWidget {
                   fontFamily: "Poppins",
                 ),
               ),
-              const TextField(
-                decoration: InputDecoration(
-                  // hintText:
-                  //     'Email Address', //AppLocalizations.of(context)!.email,
-                  border: UnderlineInputBorder(),
-                ),
+              Consumer(
+                builder: (context, ref, child) {
+                  final state = ref.watch(authNotifierProvider);
+                  return TextField(
+                    controller: context
+                        .findAncestorStateOfType<_LoginViewState>()!
+                        .emailController,
+                    decoration: InputDecoration(
+                      errorText: state.error,
+                      border: const UnderlineInputBorder(),
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 16),
               const Text(
@@ -66,14 +97,19 @@ class BodyWidget extends StatelessWidget {
                   fontFamily: "Poppins",
                 ),
               ),
-              const TextField(
-                decoration: InputDecoration(
-                  // hintText:
-                  //     'Password', //AppLocalizations.of(context)!.password,
-                  border: UnderlineInputBorder(),
-                  suffixIcon: Icon(Icons.visibility_off),
-                ),
-                obscureText: true,
+              Consumer(
+                builder: (context, ref, child) {
+                  return TextField(
+                    controller: context
+                        .findAncestorStateOfType<_LoginViewState>()!
+                        .passwordController,
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      suffixIcon: Icon(Icons.visibility_off),
+                    ),
+                    obscureText: true,
+                  );
+                },
               ),
               const SizedBox(height: 16),
               const Text(
@@ -86,15 +122,38 @@ class BodyWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF006FFD)),
-                ),
-                child: const Text(
-                  'Login', //AppLocalizations.of(context)!.login,
-                  style: TextStyle(color: Colors.white),
-                ),
+              Consumer(
+                builder: (context, ref, child) {
+                  final state = ref.watch(authNotifierProvider);
+                  return ElevatedButton(
+                    onPressed: state.isLoading
+                        ? null
+                        : () {
+                            final email = context
+                                .findAncestorStateOfType<_LoginViewState>()!
+                                .emailController
+                                .text;
+                            final password = context
+                                .findAncestorStateOfType<_LoginViewState>()!
+                                .passwordController
+                                .text;
+                            ref
+                                .read(authNotifierProvider.notifier)
+                                .login(email, password);
+                          },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Color(0xFF006FFD),
+                      ),
+                    ),
+                    child: state.isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text(
+                            'Login', //AppLocalizations.of(context)!.login,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                  );
+                },
               ),
               const SizedBox(height: 16),
               Row(

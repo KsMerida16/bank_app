@@ -14,8 +14,10 @@ final api = ApiClient();
 void getUsers() async {
   try {
     final response = await api.get("/users");
+    // ignore: avoid_print
     print(response.data);
   } catch (e) {
+    // ignore: avoid_print
     print(e);
   }
 }

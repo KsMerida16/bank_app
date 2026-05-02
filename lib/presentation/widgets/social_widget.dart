@@ -2,6 +2,21 @@ import 'package:bank_app/assets.dart';
 import 'package:flutter/material.dart';
 
 class SocialWidget extends StatelessWidget {
+  factory SocialWidget.facebook() {
+    return const SocialWidget(
+      color: Colors.blue,
+      imageAsset: Assets.facebookIcon,
+    );
+  }
+  factory SocialWidget.apple() {
+    return const SocialWidget(
+      color: Colors.black,
+      imageAsset: Assets.appleIcon,
+    );
+  }
+  factory SocialWidget.google() {
+    return const SocialWidget(color: Colors.red, imageAsset: Assets.googleIcon);
+  }
   const SocialWidget({
     super.key,
     required this.color,
@@ -10,24 +25,6 @@ class SocialWidget extends StatelessWidget {
 
   final Color color;
   final String imageAsset;
-
-  factory SocialWidget.google() {
-    return const SocialWidget(color: Colors.red, imageAsset: Assets.googleIcon);
-  }
-
-  factory SocialWidget.apple() {
-    return const SocialWidget(
-      color: Colors.black,
-      imageAsset: Assets.appleIcon,
-    );
-  }
-
-  factory SocialWidget.facebook() {
-    return const SocialWidget(
-      color: Colors.blue,
-      imageAsset: Assets.facebookIcon,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

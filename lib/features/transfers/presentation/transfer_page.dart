@@ -262,7 +262,7 @@ class _TransferPageState extends State<TransferPage>
       backgroundColor: c.background, // const Color(0xFF0F1220),
 
       appBar: AppBar(
-        title: Text(t.transfer, style: TextStyle(color: Colors.white)),
+        title: Text(t.transfer, style: const TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: c.background, //const Color(0xFF0F1220),
         leading: IconButton(

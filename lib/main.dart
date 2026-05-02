@@ -6,8 +6,9 @@ import 'package:bank_app/theme/dark_colors.dart';
 import 'package:bank_app/theme/light_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(ProviderScope(child: const MyApp()));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -1,6 +1,6 @@
 name: bank_app
 description: "Bam Project"
-publish_to:
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:

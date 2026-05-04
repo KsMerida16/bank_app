@@ -1,4 +1,4 @@
-import 'package:bank_app/presentation/screens/sign_in_screen.dart';
+import 'package:bank_app/features/login/presentation/views/sign_in_screen.dart';
 import 'package:bank_app/theme/themed_logo.dart';
 import 'package:flutter/material.dart';
 

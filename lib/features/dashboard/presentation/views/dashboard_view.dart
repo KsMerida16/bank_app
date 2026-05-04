@@ -1,8 +1,9 @@
 // lib/presentation/screens/home_dashboard_page.dart
 import 'dart:ui' as ui show FontFeature;
-import 'package:bank_app/features/settings/presentation/settings_page.dart';
-import 'package:bank_app/features/transfers/presentation/transfer_page.dart';
+import 'package:bank_app/features/settings/presentation/settings_view.dart';
+import 'package:bank_app/features/transfers/presentation/transfer_view.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
+import 'package:bank_app/widgets/bottom_nav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bank_app/theme/app_colors.dart';
@@ -224,52 +225,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
         ),
       ),
 
-      // Bottom navigation (mock visual)
-      // bottomNavigationBar: Padding(
-      //   padding: EdgeInsets.only(bottom: bottomSafe),
-      //   child: _BottomNavMock(c: c),
-      // ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: c.primary,
-        unselectedItemColor: c.textMuted,
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeDashboardPage(),
-              ),
-            );
-          }
-
-          if (index == 3) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SettingsPage()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home_outlined),
-            label: t.home, //  "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.credit_card_outlined),
-            label: t.myCards,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.pie_chart_outline),
-            label: t.statistics, //"Statistics",
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.settings_outlined),
-            label: t.settings, //"Settings",
-          ),
-        ],
-      ),
+      bottomNavigationBar: const BottomNav(currentIndex: 0)
     );
   }
 }

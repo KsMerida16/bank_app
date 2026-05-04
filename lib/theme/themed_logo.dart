@@ -1,4 +1,4 @@
-import 'package:bank_app/assets.dart';
+import 'package:bank_app/core/assets.dart';
 import 'package:flutter/material.dart';
 
 class ThemedLogo extends StatelessWidget {

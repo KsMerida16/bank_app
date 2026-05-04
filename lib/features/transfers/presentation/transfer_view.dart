@@ -1,5 +1,9 @@
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/colors_scope.dart';
+<<<<<<< HEAD:lib/features/transfers/presentation/transfer_page.dart
+=======
+import 'package:bank_app/widgets/custom_app_bar.dart';
+>>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/transfers/presentation/transfer_view.dart
 import 'package:flutter/material.dart';
 
 class TransferPage extends StatefulWidget {
@@ -101,7 +105,7 @@ class _TransferPageState extends State<TransferPage>
         icon: const Icon(Icons.send, color: Colors.white),
         label: Text("Send $type", style: const TextStyle(color: Colors.white)),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue,
+          backgroundColor: Color(0xFF0066FF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -260,6 +264,7 @@ class _TransferPageState extends State<TransferPage>
     final t = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: c.background, // const Color(0xFF0F1220),
+<<<<<<< HEAD:lib/features/transfers/presentation/transfer_page.dart
 
       appBar: AppBar(
         title: Text(t.transfer, style: TextStyle(color: Colors.white)),
@@ -296,12 +301,18 @@ class _TransferPageState extends State<TransferPage>
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
+=======
+      appBar: CustomAppBar(
+        title: t.transfer,
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: Colors.blue,
+>>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/transfers/presentation/transfer_view.dart
           tabs: [
             Tab(
               icon: const Icon(Icons.people_outline, color: Colors.white),
               text: t.thirdParty,
             ),
-
             Tab(
               icon: const Icon(
                 Icons.account_balance_outlined,
@@ -309,7 +320,6 @@ class _TransferPageState extends State<TransferPage>
               ),
               text: t.ach,
             ),
-
             Tab(
               icon: const Icon(Icons.public_outlined, color: Colors.white),
               text: t.international,
@@ -317,7 +327,6 @@ class _TransferPageState extends State<TransferPage>
           ],
         ),
       ),
-
       body: TabBarView(
         controller: _tabController,
         children: [

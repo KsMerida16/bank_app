@@ -1,7 +1,6 @@
 import 'package:bank_app/core/network/api_client.dart';
-import 'package:bank_app/features/dashboard/presentation/dashboard_page.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/presentation/screens/dashboard_screen.dart';
+import 'package:bank_app/features/dashboard/presentation/views/dashboard_view.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/theme/themed_logo.dart';

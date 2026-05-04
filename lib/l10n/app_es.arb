@@ -16,14 +16,14 @@
   "welcomeUser": "¡Bienvenido, {userName}!",
   "transactions": "Transacciones",
   "seeAll": "Ver todas",
-  "sent": "Enviar",
+  "send": "Enviar",
   "receive": "Recibir",
   "loan": "Prestar",
   "topup": "Recargar",
   "home": "Inicio",
   "myCards": "Mis tarjetas",
   "statistics": "Estadísticas",
-  "settings": "Configuraciones",
+  "settings": "Configuración",
   "entertainment": "Entretenimiento",
   "music": "Música",
   "transaction": "Transacción",
@@ -59,7 +59,11 @@
   "international": "Internacional",
 
   "originAccount": "Cuenta Origen",
+<<<<<<< HEAD
   "checkingAccount": "Cuenta de Cheques",
+=======
+  "checkingAccount": "Cuenta Monetaria",
+>>>>>>> 84c9fad (Orden de archivos y bottom nav general)
   "savingsAccount": "Cuenta de Ahorros",
   "destContact": "Seleccionar Contacto",
   "amount": "Monto",
@@ -72,4 +76,11 @@
   "country": "País",
   "swiftCode": "Código SWIFT",
   "enterSwift": "Ingrese código SWIFT"
+<<<<<<< HEAD
+=======
+
+  "United States": "Estados Unidos",
+  "Spain": "España",
+  "Canada": "Canadá"
+>>>>>>> 84c9fad (Orden de archivos y bottom nav general)
 }

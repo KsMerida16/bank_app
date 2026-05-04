@@ -1,7 +1,7 @@
-import 'package:bank_app/presentation/widgets/social_widget.dart';
+import 'package:bank_app/widgets/social_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:bank_app/assets.dart';
+import 'package:bank_app/core/assets.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});

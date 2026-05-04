@@ -1,5 +1,5 @@
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/presentation/screens/start_screen.dart';
+import 'package:bank_app/features/login/presentation/views/start_screen.dart';
 import 'package:bank_app/theme/app_theme.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/theme/dark_colors.dart';

@@ -1,6 +1,13 @@
 import 'package:bank_app/l10n/app_localizations.dart';
+<<<<<<< HEAD:lib/features/settings/presentation/settings_page.dart
 import 'package:bank_app/presentation/screens/dashboard_screen.dart';
 import 'package:bank_app/theme/colors_scope.dart';
+=======
+import 'package:bank_app/features/dashboard/presentation/views/dashboard_view.dart';
+import 'package:bank_app/theme/colors_scope.dart';
+import 'package:bank_app/widgets/bottom_nav.dart';
+import 'package:bank_app/widgets/custom_app_bar.dart';
+>>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/settings/presentation/settings_view.dart
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -61,6 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       backgroundColor: c.background,
+<<<<<<< HEAD:lib/features/settings/presentation/settings_page.dart
       appBar: AppBar(
         backgroundColor: bg, //const Color(0xFF0F1220),
         elevation: 0,
@@ -124,6 +132,10 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const SizedBox(width: 8),
         ],
+=======
+      appBar: CustomAppBar(
+        title: t.settings
+>>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/settings/presentation/settings_view.dart
       ),
 
       body: ListView(
@@ -210,6 +222,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ],
       ),
+<<<<<<< HEAD:lib/features/settings/presentation/settings_page.dart
 
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.transparent,
@@ -252,6 +265,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ],
       ),
+=======
+      bottomNavigationBar: const BottomNav(currentIndex: 3),
+>>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/settings/presentation/settings_view.dart
     );
   }
 }

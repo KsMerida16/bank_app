@@ -62,13 +62,11 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
 
   @override
   void deactivate() {
-    // TODO: implement deactivate
     super.deactivate();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -86,7 +84,7 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
     ref.listen<SignInState>(signInRiverpodProvider, (previous, next) {
       if (next is SignInSuccessState) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const HomeDashboardPage()),
+          MaterialPageRoute(builder: (_) => HomeDashboardPage(userName: next.userName, userGender: next.userGender, userImage: next.userImage)),
         );
       } else if (next is SignInErrorState) {
         ScaffoldMessenger.of(

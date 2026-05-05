@@ -3,11 +3,11 @@ import 'package:bank_app/features/auth/domain/entities/user.dart';
 import 'package:bank_app/features/auth/domain/repositories/authentication_repository.dart';
 
 class SignInUseCase {
-  final AuthenticationRepository _authenticationRepository;
 
   SignInUseCase({AuthenticationRepository? authenticationRepository})
     : _authenticationRepository =
           authenticationRepository ?? AuthenticationRepositoryImpl();
+  final AuthenticationRepository _authenticationRepository;
 
   Future<User> call(String email, String password) async {
     // Aquí iría la lógica de autenticación, por ejemplo, llamando a un repositorio

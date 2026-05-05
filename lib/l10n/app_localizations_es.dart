@@ -50,6 +50,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get welcomeUserMale => '¡Bienvenido de nuevo';
+
+  @override
+  String get welcomeUserFemale => '¡Bienvenida de nuevo';
+
+  @override
   String get transactions => 'Transacciones';
 
   @override

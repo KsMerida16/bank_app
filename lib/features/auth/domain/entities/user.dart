@@ -6,6 +6,8 @@ class User {
   final String email;
   final String name;
   final String surname;
+  final String gender;
+  final String image;
   String _newId = '';
 
   String get fullName => '$name $surname';
@@ -21,6 +23,8 @@ class User {
     required this.email,
     required this.name,
     required this.surname,
+    required this.gender,
+    required this.image,
   });
 
   factory User.fromModel(UserModel userModel) {
@@ -28,7 +32,9 @@ class User {
       email: userModel.email,
       id: '${userModel.id}',
       name: userModel.firstName,
-      surname: '',
+      surname: userModel.lastName,
+      gender: userModel.gender,
+      image: userModel.image,
     );
   }
 }

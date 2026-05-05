@@ -18,9 +18,11 @@ final class SignInCheckingCacheState extends SignInState {
 }
 
 final class SignInSuccessState extends SignInState {
-  SignInSuccessState(this.userName)
+  SignInSuccessState(this.userName, this.userGender, this.userImage)
     : super(title: 'Bienvenido $userName', logged: true);
   final String userName;
+  final String userGender;
+  final String userImage;
 }
 
 final class SignInErrorState extends SignInState {

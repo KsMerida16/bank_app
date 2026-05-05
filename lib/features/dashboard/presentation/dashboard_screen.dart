@@ -9,7 +9,11 @@ import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 
 class HomeDashboardPage extends StatefulWidget {
-  const HomeDashboardPage({super.key});
+  const HomeDashboardPage({super.key, this.userName, this.userGender, this.userImage});
+
+  final String? userName;
+  final String? userGender;
+  final String? userImage;
 
   @override
   State<HomeDashboardPage> createState() => _HomeDashboardPageState();
@@ -23,6 +27,9 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
     final bottom = MediaQuery.of(context).padding.bottom;
     // ignore: unused_local_variable
     final bottomSafe = MediaQuery.of(context).padding.bottom;
+    final currentUser = widget.userName?.trim().isNotEmpty == true ? widget.userName! : 'Usuario';
+    final isMale = widget.userGender?.toLowerCase() == 'male';
+    final userImage = widget.userImage?.isNotEmpty == true ? widget.userImage : null;
 
     return Scaffold(
       backgroundColor: c.background,
@@ -36,7 +43,12 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
             CircleAvatar(
               radius: 18,
               backgroundColor: c.divider,
-              child: const Icon(Icons.person, size: 20),
+              backgroundImage: userImage != null && userImage.isNotEmpty
+                  ? NetworkImage(userImage)
+                  : null,
+              child: userImage == null || userImage.isEmpty
+                  ? const Icon(Icons.person, size: 20)
+                  : null,
             ),
             const SizedBox(width: 12),
             // Bienvenida
@@ -45,13 +57,12 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    //'Welcome back,',
-                    t.welcomeUser(''),
+                    isMale ? t.welcomeUserMale : t.welcomeUserFemale,
                     style: TextStyle(color: c.textSecondary, fontSize: 12),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'David',
+                    currentUser,
                     style: TextStyle(
                       color: c.textPrimary,
                       fontSize: 18,
@@ -81,7 +92,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Tarjeta principal
-              _CreditCard(c: c),
+              _CreditCard(c: c, userName: currentUser),
               //_Account(c: c),
               //const CarruselEnfocado(),
               const SizedBox(height: 20),
@@ -278,8 +289,9 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
 // =============== Sección: widgets internos de la pantalla ===============
 
 class _CreditCard extends StatelessWidget {
-  const _CreditCard({required this.c});
+  const _CreditCard({required this.c, required this.userName});
   final AppColors c;
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -351,7 +363,7 @@ class _CreditCard extends StatelessWidget {
                 Row(
                   children: [
                     _MiniField(
-                      label: 'David Guerra',
+                      label: userName,
                       value: '',
                       color: c.onPrimary.withValues(alpha: 0.95),
                       labelStyle: TextStyle(

@@ -17,13 +17,11 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
   @override
   Future<String> getAccessToken() {
-    // TODO: implement getAccessToken
     throw UnimplementedError();
   }
 
   @override
   Future<String> getUserEmail() {
-    // TODO: implement getUserEmail
     throw UnimplementedError();
   }
 
@@ -42,7 +40,6 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
   @override
   Future<bool> registerWithEmailAndPassword(String email, String password) {
-    // TODO: implement registerWithEmailAndPassword
     throw UnimplementedError();
   }
 
@@ -51,7 +48,6 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     String email,
     String password,
   ) async {
-    print('Repository Signing up with email: $email and password: $password');
     final UserPasswordModel userPasswordModel = UserPasswordModel(
       email: email,
       password: password,
@@ -65,13 +61,11 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
   @override
   Future<void> signInWithGoogle() {
-    // TODO: implement signInWithGoogle
     throw UnimplementedError();
   }
 
   @override
   Future<void> signOut() {
-    // TODO: implement signOut
     throw UnimplementedError();
   }
 

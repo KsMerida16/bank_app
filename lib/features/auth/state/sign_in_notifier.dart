@@ -25,7 +25,7 @@ class SignInNotifier extends StateNotifier<SignInState> {
     final isLogged = await _isSignedInUseCase.call();
 
     if (isLogged) {
-      state = SignInSuccessState('Usuario');
+      state = SignInSuccessState('Usuario', 'male', '');
     } else {
       state = SignInInitialState();
     }
@@ -36,7 +36,7 @@ class SignInNotifier extends StateNotifier<SignInState> {
 
     try {
       final user = await _signInUseCase.call(email, password);
-      state = SignInSuccessState(user.name);
+      state = SignInSuccessState(user.fullName, user.gender, user.image);
 
       return true;
     } catch (e) {

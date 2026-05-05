@@ -1,7 +1,7 @@
 import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
 import 'package:bank_app/features/auth/state/sign_in_state.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:bank_app/features/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/theme/themed_logo.dart';
@@ -84,7 +84,13 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
     ref.listen<SignInState>(signInRiverpodProvider, (previous, next) {
       if (next is SignInSuccessState) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => HomeDashboardPage(userName: next.userName, userGender: next.userGender, userImage: next.userImage)),
+          MaterialPageRoute(
+            builder: (_) => HomeDashboardPage(
+              userName: next.userName,
+              userGender: next.userGender,
+              userImage: next.userImage,
+            ),
+          ),
         );
       } else if (next is SignInErrorState) {
         ScaffoldMessenger.of(
@@ -126,7 +132,10 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
                     const SizedBox(height: 20),
 
                     // Password
-                    Text(t.passwordLabel, style: TextStyle(color: c.textSecondary)),
+                    Text(
+                      t.passwordLabel,
+                      style: TextStyle(color: c.textSecondary),
+                    ),
                     const SizedBox(height: 8),
 
                     TextField(
@@ -136,7 +145,9 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
                         prefixIcon: const Icon(Icons.lock_outline, size: 20),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            showPassword ? Icons.visibility_off : Icons.visibility,
+                            showPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                             size: 20,
                           ),
                           onPressed: () {
@@ -215,10 +226,7 @@ class HeaderWidget extends ConsumerWidget {
 
     return const Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        ThemedLogo(height: 125),
-        SizedBox(height: 12),
-      ],
+      children: [ThemedLogo(height: 125), SizedBox(height: 12)],
     );
     // return Text(
     //   'Riverpod $title',

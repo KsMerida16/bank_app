@@ -1,16 +1,19 @@
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:bank_app/features/auth/presentation/sign_in_screen.dart';
+import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
+import 'package:bank_app/features/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  ConsumerState<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends ConsumerState<SettingsPage> {
   bool biometricEnabled = true;
 
   Widget sectionTitle(String title) {
@@ -108,16 +111,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               );
 
-              if (confirm == true) {
-                // Aquí haces tu lógica real de signOut
-                // await auth.signOut();
+              if (confirm == true && context.mounted) {
+                final success = await ref
+                    .read(signOutRiverpodProvider.notifier)
+                    .signOut();
 
-                if (context.mounted) {
+                if (success && context.mounted) {
                   ScaffoldMessenger.of(
                     context,
                   ).showSnackBar(SnackBar(content: Text(t.closed)));
-                  // Navega a login o pantalla inicial
-                  // Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (_) => const SignInPage()),
+                    (route) => false,
+                  );
+                } else if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(t.logout),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 }
               }
             },

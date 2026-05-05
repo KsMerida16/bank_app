@@ -1,6 +1,6 @@
+import 'package:bank_app/features/dashboard/presentation/views/dashboard_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:bank_app/features/auth/presentation/login_page.dart';
-import 'package:bank_app/features/dashboard/presentation/dashboard_page.dart';
 import 'package:bank_app/features/transfers/presentation/transfer_page.dart';
 import 'package:bank_app/features/history/presentation/history_page.dart';
 import 'package:bank_app/features/settings/presentation/settings_page.dart';

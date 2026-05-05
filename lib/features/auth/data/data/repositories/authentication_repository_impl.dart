@@ -65,8 +65,8 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<void> signOut() {
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    await _localAuthenticationDataSource.clearSession();
   }
 
   @override

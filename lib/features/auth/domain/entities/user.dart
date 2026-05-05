@@ -1,20 +1,7 @@
+
 import 'package:bank_app/features/auth/data/data/models/user_model.dart';
 
 class User {
-  factory User.fromModel(UserModel userModel) {
-    return User(
-      id: userModel.id,
-      name: userModel.name,
-      email: userModel.email,
-      surname: '', //userModel.surname,
-    );
-  }
-  User({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.surname,
-  });
   final String id;
   final String email;
   final String name;
@@ -22,5 +9,26 @@ class User {
   String _newId = '';
 
   String get fullName => '$name $surname';
-  set newId(String newId) => _newId = '$newId-modified';
+
+  set newId(String newId) {
+    _newId = '$newId-modified';
+  }
+
+  String get newId => _newId;
+
+  User({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.surname,
+  });
+
+  factory User.fromModel(UserModel userModel) {
+    return User(
+      email: userModel.email,
+      id: '${userModel.id}',
+      name: userModel.firstName,
+      surname: '',
+    );
+  }
 }

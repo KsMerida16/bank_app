@@ -13,7 +13,7 @@
   "errors_required": "Este campo es obligatorio",
   "errors_invalidEmail": "Ingresa un correo válido",
 
-  "welcomeUser": "¡Bienvenido, {userName}!",
+  "welcomeUser": "¡Hola!",
   "transactions": "Transacciones",
   "seeAll": "Ver todas",
   "sent": "Enviar",

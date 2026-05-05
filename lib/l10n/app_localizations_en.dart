@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailLabel => 'Email Address';
 
   @override
+  String get userLabel => 'Usuario';
+
+  @override
   String get emailHint => 'name@example.com';
 
   @override

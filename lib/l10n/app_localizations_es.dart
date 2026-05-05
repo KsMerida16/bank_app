@@ -15,6 +15,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get emailLabel => 'Correo electrónico';
 
   @override
+  String get userLabel => 'Usuario';
+
+  @override
   String get emailHint => 'nombre@ejemplo.com';
 
   @override
@@ -209,5 +212,5 @@ class AppLocalizationsEs extends AppLocalizations {
   String get swiftCode => 'Código SWIFT';
 
   @override
-  String get enterSwift => 'Enter SWIFT code';
+  String get enterSwift => 'Ingrese código SWIFT';
 }

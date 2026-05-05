@@ -107,6 +107,12 @@ abstract class AppLocalizations {
   /// **'Email Address'**
   String get emailLabel;
 
+  /// No description provided for @userLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Usuario'**
+  String get userLabel;
+
   /// No description provided for @emailHint.
   ///
   /// In en, this message translates to:

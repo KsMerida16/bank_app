@@ -1,45 +1,48 @@
 import 'package:bank_app/features/auth/domain/use_cases/signed_in_use_case.dart';
 import 'package:bank_app/features/auth/domain/use_cases/sing_in_use_case.dart';
 import 'package:bank_app/features/auth/state/sign_in_state.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod/legacy.dart';
 
-final loginRiverpodProvider =
-    StateNotifierProvider<SignInNotifier, SignInState>(
-      (ref) => SignInNotifier(),
-    );
+final signInRiverpodProvider = StateNotifierProvider<SignInNotifier, SignInState>(
+  (ref) => SignInNotifier(),
+);
 
 class SignInNotifier extends StateNotifier<SignInState> {
+
   SignInNotifier({
-    SignInUseCase? loginUseCase,
-    SignedInUseCase? isLoggeedUseCase,
-  }) : _loginUseCase = loginUseCase ?? SignInUseCase(),
-       _isLoggeedUseCase = isLoggeedUseCase ?? SignedInUseCase(),
-       super(LoginInitialState());
-  final SignInUseCase _loginUseCase;
-  final SignedInUseCase _isLoggeedUseCase;
+    SignInUseCase? signInUseCase,
+    SignedInUseCase? signedInUseCase,
+  }) : _signInUseCase = signInUseCase ?? SignInUseCase(),
+       _isSignedInUseCase = signedInUseCase ?? SignedInUseCase(),
+       super(SignInInitialState());
+
+  final SignInUseCase _signInUseCase;
+  final SignedInUseCase _isSignedInUseCase;
 
   Future<void> checkIfLogged() async {
-    state = LoginCheckingCacheState();
+    state = SignInCheckingCacheState();
 
-    final isLogged = await _isLoggeedUseCase.call();
+    final isLogged = await _isSignedInUseCase.call();
 
     if (isLogged) {
-      state = LoginSuccessState('Usuario');
+      state = SignInSuccessState('Usuario');
     } else {
-      state = LoginInitialState();
+      state = SignInInitialState();
     }
   }
 
   Future<bool> login(String email, String password) async {
-    state = LoginLoadingState();
+    state = SignInLoadingState();
 
     try {
-      final user = await _loginUseCase.call(email, password);
-      state = LoginSuccessState(user.name);
+      final user = await _signInUseCase.call(email, password);
+      state = SignInSuccessState(user.name);
 
       return true;
     } catch (e) {
-      state = LoginErrorState('Error al hacer login');
+      print(e);
+
+      state = SignInErrorState('Dummy Error al hacer login');
       return false;
     }
   }

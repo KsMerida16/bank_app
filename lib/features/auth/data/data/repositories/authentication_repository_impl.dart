@@ -51,6 +51,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     String email,
     String password,
   ) async {
+    print('Repository Signing up with email: $email and password: $password');
     final UserPasswordModel userPasswordModel = UserPasswordModel(
       email: email,
       password: password,

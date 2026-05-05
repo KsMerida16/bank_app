@@ -1,7 +1,7 @@
 import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
 import 'package:bank_app/features/auth/state/sign_in_state.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/presentation/screens/dashboard_screen.dart';
+import 'package:bank_app/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/theme/themed_logo.dart';
@@ -31,7 +31,7 @@ class SignInPage extends StatelessWidget {
         ),
         backgroundColor: c.surface,
       ),
-      body: ListView(children: [const BodyWidget()]),
+      body: const BodyWidget(),
     );
   }
 }
@@ -83,12 +83,12 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
     final c = context.c;
     final t = AppLocalizations.of(context)!;
 
-    ref.listen<SignInState>(loginRiverpodProvider, (previous, next) {
-      if (next is LoginSuccessState) {
+    ref.listen<SignInState>(signInRiverpodProvider, (previous, next) {
+      if (next is SignInSuccessState) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const HomeDashboardPage()),
         );
-      } else if (next is LoginErrorState) {
+      } else if (next is SignInErrorState) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(next.errorMessage)));
@@ -97,105 +97,95 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              const HeaderWidget(),
-              const SizedBox(height: 12),
-              Text(
-                t.signInTitle,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 24),
-
-              // Email
-              Text(t.emailLabel, style: TextStyle(color: c.textSecondary)),
-              const SizedBox(height: 8),
-              TextField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.email_outlined, size: 20),
-                  hintText: t.emailHint,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Password
-              Text(t.passwordLabel, style: TextStyle(color: c.textSecondary)),
-              const SizedBox(height: 8),
-
-              TextField(
-                controller: passwordController,
-                obscureText: !showPassword,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.lock_outline, size: 20),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      showPassword ? Icons.visibility_off : Icons.visibility,
-                      size: 20,
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const HeaderWidget(),
+                    const SizedBox(height: 12),
+                    Text(
+                      t.signInTitle,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                  ),
-                  hintText: t.passwordHint,
-                ),
-              ),
-              const SizedBox(height: 28),
+                    const SizedBox(height: 24),
 
-              // Botón primario
-              ElevatedButton(
-                // onPressed: () {
-                //   Navigator.of(context).push(
-                //     MaterialPageRoute(
-                //       builder: (_) => const HomeDashboardPage(),
-                //     ),
-                //   );
-                // },
-                onPressed: () async {
-                  /* Provider.of<LoginProvider>(
-                    context,
-                    listen: false,
-                  ).updateTitle('Haciendo login...');*/
-
-                  final email = emailController.text;
-                  final password = passwordController.text;
-
-                  ref
-                      .read(loginRiverpodProvider.notifier)
-                      .login(email, password);
-
-                  /* if (logged) {
-                    //  context.go('/dashboard');
-                  }*/
-
-                  // Solo leer valores para ejecutar funciones
-                },
-                child: Text(t.signInCta),
-              ),
-              const SizedBox(height: 16),
-
-              // Texto inferior
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(color: c.textMuted),
-                    children: [
-                      TextSpan(text: "${t.newUser} "),
-                      TextSpan(
-                        text: t.newUserLink,
-                        style: TextStyle(color: c.primary),
+                    // Email
+                    Text(t.userLabel, style: TextStyle(color: c.textSecondary)),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.email_outlined, size: 20),
+                        hintText: t.emailHint,
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Password
+                    Text(t.passwordLabel, style: TextStyle(color: c.textSecondary)),
+                    const SizedBox(height: 8),
+
+                    TextField(
+                      controller: passwordController,
+                      obscureText: !showPassword,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.lock_outline, size: 20),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            showPassword ? Icons.visibility_off : Icons.visibility,
+                            size: 20,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              showPassword = !showPassword;
+                            });
+                          },
+                        ),
+                        hintText: t.passwordHint,
+                      ),
+                    ),
+                    const SizedBox(height: 28),
+
+                    // Botón primario
+                    ElevatedButton(
+                      onPressed: () async {
+                        final email = emailController.text;
+                        final password = passwordController.text;
+
+                        ref
+                            .read(signInRiverpodProvider.notifier)
+                            .login(email, password);
+                      },
+                      child: Text(t.signInCta),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Texto inferior
+                    Center(
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(color: c.textMuted),
+                          children: [
+                            TextSpan(text: "${t.newUser} "),
+                            TextSpan(
+                              text: t.newUserLink,
+                              style: TextStyle(color: c.primary),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
                 ),
               ),
-              const SizedBox(height: 24),
-            ],
+            ),
           ),
         );
       },
@@ -211,7 +201,7 @@ class HeaderWidget extends ConsumerWidget {
     //final title = Provider.of<LoginProvider>(context).title;
 
     final state = ref.watch(
-      loginRiverpodProvider,
+      signInRiverpodProvider,
     ); // Leer valores y actualizar UI
 
     // ignore: unused_local_variable
@@ -225,8 +215,12 @@ class HeaderWidget extends ConsumerWidget {
       }
     });
 
-    return ListView(
-      children: [const ThemedLogo(height: 125), const SizedBox(height: 12)],
+    return const Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ThemedLogo(height: 125),
+        SizedBox(height: 12),
+      ],
     );
     // return Text(
     //   'Riverpod $title',

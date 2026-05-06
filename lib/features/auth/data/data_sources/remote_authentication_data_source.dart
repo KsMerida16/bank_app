@@ -1,8 +1,7 @@
 import 'package:bank_app/core/constants/api_consts.dart';
-import 'package:bank_app/features/auth/data/data/models/user_model.dart';
-import 'package:bank_app/features/auth/data/data/models/user_password_model.dart';
+import 'package:bank_app/features/auth/data/models/user_model.dart';
+import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:dio/dio.dart';
-
 
 class RemoteAutheticationDataSource {
   final dio = Dio();
@@ -10,9 +9,10 @@ class RemoteAutheticationDataSource {
   Future<UserModel> signIUpWithEmailAndPassword(
     UserPasswordModel userPasswordModel,
   ) async {
-
-print('userPasswordModel: ${userPasswordModel.email}, ${userPasswordModel.password}');
-print('ApiConsts.login: ${ApiConsts.login}');
+    print(
+      'userPasswordModel: ${userPasswordModel.email}, ${userPasswordModel.password}',
+    );
+    print('ApiConsts.login: ${ApiConsts.login}');
 
     final response = await dio.post(
       ApiConsts.login,

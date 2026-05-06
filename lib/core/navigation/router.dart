@@ -1,11 +1,11 @@
-import 'package:bank_app/features/auth/presentation/sign_in_screen.dart';
-import 'package:bank_app/features/auth/presentation/start_screen.dart';
-import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
-import 'package:bank_app/features/auth/state/sign_in_state.dart';
+import 'package:bank_app/features/auth/presentation/views/sign_in_screen.dart';
+import 'package:bank_app/features/auth/presentation/views/start_screen.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
 import 'package:bank_app/features/dashboard/presentation/views/dashboard_view.dart';
-import 'package:bank_app/features/history/presentation/history_page.dart';
-import 'package:bank_app/features/settings/presentation/settings_view.dart';
-import 'package:bank_app/features/transfers/presentation/transfer_view.dart';
+import 'package:bank_app/features/history/presentation/views/history_page.dart';
+import 'package:bank_app/features/settings/presentation/views/settings_view.dart';
+import 'package:bank_app/features/transfers/presentation/views/transfer_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 

@@ -1,6 +1,6 @@
-import 'package:bank_app/features/auth/data/data/data_sources/local_authentication_data_source.dart';
-import 'package:bank_app/features/auth/data/data/data_sources/remote_authentication_data_source.dart';
-import 'package:bank_app/features/auth/data/data/models/user_password_model.dart';
+import 'package:bank_app/features/auth/data/data_sources/local_authentication_data_source.dart';
+import 'package:bank_app/features/auth/data/data_sources/remote_authentication_data_source.dart';
+import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:bank_app/features/auth/domain/entities/user.dart';
 import 'package:bank_app/features/auth/domain/repositories/authentication_repository.dart';
 

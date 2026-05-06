@@ -1,5 +1,4 @@
-
-import 'package:bank_app/features/auth/data/data/models/user_model.dart';
+import 'package:bank_app/features/auth/data/models/user_model.dart';
 
 class User {
   final String id;

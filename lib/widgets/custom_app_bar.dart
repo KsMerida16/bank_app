@@ -3,7 +3,7 @@ import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier
 import 'package:flutter/material.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/colors_scope.dart';
-import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 

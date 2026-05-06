@@ -1,6 +1,6 @@
 import 'package:bank_app/features/auth/domain/use_cases/signed_in_use_case.dart';
 import 'package:bank_app/features/auth/domain/use_cases/sing_in_use_case.dart';
-import 'package:bank_app/features/auth/state/sign_in_state.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
 import 'package:riverpod/legacy.dart';
 
 final signInRiverpodProvider =

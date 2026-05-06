@@ -1,9 +1,6 @@
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/colors_scope.dart';
-<<<<<<< HEAD:lib/features/transfers/presentation/transfer_page.dart
-=======
 import 'package:bank_app/widgets/custom_app_bar.dart';
->>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/transfers/presentation/transfer_view.dart
 import 'package:flutter/material.dart';
 
 class TransferPage extends StatefulWidget {
@@ -264,50 +261,11 @@ class _TransferPageState extends State<TransferPage>
     final t = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: c.background, // const Color(0xFF0F1220),
-<<<<<<< HEAD:lib/features/transfers/presentation/transfer_page.dart
-
-      appBar: AppBar(
-        title: Text(t.transfer, style: TextStyle(color: Colors.white)),
-        centerTitle: true,
-        backgroundColor: c.background, //const Color(0xFF0F1220),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          tooltip: t.back,
-          onPressed: () {
-            // Si puede volver, hace pop; si no, podrías navegar a Home
-            if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop();
-            } else {
-              // Navigator.of(context).pushReplacementNamed('/home');
-              // o muestra un SnackBar:
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(t.noBackPage)));
-            }
-          },
-        ),
-
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(Icons.logout, color: Colors.white),
-          ),
-        ],
-
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.blue,
-          labelStyle: const TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-=======
       appBar: CustomAppBar(
         title: t.transfer,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.blue,
->>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/transfers/presentation/transfer_view.dart
           tabs: [
             Tab(
               icon: const Icon(Icons.people_outline, color: Colors.white),

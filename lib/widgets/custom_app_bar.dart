@@ -1,19 +1,17 @@
+import 'package:bank_app/features/auth/presentation/sign_in_screen.dart';
+import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/colors_scope.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  const CustomAppBar({super.key, required this.title, this.bottom});
   final String title;
   final PreferredSizeWidget? bottom;
 
-  const CustomAppBar({
-    super.key,
-    required this.title,
-    this.bottom,
-  });
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final c = AppColorsScope.of(context);
     final t = AppLocalizations.of(context)!;
 
@@ -22,10 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
 
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.white),
-      ),
+      title: Text(title, style: const TextStyle(color: Colors.white)),
 
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -34,9 +29,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           if (Navigator.of(context).canPop()) {
             Navigator.of(context).pop();
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(t.noBackPage)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(t.noBackPage)));
           }
         },
       ),
@@ -67,9 +62,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
 
             if (confirm == true && context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(t.closed)),
-              );
+              final success = await ref
+                  .read(signOutRiverpodProvider.notifier)
+                  .signOut();
+
+              if (success && context.mounted) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(t.closed)));
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const SignInPage()),
+                  (route) => false,
+                );
+              } else if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(t.logout),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             }
           },
         ),
@@ -81,7 +93,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(
-        kToolbarHeight + (bottom?.preferredSize.height ?? 0),
-      );
+  Size get preferredSize =>
+      Size.fromHeight(kToolbarHeight + (bottom?.preferredSize.height ?? 0));
 }

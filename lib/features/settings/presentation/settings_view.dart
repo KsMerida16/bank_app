@@ -1,13 +1,7 @@
 import 'package:bank_app/l10n/app_localizations.dart';
-<<<<<<< HEAD:lib/features/settings/presentation/settings_page.dart
-import 'package:bank_app/presentation/screens/dashboard_screen.dart';
-import 'package:bank_app/theme/colors_scope.dart';
-=======
-import 'package:bank_app/features/dashboard/presentation/views/dashboard_view.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/widgets/bottom_nav.dart';
 import 'package:bank_app/widgets/custom_app_bar.dart';
->>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/settings/presentation/settings_view.dart
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -68,75 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       backgroundColor: c.background,
-<<<<<<< HEAD:lib/features/settings/presentation/settings_page.dart
-      appBar: AppBar(
-        backgroundColor: bg, //const Color(0xFF0F1220),
-        elevation: 0,
-        centerTitle: true,
-        title: Text(t.settings, style: const TextStyle(color: Colors.white)),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          tooltip: t.back,
-          onPressed: () {
-            // Si puede volver, hace pop; si no, podrías navegar a Home
-            if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop();
-            } else {
-              // Navigator.of(context).pushReplacementNamed('/home');
-              // o muestra un SnackBar:
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text(t.noBackPage)));
-            }
-          },
-        ),
-
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.white),
-            tooltip: t.logout,
-            onPressed: () async {
-              final confirm = await showDialog<bool>(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(t.logout),
-                    content: Text(t.sure),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: Text(t.cancel),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => {Navigator.of(context).pop(true)},
-                        child: Text(t.exit),
-                      ),
-                    ],
-                  );
-                },
-              );
-
-              if (confirm == true) {
-                // Aquí haces tu lógica real de signOut
-                // await auth.signOut();
-
-                if (context.mounted) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(t.closed)));
-                  // Navega a login o pantalla inicial
-                  // Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-                }
-              }
-            },
-          ),
-          const SizedBox(width: 8),
-        ],
-=======
-      appBar: CustomAppBar(
-        title: t.settings
->>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/settings/presentation/settings_view.dart
-      ),
+      appBar: CustomAppBar(title: t.settings),
 
       body: ListView(
         children: [
@@ -222,52 +148,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ],
       ),
-<<<<<<< HEAD:lib/features/settings/presentation/settings_page.dart
-
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.transparent,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: c.primary,
-        unselectedItemColor: c.textMuted,
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const HomeDashboardPage(),
-              ),
-            );
-          }
-
-          if (index == 3) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SettingsPage()),
-            );
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.home_outlined),
-            label: t.home,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.credit_card_outlined),
-            label: t.myCards,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.pie_chart_outline),
-            label: t.statistics,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.settings_outlined),
-            label: t.settings,
-          ),
-        ],
-      ),
-=======
       bottomNavigationBar: const BottomNav(currentIndex: 3),
->>>>>>> 84c9fad (Orden de archivos y bottom nav general):lib/features/settings/presentation/settings_view.dart
     );
   }
 }

@@ -22,6 +22,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
     final c = AppColorsScope.of(context);
     final t = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).padding.bottom;
+    // ignore: unused_local_variable
     final bottomSafe = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
@@ -225,7 +226,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
         ),
       ),
 
-      bottomNavigationBar: const BottomNav(currentIndex: 0)
+      bottomNavigationBar: const BottomNav(currentIndex: 0),
     );
   }
 }
@@ -334,6 +335,7 @@ class _CreditCard extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _Account extends StatelessWidget {
   const _Account({required this.c});
   final AppColors c;
@@ -341,6 +343,7 @@ class _Account extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final surface = _blend(c.surface, Colors.white.withValues(alpha: 0.02));
+    // ignore: unused_local_variable
     final t = AppLocalizations.of(context)!;
     final grad = LinearGradient(
       begin: Alignment.topLeft,
@@ -754,6 +757,7 @@ class _RoundIconButton extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _BottomNavMock extends StatelessWidget {
   const _BottomNavMock({required this.c});
   final AppColors c;

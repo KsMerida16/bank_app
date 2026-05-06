@@ -84,10 +84,7 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
 
     ref.listen<SignInState>(signInRiverpodProvider, (previous, next) {
       if (next is SignInSuccessState) {
-        context.goNamed(
-          Routes.dashboard,
-          extra: next,
-        );
+        context.goNamed(Routes.dashboard, extra: next);
       } else if (next is SignInErrorState) {
         ScaffoldMessenger.of(
           context,

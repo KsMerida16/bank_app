@@ -1,12 +1,13 @@
+import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
 import 'package:bank_app/features/auth/state/sign_in_state.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/features/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/theme/themed_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 extension CtxColors on BuildContext {
   AppColors get c => AppColorsScope.of(this);
@@ -27,7 +28,7 @@ class SignInPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           color: c.icon,
           tooltip: t.backTooltip,
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
         ),
         backgroundColor: c.surface,
       ),
@@ -83,14 +84,9 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
 
     ref.listen<SignInState>(signInRiverpodProvider, (previous, next) {
       if (next is SignInSuccessState) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (_) => HomeDashboardPage(
-              userName: next.userName,
-              userGender: next.userGender,
-              userImage: next.userImage,
-            ),
-          ),
+        context.goNamed(
+          Routes.dashboard,
+          extra: next,
         );
       } else if (next is SignInErrorState) {
         ScaffoldMessenger.of(
@@ -209,32 +205,11 @@ class HeaderWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     //final title = Provider.of<LoginProvider>(context).title;
 
-    final state = ref.watch(
-      signInRiverpodProvider,
-    ); // Leer valores y actualizar UI
-
-    // ignore: unused_local_variable
-    final title = state.title;
-    final logged = state.logged;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (logged) {
-        // Navegar a otra pantalla
-        //context.go('/dashboard');
-        const HomeDashboardPage();
-      }
-    });
+    ref.watch(signInRiverpodProvider);
 
     return const Column(
       mainAxisSize: MainAxisSize.min,
       children: [ThemedLogo(height: 125), SizedBox(height: 12)],
     );
-    // return Text(
-    //   'Riverpod $title',
-    //   style: TextStyle(
-    //     fontSize: 24,
-    //     color: Colors.black,
-    //     fontWeight: FontWeight.bold,
-    //   ),
-    // );
   }
 }

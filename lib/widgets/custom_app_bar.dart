@@ -1,9 +1,11 @@
-import 'package:bank_app/features/auth/presentation/sign_in_screen.dart';
+import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/colors_scope.dart';
+import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, required this.title, this.bottom});
@@ -19,23 +21,15 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       backgroundColor: c.background,
       elevation: 0,
       centerTitle: true,
-
+      automaticallyImplyLeading: false,
+      leading: context.canPop()
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+              tooltip: t.back,
+              onPressed: () => context.pop(),
+            )
+          : null,
       title: Text(title, style: const TextStyle(color: Colors.white)),
-
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-        tooltip: t.back,
-        onPressed: () {
-          if (Navigator.of(context).canPop()) {
-            Navigator.of(context).pop();
-          } else {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(t.noBackPage)));
-          }
-        },
-      ),
-
       actions: [
         IconButton(
           icon: const Icon(Icons.logout, color: Colors.white),
@@ -49,11 +43,11 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   content: Text(t.sure),
                   actions: [
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
+                      onPressed: () => context.pop(false),
                       child: Text(t.cancel),
                     ),
                     ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () => context.pop(true),
                       child: Text(t.exit),
                     ),
                   ],
@@ -67,13 +61,11 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   .signOut();
 
               if (success && context.mounted) {
+                ref.read(signInRiverpodProvider.notifier).signOut();
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(SnackBar(content: Text(t.closed)));
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (_) => const SignInPage()),
-                  (route) => false,
-                );
+                context.go(Routes.startLocation);
               } else if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -85,9 +77,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
             }
           },
         ),
-        const SizedBox(width: 8),
       ],
-
       bottom: bottom,
     );
   }

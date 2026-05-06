@@ -1,12 +1,11 @@
+import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/features/auth/presentation/sign_in_screen.dart';
-import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
-import 'package:bank_app/features/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/widgets/bottom_nav.dart';
 import 'package:bank_app/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -36,7 +35,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     BuildContext context,
     String title, {
     String? trailing,
-    Widget? page,
+    String? routeName,
   }) {
     return ListTile(
       title: Text(title, style: const TextStyle(color: Colors.white)),
@@ -48,11 +47,8 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
               color: Colors.white54,
             ),
       onTap: () {
-        if (page != null) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => page),
-          );
+        if (routeName != null) {
+          context.pushNamed(routeName);
         }
       },
     );
@@ -83,16 +79,16 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   context,
                   t.language,
                   trailing: t.english,
-                  page: const LanguagePage(),
+                  routeName: Routes.language,
                 ),
 
                 const Divider(color: Colors.white10),
 
-                settingsItem(context, t.myProfile, page: const ProfilePage()),
+                settingsItem(context, t.myProfile, routeName: Routes.profile),
 
                 const Divider(color: Colors.white10),
 
-                settingsItem(context, t.contactus, page: const ContactPage()),
+                settingsItem(context, t.contactus, routeName: Routes.contact),
               ],
             ),
           ),
@@ -111,7 +107,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 settingsItem(
                   context,
                   t.changePassword,
-                  page: const ChangePasswordPage(),
+                  routeName: Routes.changePassword,
                 ),
 
                 const Divider(color: Colors.white10),
@@ -119,7 +115,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 settingsItem(
                   context,
                   t.privatePolicy,
-                  page: const PrivacyPage(),
+                  routeName: Routes.privacy,
                 ),
 
                 const Divider(color: Colors.white10),

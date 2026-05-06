@@ -3,12 +3,12 @@ import 'package:bank_app/features/auth/domain/use_cases/sing_in_use_case.dart';
 import 'package:bank_app/features/auth/state/sign_in_state.dart';
 import 'package:riverpod/legacy.dart';
 
-final signInRiverpodProvider = StateNotifierProvider<SignInNotifier, SignInState>(
-  (ref) => SignInNotifier(),
-);
+final signInRiverpodProvider =
+    StateNotifierProvider<SignInNotifier, SignInState>(
+      (ref) => SignInNotifier(),
+    );
 
 class SignInNotifier extends StateNotifier<SignInState> {
-
   SignInNotifier({
     SignInUseCase? signInUseCase,
     SignedInUseCase? signedInUseCase,
@@ -42,9 +42,13 @@ class SignInNotifier extends StateNotifier<SignInState> {
     } catch (e) {
       print(e);
 
-      state = SignInErrorState('Dummy Error al hacer login');
+      state = SignInErrorState('Error al iniciar sesión: $e');
       return false;
     }
+  }
+
+  void signOut() {
+    state = SignInInitialState();
   }
 
   void loginWithFacebook() {}

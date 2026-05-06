@@ -1,6 +1,6 @@
 import 'package:bank_app/core/navigation/router.dart';
-import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
-import 'package:bank_app/features/auth/state/sign_in_state.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';

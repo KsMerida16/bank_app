@@ -2,7 +2,7 @@
 import 'dart:ui' as ui show FontFeature;
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
-import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart';
 import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
 import 'package:bank_app/widgets/bottom_nav.dart';
 import 'package:flutter/cupertino.dart';

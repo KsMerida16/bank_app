@@ -1,5 +1,5 @@
 import 'package:bank_app/features/auth/domain/use_cases/sign_out_use_case.dart';
-import 'package:bank_app/features/auth/state/sign_out_state.dart';
+import 'package:bank_app/features/auth/presentation/state/sign_out_state.dart';
 import 'package:riverpod/legacy.dart';
 
 final signOutRiverpodProvider =

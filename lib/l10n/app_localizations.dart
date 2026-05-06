@@ -107,6 +107,12 @@ abstract class AppLocalizations {
   /// **'Email Address'**
   String get emailLabel;
 
+  /// No description provided for @userLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Usuario'**
+  String get userLabel;
+
   /// No description provided for @emailHint.
   ///
   /// In en, this message translates to:
@@ -166,6 +172,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome, {userName}!'**
   String welcomeUser(Object userName);
+
+  /// No description provided for @welcomeUserMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeUserMale;
+
+  /// No description provided for @welcomeUserFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeUserFemale;
 
   /// No description provided for @transactions.
   ///

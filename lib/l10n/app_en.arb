@@ -2,6 +2,7 @@
   "@@locale": "en",
   "signInTitle": "Sign In",
   "emailLabel": "Email Address",
+  "userLabel": "Usuario",
   "emailHint": "name@example.com",
   "passwordLabel": "Password",
   "passwordHint": "••••••••",
@@ -13,7 +14,7 @@
   "errors_required": "This field is required",
   "errors_invalidEmail": "Enter a valid email address",
 
-  "welcomeUser": "Welcome, {userName}!",
+  "welcomeUser": "Hello!",
   "transactions": "Transactions",
   "seeAll": "See All",
   "sent": "Sent",

@@ -5,22 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "bank_app - debug mode",
+            "name": "bank_app - dev - debug mode",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "debug"
+            "flutterMode": "debug",
+            "program": "lib/main_dev.dart"
         },
         {
-            "name": "bank_app (profile mode)",
+            "name": "bank_app - dev - profile mode",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "lib/main_dev.dart"
         },
         {
-            "name": "bank_app (release mode)",
+            "name": "bank_app - prod - release mode",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "lib/main_prod.dart"
         }
     ]
 }

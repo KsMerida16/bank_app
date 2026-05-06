@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailLabel => 'Email Address';
 
   @override
+  String get userLabel => 'Usuario';
+
+  @override
   String get emailHint => 'name@example.com';
 
   @override
@@ -45,6 +48,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String welcomeUser(Object userName) {
     return 'Welcome, $userName!';
   }
+
+  @override
+  String get welcomeUserMale => 'Welcome back';
+
+  @override
+  String get welcomeUserFemale => 'Welcome back';
 
   @override
   String get transactions => 'Transactions';

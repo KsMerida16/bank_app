@@ -8,7 +8,7 @@ class ThemedLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final asset = isDark ? Assets.logo_dark : Assets.logo_light;
+    final asset = isDark ? Assets.logoDark : Assets.logoLight;
 
     return Image.asset(
       asset,

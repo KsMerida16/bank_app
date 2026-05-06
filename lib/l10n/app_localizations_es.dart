@@ -15,6 +15,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get emailLabel => 'Correo electrónico';
 
   @override
+  String get userLabel => 'Usuario';
+
+  @override
   String get emailHint => 'nombre@ejemplo.com';
 
   @override
@@ -45,6 +48,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String welcomeUser(Object userName) {
     return '¡Bienvenido, $userName!';
   }
+
+  @override
+  String get welcomeUserMale => '¡Bienvenido de nuevo';
+
+  @override
+  String get welcomeUserFemale => '¡Bienvenida de nuevo';
 
   @override
   String get transactions => 'Transacciones';
@@ -209,5 +218,5 @@ class AppLocalizationsEs extends AppLocalizations {
   String get swiftCode => 'Código SWIFT';
 
   @override
-  String get enterSwift => 'Enter SWIFT code';
+  String get enterSwift => 'Ingrese código SWIFT';
 }

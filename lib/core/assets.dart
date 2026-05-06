@@ -1,8 +1,8 @@
 abstract class Assets {
   static const String logo = 'assets/Logo.png';
 
-  static const String logo_dark = 'assets/logo_dark.png';
-  static const String logo_light = 'assets/logo_light.png';
+  static const String logoDark = 'assets/logo_dark.png';
+  static const String logoLight = 'assets/logo_light.png';
 
   static const String loginBackground = 'assets/background.png';
 

@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/colors_scope.dart';
-import 'package:bank_app/features/dashboard/presentation/views/dashboard_view.dart';
-import 'package:bank_app/features/settings/presentation/settings_view.dart';
+import 'package:bank_app/core/navigation/router.dart';
+import 'package:go_router/go_router.dart';
 
 class BottomNav extends StatelessWidget {
   final int currentIndex;
 
-  const BottomNav({
-    super.key,
-    required this.currentIndex,
-  });
+  const BottomNav({super.key, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -29,29 +26,12 @@ class BottomNav extends StatelessWidget {
 
         switch (index) {
           case 0:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const HomeDashboardPage(),
-              ),
-            );
+            context.goNamed(Routes.dashboard);
             break;
-
-          case 1:
-            // CardsPage
-            break;
-
-          case 2:
-            // StatisticsPage
-            break;
-
           case 3:
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const SettingsPage(),
-              ),
-            );
+            context.goNamed(Routes.settings);
+            break;
+          default:
             break;
         }
       },

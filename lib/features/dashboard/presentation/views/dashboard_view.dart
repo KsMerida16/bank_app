@@ -2,14 +2,17 @@
 import 'dart:ui' as ui show FontFeature;
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
+import 'package:bank_app/features/auth/state/sign_in_notifier.dart';
+import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
 import 'package:bank_app/widgets/bottom_nav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeDashboardPage extends StatefulWidget {
+class HomeDashboardPage extends ConsumerStatefulWidget {
   const HomeDashboardPage({
     super.key,
     this.userName,
@@ -22,10 +25,10 @@ class HomeDashboardPage extends StatefulWidget {
   final String? userImage;
 
   @override
-  State<HomeDashboardPage> createState() => _HomeDashboardPageState();
+  ConsumerState<HomeDashboardPage> createState() => _HomeDashboardPageState();
 }
 
-class _HomeDashboardPageState extends State<HomeDashboardPage> {
+class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
   @override
   Widget build(BuildContext context) {
     final c = AppColorsScope.of(context);
@@ -83,12 +86,66 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
               ),
             ),
             const SizedBox(width: 12),
-            // Botón de búsqueda
+            // Botón de cierre de sesión
             _RoundIconButton(
-              icon: Icons.search,
+              icon: Icons.logout,
               bg: _blend(c.surface, Colors.white.withValues(alpha: 0.04)),
               fg: c.textPrimary,
-              onTap: () {},
+              onTap: () async {
+                final confirm = await showDialog<bool>(
+                  context: context,
+                  builder: (dialogContext) {
+                    return AlertDialog(
+                      title: Text(t.logout),
+                      content: Text(t.sure),
+                      actions: [
+                        TextButton(
+                          onPressed: () =>
+                              Navigator.of(dialogContext).pop(false),
+                          child: Text(t.cancel),
+                        ),
+                        ElevatedButton(
+                          onPressed: () =>
+                              Navigator.of(dialogContext).pop(true),
+                          child: Text(t.exit),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+                if (confirm != true) return;
+                if (!mounted) return;
+
+                final success = await ref
+                    .read(signOutRiverpodProvider.notifier)
+                    .signOut();
+
+                if (!mounted) return;
+
+                if (success) {
+                  ref.read(signInRiverpodProvider.notifier).signOut();
+                  // ignore: use_build_context_synchronously
+                  final currentContext = context;
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(
+                    // ignore: use_build_context_synchronously
+                    currentContext,
+                  ).showSnackBar(SnackBar(content: Text(t.closed)));
+                  // ignore: use_build_context_synchronously
+                  currentContext.go(Routes.startLocation);
+                } else if (mounted) {
+                  // ignore: use_build_context_synchronously
+                  final currentContext = context;
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(currentContext).showSnackBar(
+                    SnackBar(
+                      content: Text(t.logout),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
             ),
             const SizedBox(width: 8),
           ],

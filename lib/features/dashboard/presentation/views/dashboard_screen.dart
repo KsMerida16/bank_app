@@ -4,13 +4,19 @@ import 'package:bank_app/features/settings/presentation/settings_view.dart';
 import 'package:bank_app/features/transfers/presentation/transfer_view.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/widgets/bottom_nav.dart';
+import 'package:bank_app/widgets/custom_app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bank_app/theme/app_colors.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 
 class HomeDashboardPage extends StatefulWidget {
-  const HomeDashboardPage({super.key, this.userName, this.userGender, this.userImage});
+  const HomeDashboardPage({
+    super.key,
+    this.userName,
+    this.userGender,
+    this.userImage,
+  });
 
   final String? userName;
   final String? userGender;
@@ -28,13 +34,18 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
     final bottom = MediaQuery.of(context).padding.bottom;
     // ignore: unused_local_variable
     final bottomSafe = MediaQuery.of(context).padding.bottom;
-    final currentUser = widget.userName?.trim().isNotEmpty == true ? widget.userName! : 'Usuario';
+    final currentUser = widget.userName?.trim().isNotEmpty == true
+        ? widget.userName!
+        : 'Usuario';
     final isMale = widget.userGender?.toLowerCase() == 'male';
-    final userImage = widget.userImage?.isNotEmpty == true ? widget.userImage : null;
+    final userImage = widget.userImage?.isNotEmpty == true
+        ? widget.userImage
+        : null;
 
     return Scaffold(
       backgroundColor: c.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: c.background,
         elevation: 0,
         titleSpacing: 0,

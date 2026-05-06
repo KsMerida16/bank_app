@@ -261,30 +261,7 @@ class _TransferPageState extends State<TransferPage>
     final t = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: c.background, // const Color(0xFF0F1220),
-      appBar: CustomAppBar(
-        title: t.transfer,
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.blue,
-          tabs: [
-            Tab(
-              icon: const Icon(Icons.people_outline, color: Colors.white),
-              text: t.thirdParty,
-            ),
-            Tab(
-              icon: const Icon(
-                Icons.account_balance_outlined,
-                color: Colors.white,
-              ),
-              text: t.ach,
-            ),
-            Tab(
-              icon: const Icon(Icons.public_outlined, color: Colors.white),
-              text: t.international,
-            ),
-          ],
-        ),
-      ),
+      appBar: CustomAppBar(title: t.transfer),
       body: TabBarView(
         controller: _tabController,
         children: [

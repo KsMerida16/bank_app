@@ -1,17 +1,21 @@
 import 'package:bank_app/l10n/app_localizations.dart';
+import 'package:bank_app/features/auth/presentation/sign_in_screen.dart';
+import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
+import 'package:bank_app/features/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/widgets/bottom_nav.dart';
 import 'package:bank_app/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
 
   @override
-  State<SettingsPage> createState() => _SettingsPageState();
+  ConsumerState<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends ConsumerState<SettingsPage> {
   bool biometricEnabled = true;
 
   Widget sectionTitle(String title) {
@@ -62,7 +66,80 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       backgroundColor: c.background,
-      appBar: CustomAppBar(title: t.settings),
+      appBar: AppBar(
+        backgroundColor: bg, //const Color(0xFF0F1220),
+        elevation: 0,
+        centerTitle: true,
+        title: Text(t.settings, style: const TextStyle(color: Colors.white)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          tooltip: t.back,
+          onPressed: () {
+            // Si puede volver, hace pop; si no, podrías navegar a Home
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              // Navigator.of(context).pushReplacementNamed('/home');
+              // o muestra un SnackBar:
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(t.noBackPage)));
+            }
+          },
+        ),
+
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: t.logout,
+            onPressed: () async {
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text(t.logout),
+                    content: Text(t.sure),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text(t.cancel),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {Navigator.of(context).pop(true)},
+                        child: Text(t.exit),
+                      ),
+                    ],
+                  );
+                },
+              );
+
+              if (confirm == true && context.mounted) {
+                final success = await ref
+                    .read(signOutRiverpodProvider.notifier)
+                    .signOut();
+
+                if (success && context.mounted) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(t.closed)));
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (_) => const SignInPage()),
+                    (route) => false,
+                  );
+                } else if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(t.logout),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
 
       body: ListView(
         children: [

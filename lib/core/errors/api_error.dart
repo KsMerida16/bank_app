@@ -1,8 +1,7 @@
 class ApiError implements Exception {
+  ApiError({required this.message, this.statusCode});
   final String message;
   final int? statusCode;
-
-  ApiError({required this.message, this.statusCode});
 
   @override
   String toString() {

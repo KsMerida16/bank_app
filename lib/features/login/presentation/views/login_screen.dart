@@ -87,7 +87,9 @@ class BodyWidget extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {},
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color(0xFF006FFD)),
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color(0xFF006FFD),
+                  ),
                 ),
                 child: const Text(
                   'Login', //AppLocalizations.of(context)!.login,
@@ -104,6 +106,7 @@ class BodyWidget extends StatelessWidget {
                   //Image.asset(Assets.loginBackground, width: 16, height: 16),
                   InkWell(
                     onTap: () {
+                      // ignore: avoid_print
                       print('Navigate to registration page');
                     },
                     child: const Text(

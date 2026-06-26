@@ -36,7 +36,11 @@ class SignInNotifier extends StateNotifier<SignInState> {
 
     try {
       final user = await _signInUseCase.call(email, password);
-      state = SignInSuccessState(user.fullName, user.gender, user.image);
+      state = SignInSuccessState(
+        user.fullName,
+        user.gender ?? '',
+        user.image ?? '',
+      );
 
       return true;
     } catch (e) {

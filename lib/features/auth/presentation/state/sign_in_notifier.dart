@@ -40,6 +40,7 @@ class SignInNotifier extends StateNotifier<SignInState> {
 
       return true;
     } catch (e) {
+      // ignore: avoid_print
       print(e);
 
       state = SignInErrorState('Error al iniciar sesión: $e');

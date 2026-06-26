@@ -17,6 +17,7 @@ class User {
 
   String get newId => _newId;
 
+  // ignore: sort_constructors_first
   User({
     required this.id,
     required this.email,
@@ -26,6 +27,7 @@ class User {
     required this.image,
   });
 
+  // ignore: sort_constructors_first
   factory User.fromModel(UserModel userModel) {
     return User(
       email: userModel.email,

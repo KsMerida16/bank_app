@@ -10,7 +10,9 @@ ThemeData buildTheme(AppColors c, {required Brightness brightness}) {
     onSecondary: c.onPrimary,
     error: c.error,
     onError: c.onPrimary,
+    // ignore: deprecated_member_use
     background: c.background,
+    // ignore: deprecated_member_use
     onBackground: c.textPrimary,
     surface: c.surface,
     onSurface: c.textPrimary,

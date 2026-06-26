@@ -17,6 +17,7 @@ class Env {
   static String get appName {
     final appName = _values['appName'];
     if (appName == null) {
+      // ignore: avoid_print
       print(
         "Warning: 'appName' is not defined in the environment configuration.",
       );

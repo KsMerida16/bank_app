@@ -38,5 +38,6 @@ class LightColors implements AppColors {
   Color get overlay => const Color(0x14000000);
 
   @override
+  // ignore: deprecated_member_use
   Color? get shadow => Colors.black.withOpacity(0.10);
 }

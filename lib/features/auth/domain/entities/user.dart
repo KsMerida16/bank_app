@@ -3,10 +3,10 @@ import 'package:bank_app/features/auth/data/models/user_model.dart';
 class User {
   final String id;
   final String email;
-  final String name;
-  final String surname;
-  final String gender;
-  final String image;
+  final String? name;
+  final String? surname;
+  final String? gender;
+  final String? image;
   String _newId = '';
 
   String get fullName => '$name $surname';
@@ -31,7 +31,7 @@ class User {
   factory User.fromModel(UserModel userModel) {
     return User(
       email: userModel.email,
-      id: '${userModel.id}',
+      id: userModel.id,
       name: userModel.firstName,
       surname: userModel.lastName,
       gender: userModel.gender,

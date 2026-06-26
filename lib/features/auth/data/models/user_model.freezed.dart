@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- int get id; String get username; String get email; String get firstName; String get lastName; String get gender; String get image; String get accessToken; String get newId;
+ String get id; String? get username; String get email; String? get firstName; String? get lastName; String? get gender; String? get image; String? get accessToken; String? get newId;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String username, String email, String firstName, String lastName, String gender, String image, String accessToken, String newId
+ String id, String? username, String email, String? firstName, String? lastName, String? gender, String? image, String? accessToken, String? newId
 });
 
 
@@ -65,18 +65,18 @@ class _$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = null,Object? email = null,Object? firstName = null,Object? lastName = null,Object? gender = null,Object? image = null,Object? accessToken = null,Object? newId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? username = freezed,Object? email = null,Object? firstName = freezed,Object? lastName = freezed,Object? gender = freezed,Object? image = freezed,Object? accessToken = freezed,Object? newId = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
-as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as String,accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
-as String,newId: null == newId ? _self.newId : newId // ignore: cast_nullable_to_non_nullable
-as String,
+as String,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,firstName: freezed == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
+as String?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String?,accessToken: freezed == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+as String?,newId: freezed == newId ? _self.newId : newId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String username,  String email,  String firstName,  String lastName,  String gender,  String image,  String accessToken,  String newId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? username,  String email,  String? firstName,  String? lastName,  String? gender,  String? image,  String? accessToken,  String? newId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.username,_that.email,_that.firstName,_that.lastName,_that.gender,_that.image,_that.accessToken,_that.newId);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.username,_that.email,_that.firstName,_that.lastNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String username,  String email,  String firstName,  String lastName,  String gender,  String image,  String accessToken,  String newId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? username,  String email,  String? firstName,  String? lastName,  String? gender,  String? image,  String? accessToken,  String? newId)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
 return $default(_that.id,_that.username,_that.email,_that.firstName,_that.lastName,_that.gender,_that.image,_that.accessToken,_that.newId);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.username,_that.email,_that.firstName,_that.lastNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String username,  String email,  String firstName,  String lastName,  String gender,  String image,  String accessToken,  String newId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? username,  String email,  String? firstName,  String? lastName,  String? gender,  String? image,  String? accessToken,  String? newId)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.username,_that.email,_that.firstName,_that.lastName,_that.gender,_that.image,_that.accessToken,_that.newId);case _:
@@ -220,15 +220,15 @@ class _UserModel implements UserModel {
   const _UserModel({required this.id, required this.username, required this.email, required this.firstName, required this.lastName, required this.gender, required this.image, required this.accessToken, required this.newId});
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
-@override final  int id;
-@override final  String username;
+@override final  String id;
+@override final  String? username;
 @override final  String email;
-@override final  String firstName;
-@override final  String lastName;
-@override final  String gender;
-@override final  String image;
-@override final  String accessToken;
-@override final  String newId;
+@override final  String? firstName;
+@override final  String? lastName;
+@override final  String? gender;
+@override final  String? image;
+@override final  String? accessToken;
+@override final  String? newId;
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
@@ -263,7 +263,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String username, String email, String firstName, String lastName, String gender, String image, String accessToken, String newId
+ String id, String? username, String email, String? firstName, String? lastName, String? gender, String? image, String? accessToken, String? newId
 });
 
 
@@ -280,18 +280,18 @@ class __$UserModelCopyWithImpl<$Res>
 
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = null,Object? email = null,Object? firstName = null,Object? lastName = null,Object? gender = null,Object? image = null,Object? accessToken = null,Object? newId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? username = freezed,Object? email = null,Object? firstName = freezed,Object? lastName = freezed,Object? gender = freezed,Object? image = freezed,Object? accessToken = freezed,Object? newId = freezed,}) {
   return _then(_UserModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,username: null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,gender: null == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
-as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
-as String,accessToken: null == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
-as String,newId: null == newId ? _self.newId : newId // ignore: cast_nullable_to_non_nullable
-as String,
+as String,username: freezed == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,firstName: freezed == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
+as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
+as String?,gender: freezed == gender ? _self.gender : gender // ignore: cast_nullable_to_non_nullable
+as String?,image: freezed == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String?,accessToken: freezed == accessToken ? _self.accessToken : accessToken // ignore: cast_nullable_to_non_nullable
+as String?,newId: freezed == newId ? _self.newId : newId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

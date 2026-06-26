@@ -22,6 +22,7 @@ class SignOutNotifier extends StateNotifier<SignOutState> {
       state = SignOutSuccessState();
       return true;
     } catch (e) {
+      // ignore: avoid_print
       print(e);
       state = SignOutErrorState('Error al cerrar sesión: $e');
       return false;

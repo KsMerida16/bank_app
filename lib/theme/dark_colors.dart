@@ -37,5 +37,6 @@ class DarkColors implements AppColors {
   @override
   Color get overlay => const Color(0x33FFFFFF);
   @override
+  // ignore: deprecated_member_use
   Color? get shadow => Colors.black.withOpacity(0.40);
 }

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 class BottomNav extends StatelessWidget {
   final int currentIndex;
 
+  // ignore: sort_constructors_first
   const BottomNav({super.key, required this.currentIndex});
 
   @override

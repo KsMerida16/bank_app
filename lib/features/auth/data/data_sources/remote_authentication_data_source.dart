@@ -9,9 +9,11 @@ class RemoteAutheticationDataSource {
   Future<UserModel> signIUpWithEmailAndPassword(
     UserPasswordModel userPasswordModel,
   ) async {
+    // ignore: avoid_print
     print(
       'userPasswordModel: ${userPasswordModel.email}, ${userPasswordModel.password}',
     );
+    // ignore: avoid_print
     print('ApiConsts.login: ${ApiConsts.login}');
 
     final response = await dio.post(
@@ -19,7 +21,9 @@ class RemoteAutheticationDataSource {
       data: userPasswordModel.toJson(),
     );
 
+    // ignore: avoid_print
     print('Response status: ${response.statusCode}');
+    // ignore: avoid_print
     print('Response data: ${response.data}');
 
     if (response.statusCode == 200 || response.statusCode == 201) {

@@ -102,7 +102,7 @@ class _TransferPageState extends State<TransferPage>
         icon: const Icon(Icons.send, color: Colors.white),
         label: Text("Send $type", style: const TextStyle(color: Colors.white)),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFF0066FF),
+          backgroundColor: const Color(0xFF0066FF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

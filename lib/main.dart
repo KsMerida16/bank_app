@@ -1,6 +1,7 @@
 import 'package:bank_app/core/environment/env.dart';
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/core/utils/local_storage.dart';
+import 'package:bank_app/firebase_options.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/app_theme.dart';
 import 'package:bank_app/theme/colors_scope.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void runProject() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +19,6 @@ void runProject() async {
   await LocalStorage().init();
   runApp(const ProviderScope(child: MyApp()));
 }
-
-class DefaultFirebaseOptions {}
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});

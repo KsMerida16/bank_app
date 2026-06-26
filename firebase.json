@@ -1,1 +1,25 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"bankpick","appId":"1:895998651231:android:a79a815d8a573617b7a4ea","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"bankpick","configurations":{"android":"1:895998651231:android:a79a815d8a573617b7a4ea","ios":"1:895998651231:ios:d26411ffdc5f6ab7b7a4ea","macos":"1:895998651231:ios:d26411ffdc5f6ab7b7a4ea","web":"1:895998651231:web:5aa024e93ae8f92cb7a4ea","windows":"1:895998651231:web:1be16798d69678b1b7a4ea"}}}}}}
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "bankpick",
+                    "appId": "1:895998651231:android:a79a815d8a573617b7a4ea",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "bankpick",
+                    "configurations": {
+                        "android": "1:895998651231:android:a79a815d8a573617b7a4ea",
+                        "ios": "1:895998651231:ios:d26411ffdc5f6ab7b7a4ea",
+                        "macos": "1:895998651231:ios:d26411ffdc5f6ab7b7a4ea",
+                        "web": "1:895998651231:web:5aa024e93ae8f92cb7a4ea",
+                        "windows": "1:895998651231:web:1be16798d69678b1b7a4ea"
+                    }
+                }
+            }
+        }
+    }
+}

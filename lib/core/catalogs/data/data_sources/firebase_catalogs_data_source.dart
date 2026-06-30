@@ -1,6 +1,5 @@
 import 'package:bank_app/core/catalogs/data/models/catalog_model.dart';
 import 'package:bank_app/core/constants/app_firebase_tables.dart';
-import 'package:bank_app/features/dashboard/data/models/movement_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseCatalogsDataSource {

@@ -1,7 +1,6 @@
 import 'package:bank_app/core/errors/app_errors.dart';
 import 'package:bank_app/features/auth/data/data_sources/firebase_authentication_data_source.dart';
 import 'package:bank_app/features/auth/data/data_sources/firestore_users_data_source.dart';
-import 'package:bank_app/features/auth/data/data_sources/local_authentication_data_source.dart';
 import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:bank_app/features/auth/domain/entities/user.dart';
 import 'package:bank_app/features/auth/domain/repositories/authentication_repository.dart';
@@ -10,18 +9,14 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   AuthenticationRepositoryImpl({
     FirebaseAuthenticationDataSource? firebaseAuthenticationDataSource,
     FirestoreUsersDataSource? firestoreUsersDataSource,
-    LocalAuthenticationDataSource? localAuthenticationDataSource,
   }) : _firebaseAuthenticationDataSource =
            firebaseAuthenticationDataSource ??
            FirebaseAuthenticationDataSource(),
        _firestoreUsersDataSource =
-           firestoreUsersDataSource ?? FirestoreUsersDataSource(),
-       _localAuthenticationDataSource =
-           localAuthenticationDataSource ?? LocalAuthenticationDataSource();
+           firestoreUsersDataSource ?? FirestoreUsersDataSource();
 
   final FirebaseAuthenticationDataSource _firebaseAuthenticationDataSource;
   final FirestoreUsersDataSource _firestoreUsersDataSource;
-  final LocalAuthenticationDataSource _localAuthenticationDataSource;
 
   @override
   Future<String> getAccessToken() {
@@ -45,7 +40,6 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   Future<bool> logOut() async {
     try {
       await _firebaseAuthenticationDataSource.logout();
-      await _localAuthenticationDataSource.clearSession();
       return true;
     } catch (e) {
       throw Exception('${AppErrors.authException}: $e');
@@ -79,11 +73,10 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   @override
   Future<void> signOut() async {
     await _firebaseAuthenticationDataSource.logout();
-    await _localAuthenticationDataSource.clearSession();
   }
 
   @override
   Future<void> saveSession(String token) async {
-    await _localAuthenticationDataSource.saveSession(token);
+    throw UnimplementedError();
   }
 }

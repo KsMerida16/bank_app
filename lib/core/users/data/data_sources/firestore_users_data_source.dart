@@ -1,6 +1,6 @@
 import 'package:bank_app/core/constants/app_firebase_tables.dart';
 import 'package:bank_app/core/errors/app_errors.dart';
-import 'package:bank_app/features/auth/data/models/user_model.dart';
+import 'package:bank_app/core/users/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreUsersDataSource {
@@ -9,11 +9,11 @@ class FirestoreUsersDataSource {
 
   final FirebaseFirestore _firestore;
 
-  Future<UserModel> getUser(String email) async {
+  Future<UserModel> getUser(String userId) async {
     final collectionRef = _firestore.collection(AppFirebaseTables.users);
     final query = collectionRef.where(
       AppFirebaseKeys.usersEmailKey,
-      isEqualTo: email.toString(),
+      isEqualTo: userId.toString(),
     );
     final result = await query.get();
     final user = result.docs.map((doc) => UserModel.fromJson(doc.data())).first;

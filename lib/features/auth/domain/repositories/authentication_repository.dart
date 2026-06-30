@@ -1,4 +1,4 @@
-import 'package:bank_app/features/auth/domain/entities/user.dart';
+import 'package:bank_app/core/users/domain/entities/user.dart';
 
 abstract class AuthenticationRepository {
   Future<void> signInWithGoogle();

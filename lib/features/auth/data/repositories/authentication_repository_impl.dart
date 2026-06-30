@@ -1,8 +1,8 @@
 import 'package:bank_app/core/errors/app_errors.dart';
 import 'package:bank_app/features/auth/data/data_sources/firebase_authentication_data_source.dart';
-import 'package:bank_app/features/auth/data/data_sources/firestore_users_data_source.dart';
+import 'package:bank_app/core/users/data/data_sources/firestore_users_data_source.dart';
 import 'package:bank_app/features/auth/data/models/user_password_model.dart';
-import 'package:bank_app/features/auth/domain/entities/user.dart';
+import 'package:bank_app/core/users/domain/entities/user.dart';
 import 'package:bank_app/features/auth/domain/repositories/authentication_repository.dart';
 
 class AuthenticationRepositoryImpl extends AuthenticationRepository {

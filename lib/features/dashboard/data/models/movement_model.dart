@@ -1,3 +1,4 @@
+import 'package:bank_app/features/dashboard/domain/entities/movement.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'movement_model.freezed.dart';
@@ -16,4 +17,17 @@ abstract class MovementModel with _$MovementModel {
 
   factory MovementModel.fromJson(Map<String, dynamic> json) =>
       _$MovementModelFromJson(json);
+}
+
+extension MovementModelExtension on MovementModel {
+  Movement toEntity() {
+    return Movement(
+      date: date,
+      description: description,
+      amount: amount,
+      type: type,
+      sign: sign,
+      category: category,
+    );
+  }
 }

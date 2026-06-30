@@ -36,7 +36,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
     final currentUser = widget.userName?.trim().isNotEmpty == true
         ? widget.userName!
         : 'Usuario';
-    final isMale = widget.userGender?.toLowerCase() == 'male';
+    final isMale = widget.userGender?.toLowerCase() == 'm';
     final userImage = widget.userImage?.isNotEmpty == true
         ? widget.userImage
         : null;

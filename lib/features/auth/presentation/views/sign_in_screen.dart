@@ -1,3 +1,4 @@
+import 'package:bank_app/core/constants/const.dart';
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart';
 import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
@@ -46,8 +47,12 @@ class BodyWidget extends ConsumerStatefulWidget {
 
 class _BodyWidgetState extends ConsumerState<BodyWidget> {
   late bool showPassword;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(
+    text: TemporalConsts.email,
+  );
+  final TextEditingController passwordController = TextEditingController(
+    text: TemporalConsts.password,
+  );
 
   @override
   void initState() {
@@ -160,9 +165,42 @@ class _BodyWidgetState extends ConsumerState<BodyWidget> {
                         final email = emailController.text;
                         final password = passwordController.text;
 
-                        ref
-                            .read(signInRiverpodProvider.notifier)
-                            .login(email, password);
+                        if (email.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '${t.errors_required}: ${t.userLabel}',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        if (password.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                '${t.errors_required}: ${t.passwordLabel}',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        if (email.isNotEmpty && password.isNotEmpty) {
+                          ref
+                              .read(signInRiverpodProvider.notifier)
+                              .login(email, password);
+
+                          final isLoggedIn = ref
+                              .read(signInRiverpodProvider)
+                              .logged;
+                          if (isLoggedIn) {
+                            ref
+                                .read(goRouterProvider)
+                                .goNamed(Routes.dashboard);
+                          }
+                        }
                       },
                       child: Text(t.signInCta),
                     ),

@@ -12,7 +12,7 @@ class SignInUseCase {
     // Aquí iría la lógica de autenticación, por ejemplo, llamando a un repositorio
     // que se encargue de hacer la petición a un servidor.
     // Por simplicidad, vamos a simular una autenticación exitosa si el email y la contraseña no están vacíos.
-    final user = await _authenticationRepository.signIUpWithEmailAndPassword(
+    final user = await _authenticationRepository.signInWithEmailAndPassword(
       email,
       password,
     );
@@ -20,9 +20,6 @@ class SignInUseCase {
     await _authenticationRepository.saveSession(
       'fake_token',
     ); // Simulamos guardar una sesión
-
-    user.newId =
-        '12345'; // Ejemplo de uso del setter para modificar el ID del usuario
 
     return user;
   }

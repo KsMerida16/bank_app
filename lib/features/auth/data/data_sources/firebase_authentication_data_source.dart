@@ -1,28 +1,30 @@
+import 'package:bank_app/features/auth/data/models/auth_model.dart';
 import 'package:bank_app/features/auth/data/models/user_model.dart';
+import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthenticationDataSource {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<UserModel> login(String email, String password) async {
+  Future<AuthModel> login(UserPasswordModel userPassword) async {
+    //String email, String password) async {
     try {
       // ignore: avoid_print
-      print('email/password at FirebaseLoginDataSource: $email / $password');
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+      print(
+        'email/password at FirebaseLoginDataSource: ${userPassword.email} / ${userPassword.password}',
       );
-      final user = _firebaseAuth.currentUser;
-      return UserModel(
-        id: user!.uid,
-        email: email,
+      final login = await _firebaseAuth.signInWithEmailAndPassword(
+        email: userPassword.email,
+        password: userPassword.password,
+      );
+      if (login.user == null) {
+        throw Exception('Login failed: User is null');
+      }
+      final user = login.user!;
+      return AuthModel(
+        id: user.uid,
+        email: userPassword.email,
         username: user.displayName ?? '',
-        firstName: '',
-        lastName: '',
-        gender: '',
-        image: '',
-        accessToken: '',
-        newId: '',
       );
     } on FirebaseAuthException catch (e) {
       // ignore: avoid_print
@@ -83,7 +85,7 @@ class FirebaseAuthenticationDataSource {
       );
 
       return UserModel(
-        id: _firebaseAuth.currentUser!.uid,
+        //id: _firebaseAuth.currentUser!.uid,
         email: email,
         username: _firebaseAuth.currentUser!.displayName ?? '',
         firstName: '',
@@ -114,6 +116,21 @@ class FirebaseAuthenticationDataSource {
       // ignore: avoid_print
       print(e);
       throw Exception('Unknown error: $e');
+    }
+  }
+
+  Future<String?> getSessionToken() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null) {
+        final idToken = await user.getIdToken();
+        return idToken;
+      }
+      return null;
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+      throw Exception('Error al obtener el token de sesión: $e');
     }
   }
 }

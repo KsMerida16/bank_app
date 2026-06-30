@@ -17,9 +17,9 @@ class SignInUseCase {
       password,
     );
 
-    await _authenticationRepository.saveSession(
-      'fake_token',
-    ); // Simulamos guardar una sesión
+    // await _authenticationRepository.saveSession(
+    //   'fake_token',
+    // ); // Simulamos guardar una sesión
 
     return user;
   }

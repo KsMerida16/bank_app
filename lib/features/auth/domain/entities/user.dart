@@ -1,37 +1,26 @@
 import 'package:bank_app/features/auth/data/models/user_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class User {
-  final String id;
-  final String email;
-  final String? name;
-  final String? surname;
-  final String? gender;
-  final String? image;
-  String _newId = '';
+part 'user.freezed.dart';
 
-  String get fullName => '$name $surname';
+@freezed
+abstract class User with _$User {
+  const User._();
 
-  set newId(String newId) {
-    _newId = '$newId-modified';
-  }
+  const factory User({
+    required String email,
+    String? name,
+    String? surname,
+    String? gender,
+    String? image,
+  }) = _User;
 
-  String get newId => _newId;
-
-  // ignore: sort_constructors_first
-  User({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.surname,
-    required this.gender,
-    required this.image,
-  });
+  String get fullName => '${name ?? ''} ${surname ?? ''}'.trim();
 
   // ignore: sort_constructors_first
   factory User.fromModel(UserModel userModel) {
     return User(
       email: userModel.email,
-      id: userModel.id,
       name: userModel.firstName,
       surname: userModel.lastName,
       gender: userModel.gender,

@@ -6,13 +6,12 @@ part 'user_model.g.dart';
 @freezed
 abstract class UserModel with _$UserModel {
   const factory UserModel({
-    required String id,
-    required String? username,
-    required String email,
-    required String? firstName,
-    required String? lastName,
-    required String? gender,
-    required String? image,
+    @JsonKey(name: 'user_name') required String? username,
+    @JsonKey(name: 'email') required String email,
+    @JsonKey(name: 'first_name') required String? firstName,
+    @JsonKey(name: 'last_name') required String? lastName,
+    @JsonKey(name: 'gender') required String? gender,
+    @JsonKey(name: 'image') required String? image,
     required String? accessToken,
     required String? newId,
   }) = _UserModel;

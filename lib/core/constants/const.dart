@@ -5,3 +5,8 @@ abstract class Consts {
   /// Shared preferences keys
   static const String sessionTokenKey = 'session_token';
 }
+
+abstract class TemporalConsts {
+  static const String email = "david.guerra.gt@gmail.com";
+  static const String password = "App1973.";
+}

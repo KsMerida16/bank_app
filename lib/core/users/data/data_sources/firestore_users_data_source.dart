@@ -10,7 +10,7 @@ class FirestoreUsersDataSource {
   final FirebaseFirestore _firestore;
 
   Future<UserModel> getUser(String userId) async {
-    final collectionRef = _firestore.collection(AppFirebaseTables.users);
+    final collectionRef = _firestore.collection(AppFirebaseCollections.users);
     final query = collectionRef.where(
       AppFirebaseKeys.usersEmailKey,
       isEqualTo: userId.toString(),
@@ -22,7 +22,7 @@ class FirestoreUsersDataSource {
 
   Future<String> saveUserRole(UserModel user) async {
     try {
-      final collectionRef = _firestore.collection(AppFirebaseTables.users);
+      final collectionRef = _firestore.collection(AppFirebaseCollections.users);
       final docRef = await collectionRef.add(user.toJson());
       return docRef.id;
     } catch (e) {

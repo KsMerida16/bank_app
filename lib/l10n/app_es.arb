@@ -70,10 +70,16 @@
   "accountNumber": "Número de Cuenta",
   "enterAccount": "Ingrese Número de Cuenta",
   "country": "País",
+  "refresh": "Actualizar",
   "swiftCode": "Código SWIFT",
-  "enterSwift": "Ingrese código SWIFT"
+  "enterSwift": "Ingrese código SWIFT",
+  "transferCta": "Transferencia",
+  "tryAgain": "Intentar de nuevo",
+  "noResults": "No se encontraron resultados",
+  "welcomeUserMale": "¡Hola, Sr. {name}!",
+  "welcomeUserFemale": "¡Hola, Sra. {name}!",
 
-  "United States": "Estados Unidos",
-  "Spain": "España",
-  "Canada": "Canadá"
+  "unitedStates": "Estados Unidos",
+  "spain": "España",
+  "canada": "Canadá"
 }

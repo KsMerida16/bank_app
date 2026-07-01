@@ -11,7 +11,7 @@ _AccountModel _$AccountModelFromJson(Map<String, dynamic> json) =>
       accountUserId: json['user_id'] as String,
       accountNumber: json['number'] as String,
       accountType: json['type'] as String,
-      accountCurrency: json['currency'] as num,
+      accountCurrency: json['currency'] as String,
       accountName: json['name'] as String,
       accountBalance: (json['balance'] as num).toDouble(),
     );

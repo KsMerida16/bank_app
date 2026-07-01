@@ -68,7 +68,9 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isMale ? t.welcomeUserMale : t.welcomeUserFemale,
+                    isMale
+                        ? t.welcomeUserMale(currentUser)
+                        : t.welcomeUserFemale(currentUser),
                     style: TextStyle(color: c.textSecondary, fontSize: 12),
                   ),
                   const SizedBox(height: 2),

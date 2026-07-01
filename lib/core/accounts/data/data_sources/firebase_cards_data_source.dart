@@ -12,7 +12,7 @@ class FirebaseCardsDataSource {
   Future<List<CardModel>> getCardsByUserId(String userId) async {
     try {
       final querySnapshot = await _firestore
-          .collection(AppFirebaseTables.cards)
+          .collection(AppFirebaseCollections.cards)
           .where(AppFirebaseKeys.cardsKey, isEqualTo: userId)
           .get();
       return querySnapshot.docs
@@ -26,7 +26,7 @@ class FirebaseCardsDataSource {
   Future<void> addCard(CardModel cardData) async {
     try {
       await _firestore
-          .collection(AppFirebaseTables.cards)
+          .collection(AppFirebaseCollections.cards)
           .add(cardData.toJson());
     } catch (e) {
       throw Exception('Error adding card: $e');

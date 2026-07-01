@@ -36,7 +36,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
     final currentUser = widget.userName?.trim().isNotEmpty == true
         ? widget.userName!
         : 'Usuario';
-    final isMale = widget.userGender?.toLowerCase() == 'male';
+    final isMale = widget.userGender?.toLowerCase() == 'm';
     final userImage = widget.userImage?.isNotEmpty == true
         ? widget.userImage
         : null;
@@ -68,7 +68,9 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isMale ? t.welcomeUserMale : t.welcomeUserFemale,
+                    isMale
+                        ? t.welcomeUserMale(currentUser)
+                        : t.welcomeUserFemale(currentUser),
                     style: TextStyle(color: c.textSecondary, fontSize: 12),
                   ),
                   const SizedBox(height: 2),

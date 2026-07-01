@@ -1,10 +1,16 @@
 // lib/presentation/screens/home_dashboard_page.dart
 import 'dart:ui' as ui show FontFeature;
 import 'package:bank_app/core/navigation/router.dart';
+import 'package:bank_app/core/accounts/data/models/card_model.dart';
+import 'package:bank_app/core/accounts/domain/entities/account.dart';
+import 'package:bank_app/features/dashboard/presentation/state/dashboard_state.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart';
+import 'package:bank_app/features/dashboard/domain/entities/movement.dart';
+import 'package:bank_app/features/dashboard/presentation/state/dashboard_notifier.dart';
 import 'package:bank_app/features/dashboard/presentation/state/sign_out_notifier.dart';
 import 'package:bank_app/widgets/bottom_nav.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,19 +36,66 @@ class HomeDashboardPage extends ConsumerStatefulWidget {
 
 class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userId = _resolveDashboardUserId();
+      if (userId == null || userId.isEmpty) return;
+      ref.read(dashboardNotifierProvider.notifier).loadDashboard(userId);
+    });
+  }
+
+  String? _resolveDashboardUserId() {
+    final firebaseUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    final email = firebaseUser?.email?.trim();
+    if (email != null && email.isNotEmpty) return email;
+
+    final fromWidget = widget.userName?.trim();
+    if (fromWidget != null && fromWidget.isNotEmpty) return fromWidget;
+
+    return null;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final dashboardState = ref.watch(dashboardNotifierProvider);
     final c = AppColorsScope.of(context);
     final t = AppLocalizations.of(context)!;
     final bottom = MediaQuery.of(context).padding.bottom;
-    // ignore: unused_local_variable
-    final bottomSafe = MediaQuery.of(context).padding.bottom;
-    final currentUser = widget.userName?.trim().isNotEmpty == true
+
+    final loadedData = dashboardState.maybeWhen(
+      loaded: (user, accounts, cards, movements) =>
+          (user: user, accounts: accounts, cards: cards, movements: movements),
+      orElse: () => null,
+    );
+
+    final currentUser = loadedData?.user.fullName.trim().isNotEmpty == true
+        ? loadedData!.user.fullName
+        : widget.userName?.trim().isNotEmpty == true
         ? widget.userName!
         : 'Usuario';
-    final isMale = widget.userGender?.toLowerCase() == 'male';
-    final userImage = widget.userImage?.isNotEmpty == true
+
+    final gender = loadedData?.user.gender ?? widget.userGender;
+    final isMale = (gender ?? '').toLowerCase() == 'male';
+    final userImage = loadedData?.user.image?.isNotEmpty == true
+        ? loadedData!.user.image
+        : widget.userImage?.isNotEmpty == true
         ? widget.userImage
         : null;
+
+    final isLoading = dashboardState.maybeWhen(
+      loading: () => true,
+      orElse: () => false,
+    );
+
+    final errorMessage = dashboardState.maybeWhen(
+      error: (message) => message,
+      orElse: () => null,
+    );
+
+    final movements = loadedData?.movements ?? <Movement>[];
+    final accounts = loadedData?.accounts ?? <Account>[];
+    final cards = loadedData?.cards ?? <CardModel>[];
 
     return Scaffold(
       backgroundColor: c.background,
@@ -70,7 +123,9 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    isMale ? t.welcomeUserMale : t.welcomeUserFemale,
+                    isMale
+                        ? t.welcomeUserMale(currentUser)
+                        : t.welcomeUserFemale(currentUser),
                     style: TextStyle(color: c.textSecondary, fontSize: 12),
                   ),
                   const SizedBox(height: 2),
@@ -153,167 +208,163 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
       ),
       body: SafeArea(
         bottom: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Tarjeta principal
-              _CreditCard(c: c, userName: currentUser),
-              //_Account(c: c),
-              //const CarruselEnfocado(),
-              const SizedBox(height: 20),
-
-              // Acciones rápidas
-              _QuickActionsRow(c: c),
-              const SizedBox(height: 24),
-
-              // Encabezado de sección
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      t.transactions,
-                      style: TextStyle(
-                        color: c.textPrimary,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
+        child: isLoading
+            ? Center(child: CircularProgressIndicator(color: c.primary))
+            : errorMessage != null
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        errorMessage,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: c.textSecondary),
                       ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Text(
-                      t.seeAll,
-                      //'See All',
-                      style: TextStyle(
-                        color: c.primary,
-                        fontWeight: FontWeight.w600,
+                      const SizedBox(height: 16),
+                      FilledButton(
+                        onPressed: () {
+                          final userId = _resolveDashboardUserId();
+                          if (userId == null || userId.isEmpty) return;
+                          ref
+                              .read(dashboardNotifierProvider.notifier)
+                              .loadDashboard(userId);
+                        },
+                        child: Text(t.tryAgain),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 12),
-
-              // Lista de transacciones (mock)
-
-              // Apple
-              _TransactionTile(
-                c: c,
-                leading: _CircleBrand(
-                  c: c,
-                  child: const Icon(CupertinoIcons.ant_circle, size: 18),
                 ),
-                title: 'Apple',
-                subtitle: t.entertainment,
-                amountText: '- \$ 5,99',
-                amountColor: c.textPrimary,
-              ),
-              _DividerLine(c: c),
+              )
+            : SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Tarjeta principal
+                    _CardsCarousel(
+                      c: c,
+                      userName: currentUser,
+                      accounts: accounts,
+                      cards: cards,
+                    ),
+                    const SizedBox(height: 20),
 
-              // Spotify
-              _TransactionTile(
-                c: c,
-                leading: _CircleBrand(
-                  c: c,
-                  child: const Icon(Icons.music_note_rounded, size: 18),
+                    // Acciones rápidas
+                    _QuickActionsRow(c: c),
+                    const SizedBox(height: 24),
+
+                    // Encabezado de sección
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            t.transactions,
+                            style: TextStyle(
+                              color: c.textPrimary,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text(
+                            t.seeAll,
+                            style: TextStyle(
+                              color: c.primary,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+
+                    if (movements.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Text(
+                          t.noResults,
+                          style: TextStyle(color: c.textSecondary),
+                        ),
+                      )
+                    else
+                      ...movements.map((movement) {
+                        final isNegative =
+                            movement.sign.trim().startsWith('-') ||
+                            movement.amount < 0;
+                        final amountValue = movement.amount
+                            .abs()
+                            .toStringAsFixed(2);
+                        final amountText = isNegative
+                            ? '- \$ $amountValue'
+                            : '\$ $amountValue';
+
+                        return Column(
+                          children: [
+                            _TransactionTile(
+                              c: c,
+                              leading: _CircleBrand(
+                                c: c,
+                                child: Icon(
+                                  _iconForCategory(movement.category),
+                                  size: 18,
+                                ),
+                              ),
+                              title: movement.description,
+                              subtitle: movement.category,
+                              amountText: amountText,
+                              amountColor: isNegative
+                                  ? c.textPrimary
+                                  : c.primary,
+                            ),
+                            _DividerLine(c: c),
+                          ],
+                        );
+                      }),
+
+                    SizedBox(height: kBottomNavigationBarHeight + 16 + bottom),
+                  ],
                 ),
-                title: 'Spotify',
-                subtitle: t.music,
-                amountText: '- \$ 12,99',
-                amountColor: c.textPrimary,
               ),
-              _DividerLine(c: c),
-
-              //Money transfer 300
-              _TransactionTile(
-                c: c,
-                leading: _CircleBrand(
-                  c: c,
-                  child: const Icon(Icons.sync_alt_rounded, size: 18),
-                ),
-                title: 'Money Transfer',
-                subtitle: t.transaction,
-                amountText: '\$300',
-                amountColor: c.primary, // positivo resaltado en primario
-              ),
-              _DividerLine(c: c),
-
-              //Money transfer 500
-              _TransactionTile(
-                c: c,
-                leading: _CircleBrand(
-                  c: c,
-                  child: const Icon(Icons.sync_alt_rounded, size: 18),
-                ),
-                title: 'Money Transfer',
-                subtitle: t.transaction,
-                amountText: '\$500',
-                amountColor: c.primary, // positivo resaltado en primario
-              ),
-              _DividerLine(c: c),
-
-              // Grocery
-              _TransactionTile(
-                c: c,
-                leading: _CircleBrand(
-                  c: c,
-                  child: const Icon(Icons.shopping_bag_outlined, size: 18),
-                ),
-                title: 'Walmart',
-                subtitle: t.grocery,
-                amountText: '- \$ 88',
-                amountColor: c.textPrimary,
-              ),
-              _DividerLine(c: c),
-
-              //Money transfer 200
-              _TransactionTile(
-                c: c,
-                leading: _CircleBrand(
-                  c: c,
-                  child: const Icon(Icons.sync_alt_rounded, size: 18),
-                ),
-                title: 'Money Transfer',
-                subtitle: t.transaction,
-                amountText: '\$200',
-                amountColor: c.primary, // positivo resaltado en primario
-              ),
-              _DividerLine(c: c),
-
-              // Apple
-              _TransactionTile(
-                c: c,
-                leading: _CircleBrand(
-                  c: c,
-                  child: const Icon(CupertinoIcons.ant_circle, size: 18),
-                ),
-                title: 'Apple',
-                subtitle: t.entertainment,
-                amountText: '- \$ 5,99',
-                amountColor: c.textPrimary,
-              ),
-              _DividerLine(c: c),
-
-              SizedBox(height: kBottomNavigationBarHeight + 16 + bottom),
-              //const SizedBox(height: 20), // espacio para el bottom bar
-            ],
-          ),
-        ),
       ),
 
       bottomNavigationBar: const BottomNav(currentIndex: 0),
     );
+  }
+
+  IconData _iconForCategory(String category) {
+    final normalized = category.toLowerCase();
+    if (normalized.contains('music')) return Icons.music_note_rounded;
+    if (normalized.contains('entertainment')) return CupertinoIcons.ant_circle;
+    if (normalized.contains('grocery')) return Icons.shopping_bag_outlined;
+    if (normalized.contains('transfer') || normalized.contains('transaction')) {
+      return Icons.sync_alt_rounded;
+    }
+    return Icons.receipt_long_outlined;
   }
 }
 
 // =============== Sección: widgets internos de la pantalla ===============
 
 class _CreditCard extends StatelessWidget {
-  const _CreditCard({required this.c, required this.userName});
+  const _CreditCard({
+    required this.c,
+    required this.userName,
+    required this.cardNumber,
+    required this.expiryDate,
+    required this.cvv,
+    required this.productLabel,
+  });
+
   final AppColors c;
   final String userName;
+  final String cardNumber;
+  final String expiryDate;
+  final String cvv;
+  final String productLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -371,7 +422,7 @@ class _CreditCard extends StatelessWidget {
                 const Spacer(),
                 // Número principal
                 Text(
-                  '4562  1122  4595  7852',
+                  _formattedCardNumber(cardNumber),
                   style: TextStyle(
                     color: c.onPrimary,
                     fontFeatures: const [ui.FontFeature.tabularFigures()],
@@ -397,12 +448,20 @@ class _CreditCard extends StatelessWidget {
                     const Spacer(),
                     _MiniField(
                       label: t.expiryDate, //'Expiry Date',
-                      value: '24/2000',
+                      value: expiryDate,
                       color: c.onPrimary,
                     ),
                     const SizedBox(width: 16),
-                    _MiniField(label: 'CVV', value: '6986', color: c.onPrimary),
+                    _MiniField(label: 'CVV', value: cvv, color: c.onPrimary),
                   ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  productLabel.toUpperCase(),
+                  style: TextStyle(
+                    color: c.onPrimary.withValues(alpha: 0.85),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -411,6 +470,342 @@ class _CreditCard extends StatelessWidget {
       ),
     );
   }
+
+  String _formattedCardNumber(String value) {
+    final digits = value.replaceAll(RegExp(r'\D'), '');
+    if (digits.length < 16) return value;
+    final chunks = <String>[];
+    for (var i = 0; i < digits.length; i += 4) {
+      chunks.add(digits.substring(i, i + 4));
+    }
+    return chunks.join('  ');
+  }
+}
+
+class _CardsCarousel extends StatefulWidget {
+  const _CardsCarousel({
+    required this.c,
+    required this.userName,
+    required this.accounts,
+    required this.cards,
+  });
+
+  final AppColors c;
+  final String userName;
+  final List<Account> accounts;
+  final List<CardModel> cards;
+
+  @override
+  State<_CardsCarousel> createState() => _CardsCarouselState();
+}
+
+class _CardsCarouselState extends State<_CardsCarousel> {
+  final PageController _controller = PageController(viewportFraction: 0.92);
+  int _currentIndex = 0;
+
+  List<_CarouselProduct> get _items {
+    final items = <_CarouselProduct>[];
+
+    for (final card in widget.cards) {
+      items.add(_CarouselProduct.card(card: card));
+    }
+
+    for (final account in widget.accounts) {
+      items.add(_CarouselProduct.account(account));
+    }
+
+    return items;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final items = _items;
+
+    if (items.isEmpty) {
+      return _CreditCard(
+        c: widget.c,
+        userName: widget.userName,
+        cardNumber: '0000 0000 0000 0000',
+        expiryDate: '--/--',
+        cvv: '---',
+        productLabel: 'Sin productos',
+      );
+    }
+
+    return Column(
+      children: [
+        SizedBox(
+          height: 210,
+          child: PageView.builder(
+            controller: _controller,
+            itemCount: items.length,
+            onPageChanged: (index) {
+              if (_currentIndex == index) return;
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            itemBuilder: (context, index) {
+              final item = items[index];
+              final isActive = index == _currentIndex;
+
+              return AnimatedScale(
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutCubic,
+                scale: isActive ? 1 : 0.94,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: item.when(
+                    card: (card) => _CreditCard(
+                      c: widget.c,
+                      userName: card.cardHolderName.isNotEmpty
+                          ? card.cardHolderName
+                          : widget.userName,
+                      cardNumber: card.cardNumber,
+                      expiryDate: card.expirationDate,
+                      cvv: card.cvv,
+                      productLabel: 'Tarjeta',
+                    ),
+                    account: (account) => _AccountSummaryCard(
+                      c: widget.c,
+                      userName: widget.userName,
+                      account: account,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(items.length, (index) {
+            final isActive = _currentIndex == index;
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
+              width: isActive ? 18 : 6,
+              height: 6,
+              decoration: BoxDecoration(
+                color: isActive
+                    ? widget.c.primary
+                    : widget.c.textMuted.withValues(alpha: 0.35),
+                borderRadius: BorderRadius.circular(999),
+              ),
+            );
+          }),
+        ),
+      ],
+    );
+  }
+}
+
+class _AccountSummaryCard extends StatelessWidget {
+  const _AccountSummaryCard({
+    required this.c,
+    required this.userName,
+    required this.account,
+  });
+
+  final AppColors c;
+  final String userName;
+  final Account account;
+
+  @override
+  Widget build(BuildContext context) {
+    final surface = _blend(c.surface, Colors.white.withValues(alpha: 0.02));
+    final gradient = LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        _blend(c.surface, c.primary.withValues(alpha: 0.38)),
+        _blend(c.primary, surface).withValues(alpha: 0.92),
+      ],
+    );
+
+    return Container(
+      height: 190,
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(18, 16, 18, 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.16),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    'Cuenta',
+                    style: TextStyle(
+                      color: c.onPrimary,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.account_balance_rounded,
+                  color: c.onPrimary.withValues(alpha: 0.92),
+                ),
+              ],
+            ),
+            const Spacer(),
+            Text(
+              account.accountType.toUpperCase(),
+              style: TextStyle(
+                color: c.onPrimary.withValues(alpha: 0.82),
+                fontSize: 11,
+                letterSpacing: 0.9,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              '\$ ${account.accountBalance.toStringAsFixed(2)}',
+              style: TextStyle(
+                color: c.onPrimary,
+                fontSize: 26,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              _formatAccountNumber(account.accountNumber),
+              style: TextStyle(
+                color: c.onPrimary,
+                fontFeatures: const [ui.FontFeature.tabularFigures()],
+                fontSize: 17,
+                letterSpacing: 0.6,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        userName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: c.onPrimary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 1),
+                      Text(
+                        'Titular',
+                        style: TextStyle(
+                          color: c.onPrimary.withValues(alpha: 0.78),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Producto',
+                        style: TextStyle(
+                          color: c.onPrimary.withValues(alpha: 0.78),
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 1),
+                      Text(
+                        account.accountType,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                          color: c.onPrimary,
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _formatAccountNumber(String value) {
+    final digits = value.replaceAll(RegExp(r'\D'), '');
+    if (digits.length < 10) return value;
+    final visible = digits.substring(digits.length - 10);
+    return '${visible.substring(0, 4)} ${visible.substring(4)}';
+  }
+}
+
+sealed class _CarouselProduct {
+  const _CarouselProduct();
+
+  const factory _CarouselProduct.card({required CardModel card}) =
+      _CarouselCardProduct;
+
+  const factory _CarouselProduct.account(Account account) =
+      _CarouselAccountProduct;
+
+  T when<T>({
+    required T Function(CardModel card) card,
+    required T Function(Account account) account,
+  }) {
+    final product = this;
+    if (product is _CarouselCardProduct) {
+      return card(product.card);
+    }
+    if (product is _CarouselAccountProduct) {
+      return account(product.account);
+    }
+    throw StateError('Unknown carousel product type');
+  }
+}
+
+class _CarouselCardProduct extends _CarouselProduct {
+  const _CarouselCardProduct({required this.card});
+
+  final CardModel card;
+}
+
+class _CarouselAccountProduct extends _CarouselProduct {
+  const _CarouselAccountProduct(this.account);
+
+  final Account account;
 }
 
 // ignore: unused_element
@@ -643,12 +1038,12 @@ class _Dot extends StatelessWidget {
   }
 }
 
-class _QuickActionsRow extends StatelessWidget {
+class _QuickActionsRow extends ConsumerWidget {
   const _QuickActionsRow({required this.c});
   final AppColors c;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context)!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -663,7 +1058,12 @@ class _QuickActionsRow extends StatelessWidget {
           icon: Icons.account_balance_wallet_outlined,
           label: t.loan, //'Loan',
         ),
-        _QuickAction(icon: Icons.add, label: t.topup),
+        _QuickAction(
+          icon: Icons.refresh_outlined,
+          label: t.refresh, //'Refresh',
+          onTap: () =>
+              ref.read(dashboardNotifierProvider.notifier).refreshDashboard(),
+        ),
       ],
     );
   }

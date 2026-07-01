@@ -45,15 +45,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errors_invalidEmail => 'Enter a valid email address';
 
   @override
-  String welcomeUser(Object userName) {
-    return 'Welcome, $userName!';
-  }
-
-  @override
-  String get welcomeUserMale => 'Welcome back';
-
-  @override
-  String get welcomeUserFemale => 'Welcome back';
+  String get welcomeUser => 'Hello!';
 
   @override
   String get transactions => 'Transactions';
@@ -215,8 +207,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String get country => 'Country';
 
   @override
+  String get refresh => 'Refresh';
+
+  @override
   String get swiftCode => 'SWIFT Code';
 
   @override
   String get enterSwift => 'Enter SWIFT code';
+
+  @override
+  String get transferCta => 'Transfer';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
+  String get noResults => 'No results found';
+
+  @override
+  String welcomeUserMale(Object name) {
+    return 'Hello, Mr. $name!';
+  }
+
+  @override
+  String welcomeUserFemale(Object name) {
+    return 'Hello, Ms. $name!';
+  }
+
+  @override
+  String get unitedStates => 'United States';
+
+  @override
+  String get spain => 'Spain';
+
+  @override
+  String get canada => 'Canada';
 }

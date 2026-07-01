@@ -12,7 +12,7 @@ class FirebaseAccountsDataSource {
   Future<List<AccountModel>> getAccountsByUserId(String userId) async {
     try {
       final querySnapshot = await _firestore
-          .collection(AppFirebaseTables.accounts)
+          .collection(AppFirebaseCollections.accounts)
           .where(AppFirebaseKeys.accountsKey, isEqualTo: userId)
           .get();
       return querySnapshot.docs
@@ -26,7 +26,7 @@ class FirebaseAccountsDataSource {
   Future<void> addAccount(AccountModel accountData) async {
     try {
       await _firestore
-          .collection(AppFirebaseTables.accounts)
+          .collection(AppFirebaseCollections.accounts)
           .add(accountData.toJson());
     } catch (e) {
       throw Exception('Error adding account: $e');

@@ -12,7 +12,7 @@ class FirebaseMovementsDataSource {
   Future<List<MovementModel>> getMovements(String accountNumber) async {
     try {
       final querySnapshot = await _firestore
-          .collection(AppFirebaseTables.movements)
+          .collection(AppFirebaseCollections.movements)
           .where(AppFirebaseKeys.movementsKey, isNotEqualTo: accountNumber)
           .get();
       return querySnapshot.docs

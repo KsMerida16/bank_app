@@ -12,7 +12,7 @@ class FirebaseCatalogsDataSource {
   Future<List<CatalogModel>> getCatalogByTable(String table) async {
     try {
       final querySnapshot = await _firestore
-          .collection(AppFirebaseTables.catalogs)
+          .collection(AppFirebaseCollections.catalogs)
           .where(AppFirebaseKeys.catalogsKey, isEqualTo: table)
           .get();
       return querySnapshot.docs

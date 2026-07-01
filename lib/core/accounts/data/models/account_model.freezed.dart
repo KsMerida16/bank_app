@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AccountModel {
 
-@JsonKey(name: 'user_id') String get accountUserId;@JsonKey(name: 'number') String get accountNumber;@JsonKey(name: 'type') String get accountType;@JsonKey(name: 'currency') num get accountCurrency;@JsonKey(name: 'name') String get accountName;@JsonKey(name: 'balance') double get accountBalance;
+@JsonKey(name: 'user_id') String get accountUserId;@JsonKey(name: 'number') String get accountNumber;@JsonKey(name: 'type') String get accountType;@JsonKey(name: 'currency') String get accountCurrency;@JsonKey(name: 'name') String get accountName;@JsonKey(name: 'balance') double get accountBalance;
 /// Create a copy of AccountModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $AccountModelCopyWith<$Res>  {
   factory $AccountModelCopyWith(AccountModel value, $Res Function(AccountModel) _then) = _$AccountModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'user_id') String accountUserId,@JsonKey(name: 'number') String accountNumber,@JsonKey(name: 'type') String accountType,@JsonKey(name: 'currency') num accountCurrency,@JsonKey(name: 'name') String accountName,@JsonKey(name: 'balance') double accountBalance
+@JsonKey(name: 'user_id') String accountUserId,@JsonKey(name: 'number') String accountNumber,@JsonKey(name: 'type') String accountType,@JsonKey(name: 'currency') String accountCurrency,@JsonKey(name: 'name') String accountName,@JsonKey(name: 'balance') double accountBalance
 });
 
 
@@ -71,7 +71,7 @@ accountUserId: null == accountUserId ? _self.accountUserId : accountUserId // ig
 as String,accountNumber: null == accountNumber ? _self.accountNumber : accountNumber // ignore: cast_nullable_to_non_nullable
 as String,accountType: null == accountType ? _self.accountType : accountType // ignore: cast_nullable_to_non_nullable
 as String,accountCurrency: null == accountCurrency ? _self.accountCurrency : accountCurrency // ignore: cast_nullable_to_non_nullable
-as num,accountName: null == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
+as String,accountName: null == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
 as String,accountBalance: null == accountBalance ? _self.accountBalance : accountBalance // ignore: cast_nullable_to_non_nullable
 as double,
   ));
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String accountUserId, @JsonKey(name: 'number')  String accountNumber, @JsonKey(name: 'type')  String accountType, @JsonKey(name: 'currency')  num accountCurrency, @JsonKey(name: 'name')  String accountName, @JsonKey(name: 'balance')  double accountBalance)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String accountUserId, @JsonKey(name: 'number')  String accountNumber, @JsonKey(name: 'type')  String accountType, @JsonKey(name: 'currency')  String accountCurrency, @JsonKey(name: 'name')  String accountName, @JsonKey(name: 'balance')  double accountBalance)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AccountModel() when $default != null:
 return $default(_that.accountUserId,_that.accountNumber,_that.accountType,_that.accountCurrency,_that.accountName,_that.accountBalance);case _:
@@ -179,7 +179,7 @@ return $default(_that.accountUserId,_that.accountNumber,_that.accountType,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String accountUserId, @JsonKey(name: 'number')  String accountNumber, @JsonKey(name: 'type')  String accountType, @JsonKey(name: 'currency')  num accountCurrency, @JsonKey(name: 'name')  String accountName, @JsonKey(name: 'balance')  double accountBalance)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'user_id')  String accountUserId, @JsonKey(name: 'number')  String accountNumber, @JsonKey(name: 'type')  String accountType, @JsonKey(name: 'currency')  String accountCurrency, @JsonKey(name: 'name')  String accountName, @JsonKey(name: 'balance')  double accountBalance)  $default,) {final _that = this;
 switch (_that) {
 case _AccountModel():
 return $default(_that.accountUserId,_that.accountNumber,_that.accountType,_that.accountCurrency,_that.accountName,_that.accountBalance);case _:
@@ -199,7 +199,7 @@ return $default(_that.accountUserId,_that.accountNumber,_that.accountType,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String accountUserId, @JsonKey(name: 'number')  String accountNumber, @JsonKey(name: 'type')  String accountType, @JsonKey(name: 'currency')  num accountCurrency, @JsonKey(name: 'name')  String accountName, @JsonKey(name: 'balance')  double accountBalance)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'user_id')  String accountUserId, @JsonKey(name: 'number')  String accountNumber, @JsonKey(name: 'type')  String accountType, @JsonKey(name: 'currency')  String accountCurrency, @JsonKey(name: 'name')  String accountName, @JsonKey(name: 'balance')  double accountBalance)?  $default,) {final _that = this;
 switch (_that) {
 case _AccountModel() when $default != null:
 return $default(_that.accountUserId,_that.accountNumber,_that.accountType,_that.accountCurrency,_that.accountName,_that.accountBalance);case _:
@@ -220,7 +220,7 @@ class _AccountModel implements AccountModel {
 @override@JsonKey(name: 'user_id') final  String accountUserId;
 @override@JsonKey(name: 'number') final  String accountNumber;
 @override@JsonKey(name: 'type') final  String accountType;
-@override@JsonKey(name: 'currency') final  num accountCurrency;
+@override@JsonKey(name: 'currency') final  String accountCurrency;
 @override@JsonKey(name: 'name') final  String accountName;
 @override@JsonKey(name: 'balance') final  double accountBalance;
 
@@ -257,7 +257,7 @@ abstract mixin class _$AccountModelCopyWith<$Res> implements $AccountModelCopyWi
   factory _$AccountModelCopyWith(_AccountModel value, $Res Function(_AccountModel) _then) = __$AccountModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'user_id') String accountUserId,@JsonKey(name: 'number') String accountNumber,@JsonKey(name: 'type') String accountType,@JsonKey(name: 'currency') num accountCurrency,@JsonKey(name: 'name') String accountName,@JsonKey(name: 'balance') double accountBalance
+@JsonKey(name: 'user_id') String accountUserId,@JsonKey(name: 'number') String accountNumber,@JsonKey(name: 'type') String accountType,@JsonKey(name: 'currency') String accountCurrency,@JsonKey(name: 'name') String accountName,@JsonKey(name: 'balance') double accountBalance
 });
 
 
@@ -280,7 +280,7 @@ accountUserId: null == accountUserId ? _self.accountUserId : accountUserId // ig
 as String,accountNumber: null == accountNumber ? _self.accountNumber : accountNumber // ignore: cast_nullable_to_non_nullable
 as String,accountType: null == accountType ? _self.accountType : accountType // ignore: cast_nullable_to_non_nullable
 as String,accountCurrency: null == accountCurrency ? _self.accountCurrency : accountCurrency // ignore: cast_nullable_to_non_nullable
-as num,accountName: null == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
+as String,accountName: null == accountName ? _self.accountName : accountName // ignore: cast_nullable_to_non_nullable
 as String,accountBalance: null == accountBalance ? _self.accountBalance : accountBalance // ignore: cast_nullable_to_non_nullable
 as double,
   ));

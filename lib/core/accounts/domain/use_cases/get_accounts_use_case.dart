@@ -3,7 +3,7 @@ import 'package:bank_app/core/accounts/domain/entities/account.dart';
 import 'package:bank_app/core/accounts/domain/repositories/accounts_repository.dart';
 
 class GetAccountsUseCase {
-  AccountsRepository _accountsRepository;
+  final AccountsRepository _accountsRepository;
 
   // ignore: sort_constructors_first
   GetAccountsUseCase({AccountsRepository? accountsRepository})

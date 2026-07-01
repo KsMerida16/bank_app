@@ -70,6 +70,15 @@
   "accountNumber": "Account Number",
   "enterAccount": "Enter Account Number",
   "country": "Country",
+  "refresh": "Refresh",
   "swiftCode": "SWIFT Code",
-  "enterSwift": "Enter SWIFT code"
-}
+  "enterSwift": "Enter SWIFT code",
+  "transferCta": "Transfer",
+  "tryAgain": "Try Again",
+  "noResults": "No results found",
+  "welcomeUserMale": "Hello, Mr. {name}!",
+  "welcomeUserFemale": "Hello, Ms. {name}!",
+  "unitedStates": "United States",
+  "spain": "Spain",
+  "canada": "Canada"
+} 

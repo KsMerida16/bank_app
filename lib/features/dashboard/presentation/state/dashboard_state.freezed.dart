@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( User user,  List<Account> accounts,  List<Movement> movements)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.user,_that.accounts,_that.movements);case _Error() when error != null:
+return loaded(_that.user,_that.accounts,_that.cards,_that.movements);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( User user,  List<Account> accounts,  List<Movement> movements)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements)  loaded,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Loaded():
-return loaded(_that.user,_that.accounts,_that.movements);case _Error():
+return loaded(_that.user,_that.accounts,_that.cards,_that.movements);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( User user,  List<Account> accounts,  List<Movement> movements)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.user,_that.accounts,_that.movements);case _Error() when error != null:
+return loaded(_that.user,_that.accounts,_that.cards,_that.movements);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -257,7 +257,7 @@ String toString() {
 
 
 class _Loaded implements DashboardState {
-   _Loaded({required this.user, required final  List<Account> accounts, required final  List<Movement> movements}): _accounts = accounts,_movements = movements;
+   _Loaded({required this.user, required final  List<Account> accounts, required final  List<CardModel> cards, required final  List<Movement> movements}): _accounts = accounts,_cards = cards,_movements = movements;
   
 
  final  User user;
@@ -266,6 +266,13 @@ class _Loaded implements DashboardState {
   if (_accounts is EqualUnmodifiableListView) return _accounts;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_accounts);
+}
+
+ final  List<CardModel> _cards;
+ List<CardModel> get cards {
+  if (_cards is EqualUnmodifiableListView) return _cards;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_cards);
 }
 
  final  List<Movement> _movements;
@@ -286,16 +293,16 @@ _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._accounts, _accounts)&&const DeepCollectionEquality().equals(other._movements, _movements));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._accounts, _accounts)&&const DeepCollectionEquality().equals(other._cards, _cards)&&const DeepCollectionEquality().equals(other._movements, _movements));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,const DeepCollectionEquality().hash(_accounts),const DeepCollectionEquality().hash(_movements));
+int get hashCode => Object.hash(runtimeType,user,const DeepCollectionEquality().hash(_accounts),const DeepCollectionEquality().hash(_cards),const DeepCollectionEquality().hash(_movements));
 
 @override
 String toString() {
-  return 'DashboardState.loaded(user: $user, accounts: $accounts, movements: $movements)';
+  return 'DashboardState.loaded(user: $user, accounts: $accounts, cards: $cards, movements: $movements)';
 }
 
 
@@ -306,7 +313,7 @@ abstract mixin class _$LoadedCopyWith<$Res> implements $DashboardStateCopyWith<$
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
- User user, List<Account> accounts, List<Movement> movements
+ User user, List<Account> accounts, List<CardModel> cards, List<Movement> movements
 });
 
 
@@ -323,11 +330,12 @@ class __$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of DashboardState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? user = null,Object? accounts = null,Object? movements = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? user = null,Object? accounts = null,Object? cards = null,Object? movements = null,}) {
   return _then(_Loaded(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,accounts: null == accounts ? _self._accounts : accounts // ignore: cast_nullable_to_non_nullable
-as List<Account>,movements: null == movements ? _self._movements : movements // ignore: cast_nullable_to_non_nullable
+as List<Account>,cards: null == cards ? _self._cards : cards // ignore: cast_nullable_to_non_nullable
+as List<CardModel>,movements: null == movements ? _self._movements : movements // ignore: cast_nullable_to_non_nullable
 as List<Movement>,
   ));
 }

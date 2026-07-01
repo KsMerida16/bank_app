@@ -9,11 +9,11 @@ class FirebaseMovementsDataSource {
   FirebaseMovementsDataSource({FirebaseFirestore? firestore})
     : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Future<List<MovementModel>> getMovements(String accountNumber) async {
+  Future<List<MovementModel>> getMovements(String userId) async {
     try {
       final querySnapshot = await _firestore
           .collection(AppFirebaseCollections.movements)
-          .where(AppFirebaseKeys.movementsKey, isNotEqualTo: accountNumber)
+          .where(AppFirebaseKeys.movementsKey, isEqualTo: userId)
           .get();
       return querySnapshot.docs
           .map((doc) => MovementModel.fromJson(doc.data()))

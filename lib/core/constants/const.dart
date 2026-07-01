@@ -7,6 +7,7 @@ abstract class Consts {
 }
 
 abstract class TemporalConsts {
-  static const String email = "david.guerra.gt@gmail.com";
-  static const String password = "App1973.";
+  static const String email =
+      ""; //"ksmerida16@gmail.com"; //"david.guerra.gt@gmail.com";
+  static const String password = ""; //"Ksm123."; //"App1973.";
 }

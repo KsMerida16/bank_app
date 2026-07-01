@@ -766,8 +766,8 @@ class _AccountSummaryCard extends StatelessWidget {
 
   String _formatAccountNumber(String value) {
     final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length < 8) return value;
-    final visible = digits.substring(digits.length - 8);
+    if (digits.length < 10) return value;
+    final visible = digits.substring(digits.length - 10);
     return '${visible.substring(0, 4)} ${visible.substring(4)}';
   }
 }

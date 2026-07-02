@@ -1,3 +1,4 @@
+import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/features/settings/domain/constants/language_catalog.dart';
 import 'package:bank_app/features/settings/domain/entities/language_entity.dart';
 import 'package:bank_app/features/settings/presentation/state/language_provider.dart';
@@ -35,13 +36,13 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
   @override
   Widget build(BuildContext context) {
     final colors = AppColorsScope.of(context);
-
+    final t = AppLocalizations.of(context)!;
     final state = ref.watch(languageNotifierProvider);
 
     return Scaffold(
       backgroundColor: colors.background,
 
-      appBar: const CustomAppBar(title: "Language"),
+      appBar: CustomAppBar(title: t.language),
 
       body: Column(
         children: [
@@ -54,9 +55,8 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
               onChanged: _filterLanguages,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: "Search language",
                 prefixIcon: const Icon(Icons.search),
-
+                hintText: t.searchLanguage,
                 filled: true,
                 fillColor: const Color(0xFF1A1F38),
 
@@ -79,9 +79,10 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
 
                 return LanguageTile(
                   language: language,
-
+                  displayName: language.code == 'es'
+                      ? t.spanish
+                      : t.english,
                   isSelected: state.locale.languageCode == language.code,
-
                   onTap: () async {
                     await ref
                         .read(languageNotifierProvider.notifier)

@@ -15,8 +15,7 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   gender: json['gender'] as String,
   image: json['image'] as String,
   accessToken: json['accessToken'] as String,
-  newId: '', //json['newId'] as String 
-  
+  newId: json['newId'] as String,
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>

@@ -1,6 +1,7 @@
 import 'package:bank_app/core/environment/env.dart';
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/core/utils/local_storage.dart';
+import 'package:bank_app/features/settings/presentation/state/language_provider.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/app_theme.dart';
 import 'package:bank_app/theme/colors_scope.dart';
@@ -25,6 +26,7 @@ class MyApp extends ConsumerWidget {
     final light = LightColors();
     final dark = DarkColors();
     final router = ref.watch(goRouterProvider);
+    final language = ref.watch(languageNotifierProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -41,8 +43,8 @@ class MyApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
+      locale: language.locale,
       supportedLocales: const [Locale('en'), Locale('es')],
-      locale: const Locale('es'),
     );
   }
 }

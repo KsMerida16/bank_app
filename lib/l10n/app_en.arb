@@ -18,6 +18,9 @@
   "transactions": "Transactions",
   "seeAll": "See All",
   "sent": "Sent",
+  "send": "Send",
+  "deposit": "Deposit",
+  "monetary": "Monetary",
   "receive": "Receive",
   "loan": "Loan",
   "topup": "Topup",
@@ -49,6 +52,7 @@
   "languageSettings": "Language Settings",
   "profilePage": "Profile Page",
   "contactPage": "Contact Page",
+  "searchLanguage": "Search language",
 
   "general": "General",
   "english": "English",

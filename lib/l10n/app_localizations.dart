@@ -191,6 +191,24 @@ abstract class AppLocalizations {
   /// **'Sent'**
   String get sent;
 
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @deposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get deposit;
+
+  /// No description provided for @monetary.
+  ///
+  /// In en, this message translates to:
+  /// **'Monetary'**
+  String get monetary;
+
   /// No description provided for @receive.
   ///
   /// In en, this message translates to:
@@ -376,6 +394,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Contact Page'**
   String get contactPage;
+
+  /// No description provided for @searchLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Search language'**
+  String get searchLanguage;
 
   /// No description provided for @general.
   ///

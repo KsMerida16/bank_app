@@ -4,6 +4,7 @@ import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart'
 import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
 import 'package:bank_app/features/dashboard/presentation/views/dashboard_view.dart';
 import 'package:bank_app/features/history/presentation/views/history_page.dart';
+import 'package:bank_app/features/settings/presentation/views/language_view.dart';
 import 'package:bank_app/features/settings/presentation/views/settings_view.dart';
 import 'package:bank_app/features/transfers/presentation/views/transfer_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,13 +16,19 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: Routes.startLocation,
     redirect: (context, state) {
-      if (isLoggedIn) {
-        return Routes.dashboardLocation;
-      } else if (!isLoggedIn) {
+      final loggingInOrStarting =
+          state.matchedLocation == Routes.signinLocation ||
+          state.matchedLocation == Routes.startLocation;
+
+      if (!isLoggedIn && !loggingInOrStarting) {
         return Routes.signinLocation;
       }
 
-      return null;
+      if (isLoggedIn && loggingInOrStarting) {
+        return Routes.dashboardLocation;
+      }
+
+      return null; // deja pasar la navegación normalmente
     },
     routes: [
       GoRoute(path: '/', redirect: (context, state) => Routes.signinLocation),

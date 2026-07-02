@@ -57,6 +57,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sent => 'Sent';
 
   @override
+  String get send => 'Send';
+
+  @override
+  String get deposit => 'Deposit';
+
+  @override
+  String get monetary => 'Monetary';
+
+  @override
   String get receive => 'Receive';
 
   @override
@@ -148,6 +157,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contactPage => 'Contact Page';
+
+  @override
+  String get searchLanguage => 'Search language';
 
   @override
   String get general => 'General';

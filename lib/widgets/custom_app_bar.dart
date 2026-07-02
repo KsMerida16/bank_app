@@ -26,7 +26,13 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               tooltip: t.back,
-              onPressed: () => context.pop(),
+              onPressed: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.goNamed(Routes.dashboard);
+                }
+              },
             )
           : null,
       title: Text(title, style: const TextStyle(color: Colors.white)),

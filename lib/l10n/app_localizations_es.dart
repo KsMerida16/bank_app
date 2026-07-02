@@ -45,15 +45,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get errors_invalidEmail => 'Ingresa un correo válido';
 
   @override
-  String welcomeUser(Object userName) {
-    return '¡Bienvenido, $userName!';
-  }
-
-  @override
-  String get welcomeUserMale => '¡Bienvenido de nuevo';
-
-  @override
-  String get welcomeUserFemale => '¡Bienvenida de nuevo';
+  String get welcomeUser => '¡Hola!';
 
   @override
   String get transactions => 'Transacciones';
@@ -62,7 +54,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get seeAll => 'Ver todas';
 
   @override
-  String get sent => 'Enviar';
+  String get sent => 'Sent';
 
   @override
   String get receive => 'Recibir';
@@ -83,7 +75,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get statistics => 'Estadísticas';
 
   @override
-  String get settings => 'Configuraciones';
+  String get settings => 'Configuración';
 
   @override
   String get entertainment => 'Entretenimiento';
@@ -182,7 +174,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get originAccount => 'Cuenta Origen';
 
   @override
-  String get checkingAccount => 'Cuenta de Cheques';
+  String get checkingAccount => 'Cuenta Monetaria';
 
   @override
   String get savingsAccount => 'Cuenta de Ahorros';
@@ -215,8 +207,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get country => 'País';
 
   @override
+  String get refresh => 'Actualizar';
+
+  @override
   String get swiftCode => 'Código SWIFT';
 
   @override
   String get enterSwift => 'Ingrese código SWIFT';
+
+  @override
+  String get transferCta => 'Transferencia';
+
+  @override
+  String get tryAgain => 'Intentar de nuevo';
+
+  @override
+  String get noResults => 'No se encontraron resultados';
+
+  @override
+  String welcomeUserMale(Object name) {
+    return '¡Hola, Sr. $name!';
+  }
+
+  @override
+  String welcomeUserFemale(Object name) {
+    return '¡Hola, Sra. $name!';
+  }
+
+  @override
+  String get unitedStates => 'Estados Unidos';
+
+  @override
+  String get spain => 'España';
+
+  @override
+  String get canada => 'Canadá';
 }

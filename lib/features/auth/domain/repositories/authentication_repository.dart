@@ -1,4 +1,4 @@
-import 'package:bank_app/features/auth/domain/entities/user.dart';
+import 'package:bank_app/core/users/domain/entities/user.dart';
 
 abstract class AuthenticationRepository {
   Future<void> signInWithGoogle();
@@ -8,6 +8,6 @@ abstract class AuthenticationRepository {
   Future<bool> logOut();
   Future<bool> registerWithEmailAndPassword(String email, String password);
   Future<String> getAccessToken();
-  Future<User> signIUpWithEmailAndPassword(String email, String password);
+  Future<User> signInWithEmailAndPassword(String email, String password);
   Future<void> saveSession(String token);
 }

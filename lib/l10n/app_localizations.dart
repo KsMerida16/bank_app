@@ -170,20 +170,8 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeUser.
   ///
   /// In en, this message translates to:
-  /// **'Welcome, {userName}!'**
-  String welcomeUser(Object userName);
-
-  /// No description provided for @welcomeUserMale.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome back'**
-  String get welcomeUserMale;
-
-  /// No description provided for @welcomeUserFemale.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome back'**
-  String get welcomeUserFemale;
+  /// **'Hello!'**
+  String get welcomeUser;
 
   /// No description provided for @transactions.
   ///
@@ -503,6 +491,12 @@ abstract class AppLocalizations {
   /// **'Country'**
   String get country;
 
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
   /// No description provided for @swiftCode.
   ///
   /// In en, this message translates to:
@@ -514,6 +508,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter SWIFT code'**
   String get enterSwift;
+
+  /// No description provided for @transferCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get transferCta;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
+  /// No description provided for @noResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noResults;
+
+  /// No description provided for @welcomeUserMale.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, Mr. {name}!'**
+  String welcomeUserMale(Object name);
+
+  /// No description provided for @welcomeUserFemale.
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, Ms. {name}!'**
+  String welcomeUserFemale(Object name);
+
+  /// No description provided for @unitedStates.
+  ///
+  /// In en, this message translates to:
+  /// **'United States'**
+  String get unitedStates;
+
+  /// No description provided for @spain.
+  ///
+  /// In en, this message translates to:
+  /// **'Spain'**
+  String get spain;
+
+  /// No description provided for @canada.
+  ///
+  /// In en, this message translates to:
+  /// **'Canada'**
+  String get canada;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

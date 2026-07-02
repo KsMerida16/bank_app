@@ -15,22 +15,16 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: Routes.startLocation,
     redirect: (context, state) {
-      final isAuthRoute =
-          state.uri.path == Routes.startLocation ||
-          state.uri.path == Routes.signinLocation;
-
-      if (!isLoggedIn && !isAuthRoute) {
-        return Routes.startLocation;
-      }
-
-      if (isLoggedIn && isAuthRoute) {
+      if (isLoggedIn) {
         return Routes.dashboardLocation;
+      } else if (!isLoggedIn) {
+        return Routes.signinLocation;
       }
 
       return null;
     },
     routes: [
-      GoRoute(path: '/', redirect: (context, state) => Routes.startLocation),
+      GoRoute(path: '/', redirect: (context, state) => Routes.signinLocation),
       GoRoute(
         name: Routes.start,
         path: Routes.startLocation,

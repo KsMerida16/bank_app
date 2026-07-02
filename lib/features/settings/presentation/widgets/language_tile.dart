@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class LanguageTile extends StatelessWidget {
   final LanguageEntity language;
+  final String displayName;
   final bool isSelected;
   final VoidCallback onTap;
 
   const LanguageTile({
     super.key,
     required this.language,
+    required this.displayName,
     required this.isSelected,
     required this.onTap,
   });
@@ -16,7 +18,7 @@ class LanguageTile extends StatelessWidget {
   String get flag {
     switch (language.code) {
       case 'es':
-        return '🇪🇸';
+        return '🇬🇹';
       case 'en':
         return '🇺🇸';
       default:
@@ -51,7 +53,7 @@ class LanguageTile extends StatelessWidget {
 
               Expanded(
                 child: Text(
-                  language.name,
+                  displayName,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17,

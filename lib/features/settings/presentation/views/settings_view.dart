@@ -6,6 +6,7 @@ import 'package:bank_app/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:bank_app/features/settings/presentation/state/language_provider.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -59,6 +60,12 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     final c = AppColorsScope.of(context);
     final t = AppLocalizations.of(context)!;
     final bg = _blend(c.surface, Colors.white.withValues(alpha: 0.03));
+    final languageState = ref.watch(
+      languageNotifierProvider,
+    ); 
+    final currentLanguageLabel = languageState.locale.languageCode == 'es'
+        ? t.spanish
+        : t.english;
 
     return Scaffold(
       backgroundColor: c.background,
@@ -78,7 +85,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                 settingsItem(
                   context,
                   t.language,
-                  trailing: t.english,
+                  trailing: currentLanguageLabel,
                   routeName: Routes.language,
                 ),
 
@@ -148,19 +155,6 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
         ],
       ),
       bottomNavigationBar: const BottomNav(currentIndex: 3),
-    );
-  }
-}
-
-class LanguagePage extends StatelessWidget {
-  const LanguagePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(title: Text(t.language)),
-      body: Center(child: Text(t.languageSettings)),
     );
   }
 }

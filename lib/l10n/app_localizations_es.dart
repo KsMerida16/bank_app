@@ -54,7 +54,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get seeAll => 'Ver todas';
 
   @override
-  String get sent => 'Sent';
+  String get sent => 'Enviar';
+
+  @override
+  String get send => 'Enviar';
+
+  @override
+  String get deposit => 'Deposito';
+
+  @override
+  String get monetary => 'Monetaria';
 
   @override
   String get receive => 'Recibir';
@@ -138,16 +147,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get biometricDisabled => 'Biometría Deshabilitada';
 
   @override
-  String get language => 'Lenguaje';
+  String get language => 'Idioma';
 
   @override
-  String get languageSettings => 'Configuración de Lenguaje';
+  String get languageSettings => 'Configuración de Idioma';
 
   @override
   String get profilePage => 'Página de Perfil';
 
   @override
   String get contactPage => 'Página de contacto';
+
+  @override
+  String get searchLanguage => 'Buscar idioma';
 
   @override
   String get general => 'General';

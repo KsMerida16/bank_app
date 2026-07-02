@@ -21,7 +21,7 @@ dependencies:
   riverpod: ^3.2.1
   get_it: ^9.2.1 
   json_annotation: ^4.11.0
-  firebase_core: ^4.10.0
+  firebase_core: ^4.11.0
   firebase_auth: ^6.5.2
   cloud_firestore: ^6.5.0
 
@@ -45,3 +45,7 @@ flutter:
   - assets/logo_dark.png
   - env_dev.json
   - env_prod.json
+
+scripts:
+  build: dart run build_runner build --delete-conflicting-outputs
+  watch: dart run build_runner watch --delete-conflicting-outputs

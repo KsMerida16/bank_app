@@ -2,6 +2,7 @@ import 'package:bank_app/core/environment/env.dart';
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/core/utils/local_storage.dart';
 import 'package:bank_app/features/settings/presentation/state/language_provider.dart';
+import 'package:bank_app/firebase_options.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/app_theme.dart';
 import 'package:bank_app/theme/colors_scope.dart';
@@ -10,9 +11,11 @@ import 'package:bank_app/theme/light_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void runProject() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Env.initialize();
   await LocalStorage().init();
   runApp(const ProviderScope(child: MyApp()));

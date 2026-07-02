@@ -59,11 +59,7 @@
   "international": "Internacional",
 
   "originAccount": "Cuenta Origen",
-<<<<<<< HEAD
-  "checkingAccount": "Cuenta de Cheques",
-=======
   "checkingAccount": "Cuenta Monetaria",
->>>>>>> 84c9fad (Orden de archivos y bottom nav general)
   "savingsAccount": "Cuenta de Ahorros",
   "destContact": "Seleccionar Contacto",
   "amount": "Monto",
@@ -74,13 +70,16 @@
   "accountNumber": "Número de Cuenta",
   "enterAccount": "Ingrese Número de Cuenta",
   "country": "País",
+  "refresh": "Actualizar",
   "swiftCode": "Código SWIFT",
-  "enterSwift": "Ingrese código SWIFT"
-<<<<<<< HEAD
-=======
+  "enterSwift": "Ingrese código SWIFT",
+  "transferCta": "Transferencia",
+  "tryAgain": "Intentar de nuevo",
+  "noResults": "No se encontraron resultados",
+  "welcomeUserMale": "¡Hola, Sr. {name}!",
+  "welcomeUserFemale": "¡Hola, Sra. {name}!",
 
-  "United States": "Estados Unidos",
-  "Spain": "España",
-  "Canada": "Canadá"
->>>>>>> 84c9fad (Orden de archivos y bottom nav general)
+  "unitedStates": "Estados Unidos",
+  "spain": "España",
+  "canada": "Canadá"
 }

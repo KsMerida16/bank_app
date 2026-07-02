@@ -1,5 +1,5 @@
 import 'package:bank_app/core/constants/api_consts.dart';
-import 'package:bank_app/features/auth/data/models/user_model.dart';
+import 'package:bank_app/core/users/data/models/user_model.dart';
 import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:dio/dio.dart';
 

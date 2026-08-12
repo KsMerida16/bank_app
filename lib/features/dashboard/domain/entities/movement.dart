@@ -7,6 +7,7 @@ part 'movement.freezed.dart';
 abstract class Movement with _$Movement {
   const factory Movement({
     required String date,
+    required String timestamp,
     required String description,
     required double amount,
     required String type,
@@ -19,6 +20,7 @@ extension MovementExtension on Movement {
   MovementModel toModel() {
     return MovementModel(
       date: date,
+      timestamp: timestamp,
       description: description,
       amount: amount,
       type: type,
@@ -32,6 +34,7 @@ extension MovementFromModelExtension on MovementModel {
   Movement fromModel() {
     return Movement(
       date: date,
+      timestamp: timestamp,
       description: description,
       amount: amount,
       type: type,

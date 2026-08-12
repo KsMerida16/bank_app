@@ -15,6 +15,9 @@ abstract class DashboardState with _$DashboardState {
     required List<Account> accounts,
     required List<CardModel> cards,
     required List<Movement> movements,
+    required bool hasMoreMovements,
+    required bool isLoadingMoreMovements,
+    required String? lastMovementTimestamp,
   }) = _Loaded;
   factory DashboardState.error({required String message}) = _Error;
 }

@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.user,_that.accounts,_that.cards,_that.movements);case _Error() when error != null:
+return loaded(_that.user,_that.accounts,_that.cards,_that.movements,_that.hasMoreMovements,_that.isLoadingMoreMovements,_that.lastMovementTimestamp);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)  loaded,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
 return loading();case _Loaded():
-return loaded(_that.user,_that.accounts,_that.cards,_that.movements);case _Error():
+return loaded(_that.user,_that.accounts,_that.cards,_that.movements,_that.hasMoreMovements,_that.isLoadingMoreMovements,_that.lastMovementTimestamp);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
 return loading();case _Loaded() when loaded != null:
-return loaded(_that.user,_that.accounts,_that.cards,_that.movements);case _Error() when error != null:
+return loaded(_that.user,_that.accounts,_that.cards,_that.movements,_that.hasMoreMovements,_that.isLoadingMoreMovements,_that.lastMovementTimestamp);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -257,7 +257,7 @@ String toString() {
 
 
 class _Loaded implements DashboardState {
-   _Loaded({required this.user, required final  List<Account> accounts, required final  List<CardModel> cards, required final  List<Movement> movements}): _accounts = accounts,_cards = cards,_movements = movements;
+   _Loaded({required this.user, required final  List<Account> accounts, required final  List<CardModel> cards, required final  List<Movement> movements, required this.hasMoreMovements, required this.isLoadingMoreMovements, required this.lastMovementTimestamp}): _accounts = accounts,_cards = cards,_movements = movements;
   
 
  final  User user;
@@ -282,6 +282,9 @@ class _Loaded implements DashboardState {
   return EqualUnmodifiableListView(_movements);
 }
 
+ final  bool hasMoreMovements;
+ final  bool isLoadingMoreMovements;
+ final  String? lastMovementTimestamp;
 
 /// Create a copy of DashboardState
 /// with the given fields replaced by the non-null parameter values.
@@ -293,16 +296,16 @@ _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._accounts, _accounts)&&const DeepCollectionEquality().equals(other._cards, _cards)&&const DeepCollectionEquality().equals(other._movements, _movements));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.user, user) || other.user == user)&&const DeepCollectionEquality().equals(other._accounts, _accounts)&&const DeepCollectionEquality().equals(other._cards, _cards)&&const DeepCollectionEquality().equals(other._movements, _movements)&&(identical(other.hasMoreMovements, hasMoreMovements) || other.hasMoreMovements == hasMoreMovements)&&(identical(other.isLoadingMoreMovements, isLoadingMoreMovements) || other.isLoadingMoreMovements == isLoadingMoreMovements)&&(identical(other.lastMovementTimestamp, lastMovementTimestamp) || other.lastMovementTimestamp == lastMovementTimestamp));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,user,const DeepCollectionEquality().hash(_accounts),const DeepCollectionEquality().hash(_cards),const DeepCollectionEquality().hash(_movements));
+int get hashCode => Object.hash(runtimeType,user,const DeepCollectionEquality().hash(_accounts),const DeepCollectionEquality().hash(_cards),const DeepCollectionEquality().hash(_movements),hasMoreMovements,isLoadingMoreMovements,lastMovementTimestamp);
 
 @override
 String toString() {
-  return 'DashboardState.loaded(user: $user, accounts: $accounts, cards: $cards, movements: $movements)';
+  return 'DashboardState.loaded(user: $user, accounts: $accounts, cards: $cards, movements: $movements, hasMoreMovements: $hasMoreMovements, isLoadingMoreMovements: $isLoadingMoreMovements, lastMovementTimestamp: $lastMovementTimestamp)';
 }
 
 
@@ -313,7 +316,7 @@ abstract mixin class _$LoadedCopyWith<$Res> implements $DashboardStateCopyWith<$
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
- User user, List<Account> accounts, List<CardModel> cards, List<Movement> movements
+ User user, List<Account> accounts, List<CardModel> cards, List<Movement> movements, bool hasMoreMovements, bool isLoadingMoreMovements, String? lastMovementTimestamp
 });
 
 
@@ -330,13 +333,16 @@ class __$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of DashboardState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? user = null,Object? accounts = null,Object? cards = null,Object? movements = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? user = null,Object? accounts = null,Object? cards = null,Object? movements = null,Object? hasMoreMovements = null,Object? isLoadingMoreMovements = null,Object? lastMovementTimestamp = freezed,}) {
   return _then(_Loaded(
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,accounts: null == accounts ? _self._accounts : accounts // ignore: cast_nullable_to_non_nullable
 as List<Account>,cards: null == cards ? _self._cards : cards // ignore: cast_nullable_to_non_nullable
 as List<CardModel>,movements: null == movements ? _self._movements : movements // ignore: cast_nullable_to_non_nullable
-as List<Movement>,
+as List<Movement>,hasMoreMovements: null == hasMoreMovements ? _self.hasMoreMovements : hasMoreMovements // ignore: cast_nullable_to_non_nullable
+as bool,isLoadingMoreMovements: null == isLoadingMoreMovements ? _self.isLoadingMoreMovements : isLoadingMoreMovements // ignore: cast_nullable_to_non_nullable
+as bool,lastMovementTimestamp: freezed == lastMovementTimestamp ? _self.lastMovementTimestamp : lastMovementTimestamp // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

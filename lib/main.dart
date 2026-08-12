@@ -11,20 +11,33 @@ import 'package:bank_app/theme/app_theme.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/theme/dark_colors.dart';
 import 'package:bank_app/theme/light_colors.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 final _notificationsService = NotificationsService();
 
 Future<void> runProject() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   await Env.initialize();
   await LocalStorage().init();
-  runApp(const ProviderScope(child: MyApp()));
-  unawaited(_notificationsService.init());
+
+  // Creamos UN SOLO ProviderContainer.
+  //
+  // Este mismo container será utilizado por:
+  // - MyApp
+  // - NotificationsService
+  // - NotificationsNotifier
+  final container = ProviderContainer();
+
+  runApp(UncontrolledProviderScope(container: container, child: const MyApp()));
+
+  // Inicializamos las notificaciones después de levantar la aplicación.
+  unawaited(_notificationsService.init(container));
 }
 
 class MyApp extends ConsumerWidget {
@@ -34,25 +47,34 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final light = LightColors();
     final dark = DarkColors();
+
     final router = ref.watch(goRouterProvider);
     final language = ref.watch(languageNotifierProvider);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+
       themeMode: ThemeMode.dark,
+
       theme: buildTheme(light, brightness: Brightness.light),
+
       darkTheme: buildTheme(dark, brightness: Brightness.dark),
+
       routerConfig: router,
+
       builder: (context, child) {
         return AppColorsScope(colors: dark, child: child ?? const SizedBox());
       },
+
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
+
       locale: language.locale,
+
       supportedLocales: const [Locale('en'), Locale('es')],
     );
   }

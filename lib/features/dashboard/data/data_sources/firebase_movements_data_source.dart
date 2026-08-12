@@ -24,4 +24,30 @@ class FirebaseMovementsDataSource {
       );
     }
   }
+
+  Future<List<MovementModel>> getMovementsByPage(
+    String userId,
+    int limit,
+    String timestamp,
+  ) async {
+    try {
+      final baseQuery = _firestore
+          .collection(AppFirebaseCollections.movements)
+          .where(AppFirebaseKeys.movementsKey, isEqualTo: userId)
+          .orderBy('timestamp')
+          .limit(limit);
+
+      final querySnapshot = await (timestamp.isEmpty
+          ? baseQuery.get()
+          : baseQuery.startAfter([timestamp]).get());
+
+      return querySnapshot.docs
+          .map((doc) => MovementModel.fromJson(doc.data()))
+          .toList();
+    } catch (e) {
+      throw Exception(
+        'Error fetching movements from ${AppFirebaseCollections.movements} for uid=$userId: $e',
+      );
+    }
+  }
 }

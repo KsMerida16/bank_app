@@ -13,3 +13,7 @@ abstract class AppFirebaseKeys {
   static final String cardsKey = 'user_id';
   static final String catalogsKey = 'table';
 }
+
+abstract class AppFirebasePaginationConstants {
+  static final int defaultLimit = 2;
+}

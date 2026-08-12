@@ -20,4 +20,22 @@ class MovementsRepositoryImpl implements MovementsRepository {
       throw Exception('Error fetching movements: $e');
     }
   }
+
+  @override
+  Future<List<Movement>> getMovementsByPage(
+    String userId,
+    int limit,
+    String timestamp,
+  ) async {
+    try {
+      final models = await _movementsDataSource.getMovementsByPage(
+        userId,
+        limit,
+        timestamp,
+      );
+      return models.map((model) => model.toEntity()).toList();
+    } catch (e) {
+      throw Exception('Error fetching movements by page: $e');
+    }
+  }
 }

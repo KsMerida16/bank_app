@@ -141,6 +141,16 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
               ),
             ),
             const SizedBox(width: 12),
+            _RoundIconButton(
+              icon: Icons.notifications_none_rounded,
+              bg: _blend(c.surface, Colors.white.withValues(alpha: 0.04)),
+              fg: c.textPrimary,
+              onTap: () {
+                context.goNamed(Routes.notifications);
+              },
+            ),
+
+            const SizedBox(width: 8),
             // Botón de cierre de sesión
             _RoundIconButton(
               icon: Icons.logout,

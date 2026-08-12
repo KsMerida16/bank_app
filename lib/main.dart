@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:bank_app/core/environment/env.dart';
 import 'package:bank_app/core/navigation/router.dart';
+import 'package:bank_app/core/notifications/notification_service.dart';
 import 'package:bank_app/core/utils/local_storage.dart';
 import 'package:bank_app/features/settings/presentation/state/language_provider.dart';
 import 'package:bank_app/firebase_options.dart';
@@ -13,12 +16,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void runProject() async {
+final _notificationsService = NotificationsService();
+
+Future<void> runProject() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Env.initialize();
   await LocalStorage().init();
   runApp(const ProviderScope(child: MyApp()));
+  unawaited(_notificationsService.init());
 }
 
 class MyApp extends ConsumerWidget {

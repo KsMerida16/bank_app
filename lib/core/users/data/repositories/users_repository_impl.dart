@@ -10,8 +10,8 @@ class UsersRepositoryImpl implements UsersRepository {
     : _firestoreUsersDataSource =
           firestoreUsersDataSource ?? FirestoreUsersDataSource();
   @override
-  Future<User> getUser(String userId) async {
-    final userModel = await _firestoreUsersDataSource.getUser(userId);
+  Future<User> getUser(String email) async {
+    final userModel = await _firestoreUsersDataSource.getUser(email);
     return User.fromModel(userModel);
   }
 }

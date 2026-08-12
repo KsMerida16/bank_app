@@ -1,7 +1,9 @@
+import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
 import 'package:bank_app/theme/colors_scope.dart';
 import 'package:bank_app/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TransferPage extends StatefulWidget {
   const TransferPage({super.key});
@@ -261,7 +263,12 @@ class _TransferPageState extends State<TransferPage>
     final t = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: c.background, // const Color(0xFF0F1220),
-      appBar: CustomAppBar(title: t.transfer),
+      appBar: CustomAppBar(
+        title: t.transfer,
+        onPressed: () {
+          context.goNamed(Routes.dashboard);
+        },
+      ),
       body: TabBarView(
         controller: _tabController,
         children: [

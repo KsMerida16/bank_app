@@ -4,6 +4,7 @@ import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart'
 import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
 import 'package:bank_app/features/dashboard/presentation/views/dashboard_view.dart';
 import 'package:bank_app/features/history/presentation/views/history_page.dart';
+import 'package:bank_app/features/notifications/presentation/views/notifications_page.dart';
 import 'package:bank_app/features/settings/presentation/views/language_view.dart';
 import 'package:bank_app/features/settings/presentation/views/settings_view.dart';
 import 'package:bank_app/features/transfers/presentation/views/transfer_view.dart';
@@ -115,6 +116,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: Routes.privacyLocation,
         builder: (context, state) => const PrivacyPage(),
       ),
+      GoRoute(
+        name: Routes.notifications,
+        path: Routes.notificationsLocation,
+        builder: (context, state) => const NotificationsPage(),
+      ),
     ],
   );
 });
@@ -131,6 +137,7 @@ abstract class Routes {
   static const String contact = 'contact';
   static const String changePassword = 'changePassword';
   static const String privacy = 'privacy';
+  static const String notifications = 'notifications';
 
   static const String startLocation = '/start';
   static const String signinLocation = '/signin';
@@ -143,4 +150,5 @@ abstract class Routes {
   static const String contactLocation = '/settings/contact';
   static const String changePasswordLocation = '/settings/changePassword';
   static const String privacyLocation = '/settings/privacy';
+  static const String notificationsLocation = '/notifications';
 }

@@ -61,8 +61,13 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     final authModel = await _firebaseAuthenticationDataSource.login(
       userPasswordModel,
     );
-    final user = await _firestoreUsersDataSource.getUser(authModel.email);
-    return User.fromModel(user);
+    try {
+      final user = await _firestoreUsersDataSource.getUser(authModel.email);
+      return User.fromModel(user);
+    } catch (_) {
+      // If Firestore profile access is denied, allow login with Firebase Auth data.
+      return User(email: authModel.email, name: authModel.username);
+    }
   }
 
   @override

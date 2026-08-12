@@ -47,6 +47,9 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
 
   String? _resolveDashboardUserId() {
     final firebaseUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    // final uid = firebaseUser?.uid.trim();
+    // if (uid != null && uid.isNotEmpty) return uid;
+
     final email = firebaseUser?.email?.trim();
     if (email != null && email.isNotEmpty) return email;
 
@@ -64,8 +67,23 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
     final bottom = MediaQuery.of(context).padding.bottom;
 
     final loadedData = dashboardState.maybeWhen(
-      loaded: (user, accounts, cards, movements) =>
-          (user: user, accounts: accounts, cards: cards, movements: movements),
+      loaded:
+          (
+            user,
+            accounts,
+            cards,
+            movements,
+            hasMoreMovements,
+            isLoadingMoreMovements,
+            lastMovementTimestamp,
+          ) => (
+            user: user,
+            accounts: accounts,
+            cards: cards,
+            movements: movements,
+            hasMoreMovements: hasMoreMovements,
+            isLoadingMoreMovements: isLoadingMoreMovements,
+          ),
       orElse: () => null,
     );
 
@@ -96,6 +114,8 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
     final movements = loadedData?.movements ?? <Movement>[];
     final accounts = loadedData?.accounts ?? <Account>[];
     final cards = loadedData?.cards ?? <CardModel>[];
+    final hasMoreMovements = loadedData?.hasMoreMovements ?? false;
+    final isLoadingMoreMovements = loadedData?.isLoadingMoreMovements ?? false;
 
     return Scaffold(
       backgroundColor: c.background,
@@ -247,96 +267,132 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
                   ),
                 ),
               )
-            : SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Tarjeta principal
-                    _CardsCarousel(
-                      c: c,
-                      userName: currentUser,
-                      accounts: accounts,
-                      cards: cards,
-                    ),
-                    const SizedBox(height: 20),
+            : NotificationListener<ScrollNotification>(
+                onNotification: (notification) {
+                  if (!hasMoreMovements || isLoadingMoreMovements) {
+                    return false;
+                  }
 
-                    // Acciones rápidas
-                    _QuickActionsRow(c: c),
-                    const SizedBox(height: 24),
+                  final shouldLoadMore =
+                      notification.metrics.pixels >=
+                      notification.metrics.maxScrollExtent - 180;
 
-                    // Encabezado de sección
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            t.transactions,
-                            style: TextStyle(
-                              color: c.textPrimary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            t.seeAll,
-                            style: TextStyle(
-                              color: c.primary,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
+                  if (shouldLoadMore) {
+                    ref
+                        .read(dashboardNotifierProvider.notifier)
+                        .loadMoreMovements();
+                  }
 
-                    if (movements.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          t.noResults,
-                          style: TextStyle(color: c.textSecondary),
-                        ),
-                      )
-                    else
-                      ...movements.map((movement) {
-                        final isNegative =
-                            movement.sign.trim().startsWith('-') ||
-                            movement.amount < 0;
-                        final amountValue = movement.amount
-                            .abs()
-                            .toStringAsFixed(2);
-                        final amountText = isNegative
-                            ? '- \$ $amountValue'
-                            : '\$ $amountValue';
+                  return false;
+                },
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Tarjeta principal
+                      _CardsCarousel(
+                        c: c,
+                        userName: currentUser,
+                        accounts: accounts,
+                        cards: cards,
+                      ),
+                      const SizedBox(height: 20),
 
-                        return Column(
-                          children: [
-                            _TransactionTile(
-                              c: c,
-                              leading: _CircleBrand(
-                                c: c,
-                                child: Icon(
-                                  _iconForCategory(movement.category),
-                                  size: 18,
-                                ),
+                      // Acciones rápidas
+                      _QuickActionsRow(c: c),
+                      const SizedBox(height: 24),
+
+                      // Encabezado de sección
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              t.transactions,
+                              style: TextStyle(
+                                color: c.textPrimary,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
                               ),
-                              title: movement.description,
-                              subtitle: movement.category,
-                              amountText: amountText,
-                              amountColor: isNegative
-                                  ? c.textPrimary
-                                  : c.primary,
                             ),
-                            _DividerLine(c: c),
-                          ],
-                        );
-                      }),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Text(
+                              t.seeAll,
+                              style: TextStyle(
+                                color: c.primary,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
 
-                    SizedBox(height: kBottomNavigationBarHeight + 16 + bottom),
-                  ],
+                      if (movements.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            t.noResults,
+                            style: TextStyle(color: c.textSecondary),
+                          ),
+                        )
+                      else
+                        ...movements.map((movement) {
+                          final isNegative =
+                              movement.sign.trim().startsWith('-') ||
+                              movement.amount < 0;
+                          final amountValue = movement.amount
+                              .abs()
+                              .toStringAsFixed(2);
+                          final amountText = isNegative
+                              ? '- \$ $amountValue'
+                              : '\$ $amountValue';
+
+                          return Column(
+                            children: [
+                              _TransactionTile(
+                                c: c,
+                                leading: _CircleBrand(
+                                  c: c,
+                                  child: Icon(
+                                    _iconForCategory(movement.category),
+                                    size: 18,
+                                  ),
+                                ),
+                                title: movement.description,
+                                subtitle: movement.category,
+                                amountText: amountText,
+                                amountColor: isNegative
+                                    ? c.textPrimary
+                                    : c.primary,
+                              ),
+                              _DividerLine(c: c),
+                            ],
+                          );
+                        }),
+
+                      if (isLoadingMoreMovements)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Center(
+                            child: SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.5,
+                                color: c.primary,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                      SizedBox(
+                        height: kBottomNavigationBarHeight + 16 + bottom,
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),

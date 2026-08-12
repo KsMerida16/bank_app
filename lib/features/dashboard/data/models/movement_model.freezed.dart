@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MovementModel {
 
-@JsonKey(name: 'date') String get date;@JsonKey(name: 'description') String get description;@JsonKey(name: 'amount') double get amount;@JsonKey(name: 'type') String get type;@JsonKey(name: 'sign') String get sign;@JsonKey(name: 'category') String get category;
+@JsonKey(name: 'date') String get date;@JsonKey(name: 'timestamp') String get timestamp;@JsonKey(name: 'description') String get description;@JsonKey(name: 'amount') double get amount;@JsonKey(name: 'type') String get type;@JsonKey(name: 'sign') String get sign;@JsonKey(name: 'category') String get category;
 /// Create a copy of MovementModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MovementModelCopyWith<MovementModel> get copyWith => _$MovementModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MovementModel&&(identical(other.date, date) || other.date == date)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MovementModel&&(identical(other.date, date) || other.date == date)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,description,amount,type,sign,category);
+int get hashCode => Object.hash(runtimeType,date,timestamp,description,amount,type,sign,category);
 
 @override
 String toString() {
-  return 'MovementModel(date: $date, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
+  return 'MovementModel(date: $date, timestamp: $timestamp, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $MovementModelCopyWith<$Res>  {
   factory $MovementModelCopyWith(MovementModel value, $Res Function(MovementModel) _then) = _$MovementModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'date') String date,@JsonKey(name: 'description') String description,@JsonKey(name: 'amount') double amount,@JsonKey(name: 'type') String type,@JsonKey(name: 'sign') String sign,@JsonKey(name: 'category') String category
+@JsonKey(name: 'date') String date,@JsonKey(name: 'timestamp') String timestamp,@JsonKey(name: 'description') String description,@JsonKey(name: 'amount') double amount,@JsonKey(name: 'type') String type,@JsonKey(name: 'sign') String sign,@JsonKey(name: 'category') String category
 });
 
 
@@ -65,9 +65,10 @@ class _$MovementModelCopyWithImpl<$Res>
 
 /// Create a copy of MovementModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? timestamp = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
   return _then(_self.copyWith(
 date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'date')  String date, @JsonKey(name: 'description')  String description, @JsonKey(name: 'amount')  double amount, @JsonKey(name: 'type')  String type, @JsonKey(name: 'sign')  String sign, @JsonKey(name: 'category')  String category)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'date')  String date, @JsonKey(name: 'timestamp')  String timestamp, @JsonKey(name: 'description')  String description, @JsonKey(name: 'amount')  double amount, @JsonKey(name: 'type')  String type, @JsonKey(name: 'sign')  String sign, @JsonKey(name: 'category')  String category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MovementModel() when $default != null:
-return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
+return $default(_that.date,_that.timestamp,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'date')  String date, @JsonKey(name: 'description')  String description, @JsonKey(name: 'amount')  double amount, @JsonKey(name: 'type')  String type, @JsonKey(name: 'sign')  String sign, @JsonKey(name: 'category')  String category)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'date')  String date, @JsonKey(name: 'timestamp')  String timestamp, @JsonKey(name: 'description')  String description, @JsonKey(name: 'amount')  double amount, @JsonKey(name: 'type')  String type, @JsonKey(name: 'sign')  String sign, @JsonKey(name: 'category')  String category)  $default,) {final _that = this;
 switch (_that) {
 case _MovementModel():
-return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
+return $default(_that.date,_that.timestamp,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'date')  String date, @JsonKey(name: 'description')  String description, @JsonKey(name: 'amount')  double amount, @JsonKey(name: 'type')  String type, @JsonKey(name: 'sign')  String sign, @JsonKey(name: 'category')  String category)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'date')  String date, @JsonKey(name: 'timestamp')  String timestamp, @JsonKey(name: 'description')  String description, @JsonKey(name: 'amount')  double amount, @JsonKey(name: 'type')  String type, @JsonKey(name: 'sign')  String sign, @JsonKey(name: 'category')  String category)?  $default,) {final _that = this;
 switch (_that) {
 case _MovementModel() when $default != null:
-return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
+return $default(_that.date,_that.timestamp,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
   return null;
 
 }
@@ -214,10 +215,11 @@ return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,
 @JsonSerializable()
 
 class _MovementModel implements MovementModel {
-  const _MovementModel({@JsonKey(name: 'date') required this.date, @JsonKey(name: 'description') required this.description, @JsonKey(name: 'amount') required this.amount, @JsonKey(name: 'type') required this.type, @JsonKey(name: 'sign') required this.sign, @JsonKey(name: 'category') required this.category});
+  const _MovementModel({@JsonKey(name: 'date') required this.date, @JsonKey(name: 'timestamp') required this.timestamp, @JsonKey(name: 'description') required this.description, @JsonKey(name: 'amount') required this.amount, @JsonKey(name: 'type') required this.type, @JsonKey(name: 'sign') required this.sign, @JsonKey(name: 'category') required this.category});
   factory _MovementModel.fromJson(Map<String, dynamic> json) => _$MovementModelFromJson(json);
 
 @override@JsonKey(name: 'date') final  String date;
+@override@JsonKey(name: 'timestamp') final  String timestamp;
 @override@JsonKey(name: 'description') final  String description;
 @override@JsonKey(name: 'amount') final  double amount;
 @override@JsonKey(name: 'type') final  String type;
@@ -237,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MovementModel&&(identical(other.date, date) || other.date == date)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MovementModel&&(identical(other.date, date) || other.date == date)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,description,amount,type,sign,category);
+int get hashCode => Object.hash(runtimeType,date,timestamp,description,amount,type,sign,category);
 
 @override
 String toString() {
-  return 'MovementModel(date: $date, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
+  return 'MovementModel(date: $date, timestamp: $timestamp, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$MovementModelCopyWith<$Res> implements $MovementModelCopy
   factory _$MovementModelCopyWith(_MovementModel value, $Res Function(_MovementModel) _then) = __$MovementModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'date') String date,@JsonKey(name: 'description') String description,@JsonKey(name: 'amount') double amount,@JsonKey(name: 'type') String type,@JsonKey(name: 'sign') String sign,@JsonKey(name: 'category') String category
+@JsonKey(name: 'date') String date,@JsonKey(name: 'timestamp') String timestamp,@JsonKey(name: 'description') String description,@JsonKey(name: 'amount') double amount,@JsonKey(name: 'type') String type,@JsonKey(name: 'sign') String sign,@JsonKey(name: 'category') String category
 });
 
 
@@ -274,9 +276,10 @@ class __$MovementModelCopyWithImpl<$Res>
 
 /// Create a copy of MovementModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? timestamp = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
   return _then(_MovementModel(
 date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable

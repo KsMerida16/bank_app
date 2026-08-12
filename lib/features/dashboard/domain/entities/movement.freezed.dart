@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Movement {
 
- String get date; String get description; double get amount; String get type; String get sign; String get category;
+ String get date; String get timestamp; String get description; double get amount; String get type; String get sign; String get category;
 /// Create a copy of Movement
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $MovementCopyWith<Movement> get copyWith => _$MovementCopyWithImpl<Movement>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Movement&&(identical(other.date, date) || other.date == date)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Movement&&(identical(other.date, date) || other.date == date)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,date,description,amount,type,sign,category);
+int get hashCode => Object.hash(runtimeType,date,timestamp,description,amount,type,sign,category);
 
 @override
 String toString() {
-  return 'Movement(date: $date, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
+  return 'Movement(date: $date, timestamp: $timestamp, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $MovementCopyWith<$Res>  {
   factory $MovementCopyWith(Movement value, $Res Function(Movement) _then) = _$MovementCopyWithImpl;
 @useResult
 $Res call({
- String date, String description, double amount, String type, String sign, String category
+ String date, String timestamp, String description, double amount, String type, String sign, String category
 });
 
 
@@ -62,9 +62,10 @@ class _$MovementCopyWithImpl<$Res>
 
 /// Create a copy of Movement
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? timestamp = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
   return _then(_self.copyWith(
 date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String date,  String description,  double amount,  String type,  String sign,  String category)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String date,  String timestamp,  String description,  double amount,  String type,  String sign,  String category)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Movement() when $default != null:
-return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
+return $default(_that.date,_that.timestamp,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String date,  String description,  double amount,  String type,  String sign,  String category)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String date,  String timestamp,  String description,  double amount,  String type,  String sign,  String category)  $default,) {final _that = this;
 switch (_that) {
 case _Movement():
-return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
+return $default(_that.date,_that.timestamp,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String date,  String description,  double amount,  String type,  String sign,  String category)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String date,  String timestamp,  String description,  double amount,  String type,  String sign,  String category)?  $default,) {final _that = this;
 switch (_that) {
 case _Movement() when $default != null:
-return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
+return $default(_that.date,_that.timestamp,_that.description,_that.amount,_that.type,_that.sign,_that.category);case _:
   return null;
 
 }
@@ -211,10 +212,11 @@ return $default(_that.date,_that.description,_that.amount,_that.type,_that.sign,
 
 
 class _Movement implements Movement {
-  const _Movement({required this.date, required this.description, required this.amount, required this.type, required this.sign, required this.category});
+  const _Movement({required this.date, required this.timestamp, required this.description, required this.amount, required this.type, required this.sign, required this.category});
   
 
 @override final  String date;
+@override final  String timestamp;
 @override final  String description;
 @override final  double amount;
 @override final  String type;
@@ -231,16 +233,16 @@ _$MovementCopyWith<_Movement> get copyWith => __$MovementCopyWithImpl<_Movement>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Movement&&(identical(other.date, date) || other.date == date)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Movement&&(identical(other.date, date) || other.date == date)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.description, description) || other.description == description)&&(identical(other.amount, amount) || other.amount == amount)&&(identical(other.type, type) || other.type == type)&&(identical(other.sign, sign) || other.sign == sign)&&(identical(other.category, category) || other.category == category));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,date,description,amount,type,sign,category);
+int get hashCode => Object.hash(runtimeType,date,timestamp,description,amount,type,sign,category);
 
 @override
 String toString() {
-  return 'Movement(date: $date, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
+  return 'Movement(date: $date, timestamp: $timestamp, description: $description, amount: $amount, type: $type, sign: $sign, category: $category)';
 }
 
 
@@ -251,7 +253,7 @@ abstract mixin class _$MovementCopyWith<$Res> implements $MovementCopyWith<$Res>
   factory _$MovementCopyWith(_Movement value, $Res Function(_Movement) _then) = __$MovementCopyWithImpl;
 @override @useResult
 $Res call({
- String date, String description, double amount, String type, String sign, String category
+ String date, String timestamp, String description, double amount, String type, String sign, String category
 });
 
 
@@ -268,9 +270,10 @@ class __$MovementCopyWithImpl<$Res>
 
 /// Create a copy of Movement
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? timestamp = null,Object? description = null,Object? amount = null,Object? type = null,Object? sign = null,Object? category = null,}) {
   return _then(_Movement(
 date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
+as String,timestamp: null == timestamp ? _self.timestamp : timestamp // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,amount: null == amount ? _self.amount : amount // ignore: cast_nullable_to_non_nullable
 as double,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable

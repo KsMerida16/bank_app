@@ -8,6 +8,7 @@ part 'movement_model.g.dart';
 abstract class MovementModel with _$MovementModel {
   const factory MovementModel({
     @JsonKey(name: 'date') required String date,
+    @JsonKey(name: 'timestamp') required String timestamp,
     @JsonKey(name: 'description') required String description,
     @JsonKey(name: 'amount') required double amount,
     @JsonKey(name: 'type') required String type,
@@ -23,6 +24,7 @@ extension MovementModelExtension on MovementModel {
   Movement toEntity() {
     return Movement(
       date: date,
+      timestamp: timestamp,
       description: description,
       amount: amount,
       type: type,

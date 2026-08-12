@@ -8,9 +8,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, required this.title, this.bottom});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    this.bottom,
+    this.onPressed,
+  });
+
   final String title;
   final PreferredSizeWidget? bottom;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,17 +29,19 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,
-      leading: context.canPop()
+      leading: onPressed != null || context.canPop()
           ? IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
               tooltip: t.back,
-              onPressed: () {
-                if (context.canPop()) {
-                  context.pop();
-                } else {
-                  context.goNamed(Routes.dashboard);
-                }
-              },
+              onPressed:
+                  onPressed ??
+                  () {
+                    if (context.canPop()) {
+                      context.pop();
+                    } else {
+                      context.goNamed(Routes.dashboard);
+                    }
+                  },
             )
           : null,
       title: Text(title, style: const TextStyle(color: Colors.white)),

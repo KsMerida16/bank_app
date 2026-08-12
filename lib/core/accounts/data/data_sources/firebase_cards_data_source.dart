@@ -19,7 +19,9 @@ class FirebaseCardsDataSource {
           .map((doc) => CardModel.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception('Error fetching cards: $e');
+      throw Exception(
+        'Error fetching cards from ${AppFirebaseCollections.cards} for uid=$userId: $e',
+      );
     }
   }
 

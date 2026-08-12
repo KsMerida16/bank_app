@@ -19,7 +19,9 @@ class FirebaseAccountsDataSource {
           .map((doc) => AccountModel.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception('Error fetching accounts: $e');
+      throw Exception(
+        'Error fetching accounts from ${AppFirebaseCollections.accounts} for uid=$userId: $e',
+      );
     }
   }
 

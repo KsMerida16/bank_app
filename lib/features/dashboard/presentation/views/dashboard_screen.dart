@@ -1,4 +1,3 @@
-// lib/presentation/screens/home_dashboard_page.dart
 import 'dart:ui' as ui show FontFeature;
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
@@ -93,6 +92,17 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
               fg: c.textPrimary,
               onTap: () {},
             ),
+            const SizedBox(width: 8),
+
+            _RoundIconButton(
+              icon: Icons.notifications_none_rounded,
+              bg: _blend(c.surface, Colors.white.withValues(alpha: 0.04)),
+              fg: c.textPrimary,
+              onTap: () {
+                context.goNamed(Routes.notifications);
+              },
+            ),
+
             const SizedBox(width: 8),
           ],
         ),

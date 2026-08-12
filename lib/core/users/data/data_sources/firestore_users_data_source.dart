@@ -9,15 +9,21 @@ class FirestoreUsersDataSource {
 
   final FirebaseFirestore _firestore;
 
-  Future<UserModel> getUser(String userId) async {
+  Future<UserModel> getUser(String email) async {
     final collectionRef = _firestore.collection(AppFirebaseCollections.users);
-    final query = collectionRef.where(
-      AppFirebaseKeys.usersEmailKey,
-      isEqualTo: userId.toString(),
-    );
-    final result = await query.get();
-    final user = result.docs.map((doc) => UserModel.fromJson(doc.data())).first;
-    return user;
+
+    try {
+      final querySnapshot = await collectionRef
+          .where(AppFirebaseKeys.usersEmailKey, isEqualTo: email)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        return UserModel.fromJson(querySnapshot.docs.first.data());
+      }
+
+      throw Exception('User profile not found for email: $email');
+    } catch (e) {
+      throw Exception('${AppErrors.usersException}: $e');
+    }
   }
 
   Future<String> saveUserRole(UserModel user) async {

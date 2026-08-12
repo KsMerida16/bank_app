@@ -19,7 +19,9 @@ class FirebaseMovementsDataSource {
           .map((doc) => MovementModel.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception('Error fetching movements: $e');
+      throw Exception(
+        'Error fetching movements from ${AppFirebaseCollections.movements} for uid=$userId: $e',
+      );
     }
   }
 }

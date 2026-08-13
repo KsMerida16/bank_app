@@ -50,13 +50,23 @@
 ### Imagenes de la Implementación
 
 - **Imagen 1:** Pantalla de inicio de sesión y registro de usuarios.
+
     ![Pantalla de inicio de sesión y registro de usuarios](/doc/sprint4/img/Login.jpg)
+
 - **Imagen 2:** Pantalla de visualización de cuentas bancarias.
+
     ![Pantalla de visualización de cuentas bancarias](/doc/sprint4/img/Accounts.jpg)
+
 - **Imagen 3:** Pantalla de visualización de tarjetas de crédito.
+
     ![Pantalla de visualización de tarjetas de crédito](/doc/sprint4/img/Cards.jpg)
+
 - **Imagen 4:** Pantalla de visualización de transacciones.
+
     ![Pantalla de visualización de transacciones](/doc/sprint4/img/Movs.jpg)
+
 - **Imagen 5:** Ejemplo de notificación push recibida en la aplicación.
+
     ![Ejemplo de notificación push recibida en la aplicación](/doc/sprint4/img/Notification.jpg)
+    
 

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:bank_app/core/logging/app_logger.dart';
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/features/notifications/domain/entities/app_notification.dart';
 import 'package:bank_app/features/notifications/presentation/state/notifications_notifier.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -49,7 +49,7 @@ class NotificationsService {
       sound: true,
     );
 
-    debugPrint('FCM permission: ${settings.authorizationStatus}');
+    AppLogger.debug('FCM permission: ${settings.authorizationStatus}');
 
     await _localNotifications
         .resolvePlatformSpecificImplementation<
@@ -61,17 +61,17 @@ class NotificationsService {
   Future<void> _initRemoteNotifications() async {
     final token = await _firebaseMessaging.getToken();
 
-    debugPrint('FCM Token: $token');
+    AppLogger.debug('FCM token obtenido: ${token != null}');
 
     // El token puede cambiar.
-    _firebaseMessaging.onTokenRefresh.listen((newToken) {
-      debugPrint('FCM Token refreshed: $newToken');
+    _firebaseMessaging.onTokenRefresh.listen((_) {
+      AppLogger.debug('FCM token actualizado');
     });
     FirebaseMessaging.onMessage.listen(_foregroundMessageHandler);
   }
 
   Future<void> _foregroundMessageHandler(RemoteMessage message) async {
-    debugPrint('Foreground FCM received: ${message.messageId}');
+    AppLogger.debug('Foreground FCM received: ${message.messageId}');
     final notification = _createAppNotification(message);
     _container
         ?.read(notificationsNotifierProvider.notifier)
@@ -184,13 +184,13 @@ class NotificationsService {
   }
 
   void _onLocalNotificationTap(NotificationResponse response) {
-    debugPrint('Local notification tapped');
+    AppLogger.debug('Local notification tapped');
 
     _goToNotifications();
   }
 
   void _handleNotificationTap(RemoteMessage message) {
-    debugPrint('Push notification tapped: ${message.messageId}');
+    AppLogger.debug('Push notification tapped: ${message.messageId}');
 
     final notification = _createAppNotification(message);
 
@@ -205,7 +205,7 @@ class NotificationsService {
     final container = _container;
 
     if (container == null) {
-      debugPrint('NotificationsService: ProviderContainer no disponible.');
+      AppLogger.debug('NotificationsService: ProviderContainer no disponible.');
       return;
     }
 
@@ -214,7 +214,7 @@ class NotificationsService {
 
       router.goNamed(Routes.notifications);
     } catch (e) {
-      debugPrint('Error navigating to notifications: $e');
+      AppLogger.debug('Error navigating to notifications: $e');
     }
   }
 }

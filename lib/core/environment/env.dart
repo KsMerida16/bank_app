@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:bank_app/core/logging/app_logger.dart';
 import 'package:flutter/services.dart';
 
 enum Environment { development, staging, production }
@@ -17,9 +19,8 @@ class Env {
   static String get appName {
     final appName = _values['appName'];
     if (appName == null) {
-      // ignore: avoid_print
-      print(
-        "Warning: 'appName' is not defined in the environment configuration.",
+      AppLogger.warning(
+        "'appName' is not defined in the environment configuration.",
       );
     }
     return _values['appName'] ?? '';

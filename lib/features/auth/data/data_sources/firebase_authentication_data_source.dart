@@ -1,57 +1,36 @@
-import 'package:bank_app/features/auth/data/models/auth_model.dart';
+import 'package:bank_app/core/logging/app_logger.dart';
 import 'package:bank_app/core/users/data/models/user_model.dart';
+import 'package:bank_app/features/auth/data/models/auth_model.dart';
 import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseAuthenticationDataSource {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FirebaseAuthenticationDataSource({FirebaseAuth? firebaseAuth})
+    : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+
+  final FirebaseAuth _firebaseAuth;
 
   Future<AuthModel> login(UserPasswordModel userPassword) async {
-    //String email, String password) async {
     try {
-      // ignore: avoid_print
-      print(
-        'email/password at FirebaseLoginDataSource: ${userPassword.email} / ${userPassword.password}',
-      );
+      // Seguridad: jamás se registran email/contraseña en logs.
       final login = await _firebaseAuth.signInWithEmailAndPassword(
         email: userPassword.email,
         password: userPassword.password,
       );
-      if (login.user == null) {
+      final user = login.user;
+      if (user == null) {
         throw Exception('Login failed: User is null');
       }
-      final user = login.user!;
       return AuthModel(
         id: user.uid,
         email: userPassword.email,
         username: user.displayName ?? '',
       );
     } on FirebaseAuthException catch (e) {
-      // ignore: avoid_print
-      print('FirebaseAuthException code: ${e.code}');
-      if (e.code == 'user-not-found') {
-        // ignore: avoid_print
-        print('No se encontró un usuario con ese correo.');
-        throw Exception('User not found. Please register first.');
-      } else if (e.code == 'wrong-password') {
-        // ignore: avoid_print
-        print('Contraseña incorrecta.');
-        throw Exception('Incorrect password');
-      } else if (e.code == 'invalid-email') {
-        // ignore: avoid_print
-        print('El email no es válido.');
-        throw Exception('Invalid email format');
-      } else if (e.code == 'invalid-credential') {
-        // ignore: avoid_print
-        print('Credencial inválida.');
-        throw Exception('Invalid email or password. Please try again.');
-      }
-      // ignore: avoid_print
-      print(e);
-      throw Exception(e.message ?? 'Login failed');
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      AppLogger.warning('Login rechazado por Firebase Auth (code: ${e.code})');
+      throw Exception(_loginMessage(e));
+    } catch (e, st) {
+      AppLogger.error('Error inesperado en login', e, st);
       throw Exception('Unknown error: $e');
     }
   }
@@ -59,35 +38,24 @@ class FirebaseAuthenticationDataSource {
   Future<void> logout() async {
     try {
       await _firebaseAuth.signOut();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } catch (e, st) {
+      AppLogger.error('Error al cerrar sesión', e, st);
       throw Exception('Error al cerrar sesión: $e');
     }
   }
 
-  Future<bool> isLoggedIn() async {
-    try {
-      final user = _firebaseAuth.currentUser;
-      return user != null;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-      throw Exception('Error al verificar el estado de inicio de sesión: $e');
-    }
-  }
+  Future<bool> isLoggedIn() async => _firebaseAuth.currentUser != null;
 
   Future<UserModel> register(String email, String password) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       return UserModel(
-        //id: _firebaseAuth.currentUser!.uid,
         email: email,
-        username: _firebaseAuth.currentUser!.displayName ?? '',
+        username: credential.user?.displayName ?? '',
         firstName: '',
         lastName: '',
         gender: '',
@@ -96,41 +64,48 @@ class FirebaseAuthenticationDataSource {
         newId: '',
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        // ignore: avoid_print
-        print('El correo ya está en uso.');
-        throw Exception('This email is already registered');
-      } else if (e.code == 'weak-password') {
-        // ignore: avoid_print
-        print('La contraseña es demasiado débil.');
-        throw Exception('Password must be at least 6 characters');
-      } else if (e.code == 'invalid-email') {
-        // ignore: avoid_print
-        print('El email no es válido.');
-        throw Exception('Invalid email format');
-      }
-      // ignore: avoid_print
-      print(e);
-      throw Exception(e.message ?? 'Registration failed');
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      AppLogger.warning('Registro rechazado por Firebase Auth (code: ${e.code})');
+      throw Exception(_registerMessage(e));
+    } catch (e, st) {
+      AppLogger.error('Error inesperado en registro', e, st);
       throw Exception('Unknown error: $e');
     }
   }
 
   Future<String?> getSessionToken() async {
     try {
-      final user = _firebaseAuth.currentUser;
-      if (user != null) {
-        final idToken = await user.getIdToken();
-        return idToken;
-      }
-      return null;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      return await _firebaseAuth.currentUser?.getIdToken();
+    } catch (e, st) {
+      AppLogger.error('Error al obtener el token de sesión', e, st);
       throw Exception('Error al obtener el token de sesión: $e');
+    }
+  }
+
+  String _loginMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return 'User not found. Please register first.';
+      case 'wrong-password':
+        return 'Incorrect password';
+      case 'invalid-email':
+        return 'Invalid email format';
+      case 'invalid-credential':
+        return 'Invalid email or password. Please try again.';
+      default:
+        return e.message ?? 'Login failed';
+    }
+  }
+
+  String _registerMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'email-already-in-use':
+        return 'This email is already registered';
+      case 'weak-password':
+        return 'Password must be at least 6 characters';
+      case 'invalid-email':
+        return 'Invalid email format';
+      default:
+        return e.message ?? 'Registration failed';
     }
   }
 }

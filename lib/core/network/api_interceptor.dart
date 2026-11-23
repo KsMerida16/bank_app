@@ -1,24 +1,24 @@
+import 'package:bank_app/core/logging/app_logger.dart';
 import 'package:dio/dio.dart';
 
+/// Interceptor de trazas. Solo registra método, ruta y código de estado:
+/// nunca cuerpos de request/response ni headers (pueden contener tokens o PII).
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // ignore: avoid_print
-    print("REQUEST[${options.method}] => PATH: ${options.path}");
-    return handler.next(options);
+    AppLogger.debug('REQUEST[${options.method}] => PATH: ${options.path}');
+    handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    // ignore: avoid_print
-    print("RESPONSE[${response.statusCode}] => DATA: ${response.data}");
-    return handler.next(response);
+    AppLogger.debug('RESPONSE[${response.statusCode}]');
+    handler.next(response);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // ignore: avoid_print
-    print("ERROR[${err.response?.statusCode}] => MESSAGE: ${err.message}");
-    return handler.next(err);
+    AppLogger.warning('ERROR[${err.response?.statusCode}] => ${err.type.name}');
+    handler.next(err);
   }
 }

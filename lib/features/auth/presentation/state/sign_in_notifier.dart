@@ -1,3 +1,4 @@
+import 'package:bank_app/core/logging/app_logger.dart';
 import 'package:bank_app/features/auth/domain/use_cases/signed_in_use_case.dart';
 import 'package:bank_app/features/auth/domain/use_cases/sing_in_use_case.dart';
 import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
@@ -43,9 +44,8 @@ class SignInNotifier extends StateNotifier<SignInState> {
       );
 
       return true;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } catch (e, st) {
+      AppLogger.error('Fallo el inicio de sesión', e, st);
 
       state = SignInErrorState('Error al iniciar sesión: $e');
       return false;

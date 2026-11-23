@@ -1,3 +1,4 @@
+import 'package:bank_app/core/environment/env.dart';
 import 'package:bank_app/core/errors/api_error.dart';
 import 'package:bank_app/core/network/api_interceptor.dart';
 import 'package:dio/dio.dart';
@@ -6,7 +7,7 @@ class ApiClient {
   ApiClient() {
     dio = Dio(
       BaseOptions(
-        baseUrl: "https://localhost:3000",
+        baseUrl: Env.apiBaseUrl,
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),
       ),

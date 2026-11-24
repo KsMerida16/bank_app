@@ -1,87 +1,60 @@
-import 'package:bank_app/core/errors/app_errors.dart';
-import 'package:bank_app/features/auth/data/data_sources/firebase_authentication_data_source.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
+import 'package:bank_app/core/errors/failures.dart';
+import 'package:bank_app/core/logging/app_logger.dart';
 import 'package:bank_app/core/users/data/data_sources/firestore_users_data_source.dart';
-import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:bank_app/core/users/domain/entities/user.dart';
+import 'package:bank_app/features/auth/data/data_sources/firebase_authentication_data_source.dart';
+import 'package:bank_app/features/auth/data/models/user_password_model.dart';
 import 'package:bank_app/features/auth/domain/repositories/authentication_repository.dart';
 
-class AuthenticationRepositoryImpl extends AuthenticationRepository {
+class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({
-    FirebaseAuthenticationDataSource? firebaseAuthenticationDataSource,
-    FirestoreUsersDataSource? firestoreUsersDataSource,
-  }) : _firebaseAuthenticationDataSource =
-           firebaseAuthenticationDataSource ??
-           FirebaseAuthenticationDataSource(),
-       _firestoreUsersDataSource =
-           firestoreUsersDataSource ?? FirestoreUsersDataSource();
+    required FirebaseAuthenticationDataSource firebaseAuthenticationDataSource,
+    required FirestoreUsersDataSource firestoreUsersDataSource,
+  }) : _firebaseAuthenticationDataSource = firebaseAuthenticationDataSource,
+       _firestoreUsersDataSource = firestoreUsersDataSource;
 
   final FirebaseAuthenticationDataSource _firebaseAuthenticationDataSource;
   final FirestoreUsersDataSource _firestoreUsersDataSource;
 
   @override
-  Future<String> getAccessToken() {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<String> getUserEmail() {
-    throw UnimplementedError();
+  Future<String> getAccessToken() async {
+    final token = await _firebaseAuthenticationDataSource.getSessionToken();
+    if (token == null) {
+      throw const AuthFailure('No hay una sesión activa.');
+    }
+    return token;
   }
 
   @override
   Future<bool> isSignedIn() async {
-    //await _localAuthenticationDataSource.getSessionToken();
     final sessionToken = await _firebaseAuthenticationDataSource
         .getSessionToken();
     return sessionToken != null;
   }
 
   @override
-  Future<bool> logOut() async {
-    try {
-      await _firebaseAuthenticationDataSource.logout();
-      return true;
-    } catch (e) {
-      throw Exception('${AppErrors.authException}: $e');
-    }
-  }
-
-  @override
-  Future<bool> registerWithEmailAndPassword(String email, String password) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<User> signInWithEmailAndPassword(String email, String password) async {
-    final UserPasswordModel userPasswordModel = UserPasswordModel(
-      email: email,
-      password: password,
-    );
-
     final authModel = await _firebaseAuthenticationDataSource.login(
-      userPasswordModel,
+      UserPasswordModel(email: email, password: password),
     );
     try {
-      final user = await _firestoreUsersDataSource.getUser(authModel.email);
+      final user = await _firestoreUsersDataSource.getUser(authModel.id);
       return User.fromModel(user);
-    } catch (_) {
-      // If Firestore profile access is denied, allow login with Firebase Auth data.
+    } catch (e) {
+      // Decisión temporal: si el perfil no se puede leer (p. ej. reglas de
+      // Firestore), se permite el acceso con los datos de Firebase Auth.
+      // Ver specs/001-autenticacion (T4): debe pasar a un Failure visible.
+      AppLogger.warning(
+        'Perfil no disponible, se usa el de Firebase Auth '
+        '(${mapToFailure(e).runtimeType})',
+      );
       return User(email: authModel.email, name: authModel.username);
     }
   }
 
   @override
-  Future<void> signInWithGoogle() {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> signOut() async {
     await _firebaseAuthenticationDataSource.logout();
-  }
-
-  @override
-  Future<void> saveSession(String token) async {
-    throw UnimplementedError();
   }
 }

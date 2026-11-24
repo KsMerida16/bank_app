@@ -1,6 +1,6 @@
 class LanguageEntity {
+  const LanguageEntity({required this.code, required this.name});
+
   final String code;
   final String name;
-
-  const LanguageEntity({required this.code, required this.name});
 }

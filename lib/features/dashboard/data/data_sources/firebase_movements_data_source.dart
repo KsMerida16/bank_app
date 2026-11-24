@@ -1,13 +1,13 @@
 import 'package:bank_app/core/constants/app_firebase_tables.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
 import 'package:bank_app/features/dashboard/data/models/movement_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseMovementsDataSource {
-  final FirebaseFirestore _firestore;
+  FirebaseMovementsDataSource({required FirebaseFirestore firestore})
+    : _firestore = firestore;
 
-  // ignore: sort_constructors_first
-  FirebaseMovementsDataSource({FirebaseFirestore? firestore})
-    : _firestore = firestore ?? FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
 
   Future<List<MovementModel>> getMovements(String userId) async {
     try {
@@ -19,9 +19,7 @@ class FirebaseMovementsDataSource {
           .map((doc) => MovementModel.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception(
-        'Error fetching movements from ${AppFirebaseCollections.movements} for uid=$userId: $e',
-      );
+      throw mapToFailure(e, context: 'cargar movimientos');
     }
   }
 
@@ -45,9 +43,7 @@ class FirebaseMovementsDataSource {
           .map((doc) => MovementModel.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception(
-        'Error fetching movements from ${AppFirebaseCollections.movements} for uid=$userId: $e',
-      );
+      throw mapToFailure(e, context: 'cargar movimientos');
     }
   }
 }

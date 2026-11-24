@@ -1,28 +1,29 @@
 import 'package:bank_app/core/constants/app_firebase_tables.dart';
-import 'package:bank_app/core/errors/app_errors.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
+import 'package:bank_app/core/errors/failures.dart';
 import 'package:bank_app/core/users/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreUsersDataSource {
-  FirestoreUsersDataSource({FirebaseFirestore? firestore})
-    : _firestore = firestore ?? FirebaseFirestore.instance;
+  FirestoreUsersDataSource({required FirebaseFirestore firestore})
+    : _firestore = firestore;
 
   final FirebaseFirestore _firestore;
 
-  Future<UserModel> getUser(String email) async {
-    final collectionRef = _firestore.collection(AppFirebaseCollections.users);
-
+  /// Lee el perfil del usuario: el documento de `users` tiene como id el UID.
+  Future<UserModel> getUser(String uid) async {
     try {
-      final querySnapshot = await collectionRef
-          .where(AppFirebaseKeys.usersEmailKey, isEqualTo: email)
+      final snapshot = await _firestore
+          .collection(AppFirebaseCollections.users)
+          .doc(uid)
           .get();
-      if (querySnapshot.docs.isNotEmpty) {
-        return UserModel.fromJson(querySnapshot.docs.first.data());
+      final data = snapshot.data();
+      if (!snapshot.exists || data == null) {
+        throw const NotFoundFailure('User profile not found.');
       }
-
-      throw Exception('User profile not found for email: $email');
+      return UserModel.fromJson(data);
     } catch (e) {
-      throw Exception('${AppErrors.usersException}: $e');
+      throw mapToFailure(e, context: 'cargar el perfil del usuario');
     }
   }
 
@@ -32,7 +33,7 @@ class FirestoreUsersDataSource {
       final docRef = await collectionRef.add(user.toJson());
       return docRef.id;
     } catch (e) {
-      throw Exception('${AppErrors.usersException}: $e');
+      throw mapToFailure(e, context: 'guardar el perfil del usuario');
     }
   }
 }

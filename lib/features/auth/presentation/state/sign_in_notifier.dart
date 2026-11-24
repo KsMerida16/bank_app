@@ -1,3 +1,5 @@
+import 'package:bank_app/core/logging/app_logger.dart';
+import 'package:bank_app/features/auth/di/auth_providers.dart';
 import 'package:bank_app/features/auth/domain/use_cases/signed_in_use_case.dart';
 import 'package:bank_app/features/auth/domain/use_cases/sing_in_use_case.dart';
 import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';
@@ -5,15 +7,18 @@ import 'package:riverpod/legacy.dart';
 
 final signInRiverpodProvider =
     StateNotifierProvider<SignInNotifier, SignInState>(
-      (ref) => SignInNotifier(),
+      (ref) => SignInNotifier(
+        signInUseCase: ref.watch(signInUseCaseProvider),
+        signedInUseCase: ref.watch(signedInUseCaseProvider),
+      ),
     );
 
 class SignInNotifier extends StateNotifier<SignInState> {
   SignInNotifier({
-    SignInUseCase? signInUseCase,
-    SignedInUseCase? signedInUseCase,
-  }) : _signInUseCase = signInUseCase ?? SignInUseCase(),
-       _isSignedInUseCase = signedInUseCase ?? SignedInUseCase(),
+    required SignInUseCase signInUseCase,
+    required SignedInUseCase signedInUseCase,
+  }) : _signInUseCase = signInUseCase,
+       _isSignedInUseCase = signedInUseCase,
        super(SignInInitialState());
 
   final SignInUseCase _signInUseCase;
@@ -43,9 +48,8 @@ class SignInNotifier extends StateNotifier<SignInState> {
       );
 
       return true;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } catch (e, st) {
+      AppLogger.error('Fallo el inicio de sesión', e, st);
 
       state = SignInErrorState('Error al iniciar sesión: $e');
       return false;

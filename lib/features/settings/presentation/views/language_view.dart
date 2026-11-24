@@ -3,10 +3,9 @@ import 'package:bank_app/features/settings/domain/constants/language_catalog.dar
 import 'package:bank_app/features/settings/domain/entities/language_entity.dart';
 import 'package:bank_app/features/settings/presentation/state/language_provider.dart';
 import 'package:bank_app/features/settings/presentation/widgets/language_tile.dart';
-import 'package:bank_app/theme/colors_scope.dart' as AppColorsScope;
+import 'package:bank_app/theme/colors_scope.dart' as colors_scope;
 import 'package:bank_app/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LanguagePage extends ConsumerStatefulWidget {
@@ -35,7 +34,7 @@ class _LanguagePageState extends ConsumerState<LanguagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = AppColorsScope.of(context);
+    final colors = colors_scope.of(context);
     final t = AppLocalizations.of(context)!;
     final state = ref.watch(languageNotifierProvider);
 

@@ -1,13 +1,13 @@
 import 'package:bank_app/core/catalogs/data/models/catalog_model.dart';
 import 'package:bank_app/core/constants/app_firebase_tables.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseCatalogsDataSource {
-  final FirebaseFirestore _firestore;
+  FirebaseCatalogsDataSource({required FirebaseFirestore firestore})
+    : _firestore = firestore;
 
-  // ignore: sort_constructors_first
-  FirebaseCatalogsDataSource({FirebaseFirestore? firestore})
-    : _firestore = firestore ?? FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
 
   Future<List<CatalogModel>> getCatalogByTable(String table) async {
     try {
@@ -19,7 +19,7 @@ class FirebaseCatalogsDataSource {
           .map((doc) => CatalogModel.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception('Error fetching catalog $table: $e');
+      throw mapToFailure(e, context: 'cargar catálogo $table');
     }
   }
 }

@@ -39,7 +39,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       UserPasswordModel(email: email, password: password),
     );
     try {
-      final user = await _firestoreUsersDataSource.getUser(authModel.email);
+      final user = await _firestoreUsersDataSource.getUser(authModel.id);
       return User.fromModel(user);
     } catch (e) {
       // Decisión temporal: si el perfil no se puede leer (p. ej. reglas de

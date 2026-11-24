@@ -46,15 +46,10 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
   }
 
   String? _resolveDashboardUserId() {
-    final firebaseUser = firebase_auth.FirebaseAuth.instance.currentUser;
-    // final uid = firebaseUser?.uid.trim();
-    // if (uid != null && uid.isNotEmpty) return uid;
-
-    final email = firebaseUser?.email?.trim();
-    if (email != null && email.isNotEmpty) return email;
-
-    final fromWidget = widget.userName?.trim();
-    if (fromWidget != null && fromWidget.isNotEmpty) return fromWidget;
+    // El identificador del cliente es el UID de Firebase Auth: es inmutable y
+    // no expone datos personales (el correo puede cambiar y es PII).
+    final uid = firebase_auth.FirebaseAuth.instance.currentUser?.uid.trim();
+    if (uid != null && uid.isNotEmpty) return uid;
 
     return null;
   }

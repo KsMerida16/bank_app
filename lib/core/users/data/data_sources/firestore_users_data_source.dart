@@ -10,18 +10,18 @@ class FirestoreUsersDataSource {
 
   final FirebaseFirestore _firestore;
 
-  Future<UserModel> getUser(String email) async {
-    final collectionRef = _firestore.collection(AppFirebaseCollections.users);
-
+  /// Lee el perfil del usuario: el documento de `users` tiene como id el UID.
+  Future<UserModel> getUser(String uid) async {
     try {
-      final querySnapshot = await collectionRef
-          .where(AppFirebaseKeys.usersEmailKey, isEqualTo: email)
+      final snapshot = await _firestore
+          .collection(AppFirebaseCollections.users)
+          .doc(uid)
           .get();
-      if (querySnapshot.docs.isNotEmpty) {
-        return UserModel.fromJson(querySnapshot.docs.first.data());
+      final data = snapshot.data();
+      if (!snapshot.exists || data == null) {
+        throw const NotFoundFailure('User profile not found.');
       }
-
-      throw const NotFoundFailure('User profile not found.');
+      return UserModel.fromJson(data);
     } catch (e) {
       throw mapToFailure(e, context: 'cargar el perfil del usuario');
     }

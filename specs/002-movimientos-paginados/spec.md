@@ -8,7 +8,7 @@ Mostrar el historial de transacciones del cliente cargando por páginas para red
 - [x] "Cargar más" usa cursor (`startAfter`) y no duplica movimientos.
 - [x] `hasMore` es falso cuando la página llega incompleta.
 - [x] Estado de carga de la página siguiente independiente del estado de la pantalla.
-- [ ] Un error al paginar NO reemplaza el dashboard completo por pantalla de error.
+- [x] Un error al paginar NO reemplaza el dashboard completo por pantalla de error.
 - [ ] Cursor basado en `DocumentSnapshot` o timestamp tipado (no string).
 - [ ] Índice compuesto documentado/desplegado (`user_id` + `timestamp`).
 

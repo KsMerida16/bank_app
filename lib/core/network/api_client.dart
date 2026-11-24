@@ -1,43 +1,41 @@
 import 'package:bank_app/core/environment/env.dart';
-import 'package:bank_app/core/errors/api_error.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
 import 'package:bank_app/core/network/api_interceptor.dart';
 import 'package:dio/dio.dart';
 
+/// Cliente HTTP para backends REST (Node.js / Python).
+///
+/// Cualquier error de Dio se traduce a un `Failure` tipado; los consumidores
+/// nunca ven `DioException`.
 class ApiClient {
-  ApiClient() {
-    dio = Dio(
-      BaseOptions(
-        baseUrl: Env.apiBaseUrl,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
-      ),
-    );
-    dio.interceptors.add(ApiInterceptor());
+  ApiClient({Dio? dio})
+    : dio =
+          dio ??
+          Dio(
+            BaseOptions(
+              baseUrl: Env.apiBaseUrl,
+              connectTimeout: const Duration(seconds: 10),
+              receiveTimeout: const Duration(seconds: 10),
+            ),
+          ) {
+    this.dio.interceptors.add(ApiInterceptor());
   }
 
-  late Dio dio;
+  final Dio dio;
 
-  Future<Response> get(String path) async {
+  Future<Response<dynamic>> get(String path) async {
     try {
-      final response = await dio.get(path);
-      return response;
-    } on DioException catch (e) {
-      throw ApiError(
-        message: e.message ?? "Unknown error",
-        statusCode: e.response?.statusCode,
-      );
+      return await dio.get<dynamic>(path);
+    } catch (e) {
+      throw mapToFailure(e, context: 'consultar $path');
     }
   }
 
-  Future<Response> post(String path, dynamic data) async {
+  Future<Response<dynamic>> post(String path, dynamic data) async {
     try {
-      final response = await dio.post(path, data: data);
-      return response;
-    } on DioException catch (e) {
-      throw ApiError(
-        message: e.message ?? "Unknown error",
-        statusCode: e.response?.statusCode,
-      );
+      return await dio.post<dynamic>(path, data: data);
+    } catch (e) {
+      throw mapToFailure(e, context: 'enviar $path');
     }
   }
 }

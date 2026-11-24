@@ -148,4 +148,26 @@ void main() {
       orElse: () => fail('se esperaba el estado loaded'),
     );
   });
+
+  test('si falla "cargar más", el dashboard se conserva y se puede reintentar', () async {
+    final firstPage = List.generate(limit, (i) => _movement('t$i'));
+    when(
+      () => getMovements.call('uid-1', limit, ''),
+    ).thenAnswer((_) async => firstPage);
+    when(
+      () => getMovements.call('uid-1', limit, 't${limit - 1}'),
+    ).thenThrow(Exception('sin red'));
+
+    await notifier.loadDashboard('uid-1');
+    await notifier.loadMoreMovements();
+
+    notifier.state.maybeWhen(
+      loaded: (_, _, _, movements, hasMore, loadingMore, _) {
+        expect(movements, hasLength(limit));
+        expect(hasMore, isTrue);
+        expect(loadingMore, isFalse);
+      },
+      orElse: () => fail('el estado debe seguir en loaded tras un error al paginar'),
+    );
+  });
 }

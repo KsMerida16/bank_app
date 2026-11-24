@@ -1,15 +1,14 @@
 import 'package:bank_app/core/catalogs/data/data_sources/firebase_catalogs_data_source.dart';
 import 'package:bank_app/core/catalogs/domain/entities/catalog.dart';
 import 'package:bank_app/core/catalogs/domain/repositories/catalog_repository.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
 
 class CatalogsRepositoryImpl implements CatalogRepository {
-  final FirebaseCatalogsDataSource _firebaseCatalogsDataSource;
-
-  // ignore: sort_constructors_first
   CatalogsRepositoryImpl({
-    FirebaseCatalogsDataSource? firebaseCatalogsDataSource,
-  }) : _firebaseCatalogsDataSource =
-           firebaseCatalogsDataSource ?? FirebaseCatalogsDataSource();
+    required FirebaseCatalogsDataSource firebaseCatalogsDataSource,
+  }) : _firebaseCatalogsDataSource = firebaseCatalogsDataSource;
+
+  final FirebaseCatalogsDataSource _firebaseCatalogsDataSource;
 
   @override
   Future<List<Catalog>> getCatalogsByTable(String tableName) async {
@@ -17,9 +16,9 @@ class CatalogsRepositoryImpl implements CatalogRepository {
       final catalogModels = await _firebaseCatalogsDataSource.getCatalogByTable(
         tableName,
       );
-      return catalogModels.map((model) => Catalog.fromModel(model)).toList();
+      return catalogModels.map(Catalog.fromModel).toList();
     } catch (e) {
-      throw Exception('Error fetching catalogs: $e');
+      throw mapToFailure(e, context: 'cargar catálogos');
     }
   }
 }

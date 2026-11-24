@@ -1,11 +1,12 @@
 import 'package:bank_app/core/constants/app_firebase_tables.dart';
-import 'package:bank_app/core/errors/app_errors.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
+import 'package:bank_app/core/errors/failures.dart';
 import 'package:bank_app/core/users/data/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreUsersDataSource {
-  FirestoreUsersDataSource({FirebaseFirestore? firestore})
-    : _firestore = firestore ?? FirebaseFirestore.instance;
+  FirestoreUsersDataSource({required FirebaseFirestore firestore})
+    : _firestore = firestore;
 
   final FirebaseFirestore _firestore;
 
@@ -20,9 +21,9 @@ class FirestoreUsersDataSource {
         return UserModel.fromJson(querySnapshot.docs.first.data());
       }
 
-      throw Exception('User profile not found for email: $email');
+      throw const NotFoundFailure('User profile not found.');
     } catch (e) {
-      throw Exception('${AppErrors.usersException}: $e');
+      throw mapToFailure(e, context: 'cargar el perfil del usuario');
     }
   }
 
@@ -32,7 +33,7 @@ class FirestoreUsersDataSource {
       final docRef = await collectionRef.add(user.toJson());
       return docRef.id;
     } catch (e) {
-      throw Exception('${AppErrors.usersException}: $e');
+      throw mapToFailure(e, context: 'guardar el perfil del usuario');
     }
   }
 }

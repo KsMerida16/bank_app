@@ -7,8 +7,7 @@ class GetAccountsUseCase {
 
   final AccountsRepository _accountsRepository;
 
-  Future<List<Account>> execute(String userId) async {
-    final models = await _accountsRepository.getAccountsByUserId(userId);
-    return models.map(Account.fromModel).toList();
+  Future<List<Account>> execute(String userId) {
+    return _accountsRepository.getAccountsByUserId(userId);
   }
 }

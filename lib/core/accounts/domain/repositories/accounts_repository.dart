@@ -1,5 +1,5 @@
-import 'package:bank_app/core/accounts/data/models/account_model.dart';
+import 'package:bank_app/core/accounts/domain/entities/account.dart';
 
 abstract class AccountsRepository {
-  Future<List<AccountModel>> getAccountsByUserId(String userId);
+  Future<List<Account>> getAccountsByUserId(String userId);
 }

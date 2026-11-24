@@ -1,4 +1,4 @@
-import 'package:bank_app/core/accounts/data/models/card_model.dart';
+import 'package:bank_app/core/accounts/domain/entities/bank_card.dart';
 import 'package:bank_app/core/accounts/domain/entities/account.dart';
 import 'package:bank_app/core/accounts/domain/use_cases/get_accounts_use_case.dart';
 import 'package:bank_app/core/accounts/domain/use_cases/get_cards_use_case.dart';
@@ -60,7 +60,7 @@ void main() {
     );
     when(
       () => getCards.execute('uid-1'),
-    ).thenAnswer((_) async => <CardModel>[]);
+    ).thenAnswer((_) async => <BankCard>[]);
 
     notifier = DashboardNotifier(
       getUserUseCase: getUser,

@@ -128,7 +128,7 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( User user,  List<Account> accounts,  List<BankCard> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)?  loaded,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -152,7 +152,7 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)  loaded,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( User user,  List<Account> accounts,  List<BankCard> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)  loaded,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
@@ -175,7 +175,7 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( User user,  List<Account> accounts,  List<CardModel> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( User user,  List<Account> accounts,  List<BankCard> cards,  List<Movement> movements,  bool hasMoreMovements,  bool isLoadingMoreMovements,  String? lastMovementTimestamp)?  loaded,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
@@ -257,7 +257,7 @@ String toString() {
 
 
 class _Loaded implements DashboardState {
-   _Loaded({required this.user, required final  List<Account> accounts, required final  List<CardModel> cards, required final  List<Movement> movements, required this.hasMoreMovements, required this.isLoadingMoreMovements, required this.lastMovementTimestamp}): _accounts = accounts,_cards = cards,_movements = movements;
+   _Loaded({required this.user, required final  List<Account> accounts, required final  List<BankCard> cards, required final  List<Movement> movements, required this.hasMoreMovements, required this.isLoadingMoreMovements, required this.lastMovementTimestamp}): _accounts = accounts,_cards = cards,_movements = movements;
   
 
  final  User user;
@@ -268,8 +268,8 @@ class _Loaded implements DashboardState {
   return EqualUnmodifiableListView(_accounts);
 }
 
- final  List<CardModel> _cards;
- List<CardModel> get cards {
+ final  List<BankCard> _cards;
+ List<BankCard> get cards {
   if (_cards is EqualUnmodifiableListView) return _cards;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_cards);
@@ -316,7 +316,7 @@ abstract mixin class _$LoadedCopyWith<$Res> implements $DashboardStateCopyWith<$
   factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
 @useResult
 $Res call({
- User user, List<Account> accounts, List<CardModel> cards, List<Movement> movements, bool hasMoreMovements, bool isLoadingMoreMovements, String? lastMovementTimestamp
+ User user, List<Account> accounts, List<BankCard> cards, List<Movement> movements, bool hasMoreMovements, bool isLoadingMoreMovements, String? lastMovementTimestamp
 });
 
 
@@ -338,7 +338,7 @@ class __$LoadedCopyWithImpl<$Res>
 user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as User,accounts: null == accounts ? _self._accounts : accounts // ignore: cast_nullable_to_non_nullable
 as List<Account>,cards: null == cards ? _self._cards : cards // ignore: cast_nullable_to_non_nullable
-as List<CardModel>,movements: null == movements ? _self._movements : movements // ignore: cast_nullable_to_non_nullable
+as List<BankCard>,movements: null == movements ? _self._movements : movements // ignore: cast_nullable_to_non_nullable
 as List<Movement>,hasMoreMovements: null == hasMoreMovements ? _self.hasMoreMovements : hasMoreMovements // ignore: cast_nullable_to_non_nullable
 as bool,isLoadingMoreMovements: null == isLoadingMoreMovements ? _self.isLoadingMoreMovements : isLoadingMoreMovements // ignore: cast_nullable_to_non_nullable
 as bool,lastMovementTimestamp: freezed == lastMovementTimestamp ? _self.lastMovementTimestamp : lastMovementTimestamp // ignore: cast_nullable_to_non_nullable

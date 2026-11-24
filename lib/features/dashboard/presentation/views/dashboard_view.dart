@@ -1,7 +1,7 @@
 // lib/presentation/screens/home_dashboard_page.dart
 import 'dart:ui' as ui show FontFeature;
 import 'package:bank_app/core/navigation/router.dart';
-import 'package:bank_app/core/accounts/data/models/card_model.dart';
+import 'package:bank_app/core/accounts/domain/entities/bank_card.dart';
 import 'package:bank_app/core/accounts/domain/entities/account.dart';
 import 'package:bank_app/features/dashboard/presentation/state/dashboard_state.dart';
 import 'package:bank_app/l10n/app_localizations.dart';
@@ -108,7 +108,7 @@ class _HomeDashboardPageState extends ConsumerState<HomeDashboardPage> {
 
     final movements = loadedData?.movements ?? <Movement>[];
     final accounts = loadedData?.accounts ?? <Account>[];
-    final cards = loadedData?.cards ?? <CardModel>[];
+    final cards = loadedData?.cards ?? <BankCard>[];
     final hasMoreMovements = loadedData?.hasMoreMovements ?? false;
     final isLoadingMoreMovements = loadedData?.isLoadingMoreMovements ?? false;
 
@@ -416,7 +416,6 @@ class _CreditCard extends StatelessWidget {
     required this.userName,
     required this.cardNumber,
     required this.expiryDate,
-    required this.cvv,
     required this.productLabel,
   });
 
@@ -424,7 +423,6 @@ class _CreditCard extends StatelessWidget {
   final String userName;
   final String cardNumber;
   final String expiryDate;
-  final String cvv;
   final String productLabel;
 
   @override
@@ -512,8 +510,6 @@ class _CreditCard extends StatelessWidget {
                       value: expiryDate,
                       color: c.onPrimary,
                     ),
-                    const SizedBox(width: 16),
-                    _MiniField(label: 'CVV', value: cvv, color: c.onPrimary),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -554,7 +550,7 @@ class _CardsCarousel extends StatefulWidget {
   final AppColors c;
   final String userName;
   final List<Account> accounts;
-  final List<CardModel> cards;
+  final List<BankCard> cards;
 
   @override
   State<_CardsCarousel> createState() => _CardsCarouselState();
@@ -594,7 +590,6 @@ class _CardsCarouselState extends State<_CardsCarousel> {
         userName: widget.userName,
         cardNumber: '0000 0000 0000 0000',
         expiryDate: '--/--',
-        cvv: '---',
         productLabel: 'Sin productos',
       );
     }
@@ -630,7 +625,6 @@ class _CardsCarouselState extends State<_CardsCarousel> {
                           : widget.userName,
                       cardNumber: card.cardNumber,
                       expiryDate: card.expirationDate,
-                      cvv: card.cvv,
                       productLabel: 'Tarjeta',
                     ),
                     account: (account) => _AccountSummaryCard(
@@ -836,14 +830,14 @@ class _AccountSummaryCard extends StatelessWidget {
 sealed class _CarouselProduct {
   const _CarouselProduct();
 
-  const factory _CarouselProduct.card({required CardModel card}) =
+  const factory _CarouselProduct.card({required BankCard card}) =
       _CarouselCardProduct;
 
   const factory _CarouselProduct.account(Account account) =
       _CarouselAccountProduct;
 
   T when<T>({
-    required T Function(CardModel card) card,
+    required T Function(BankCard card) card,
     required T Function(Account account) account,
   }) {
     final product = this;
@@ -860,7 +854,7 @@ sealed class _CarouselProduct {
 class _CarouselCardProduct extends _CarouselProduct {
   const _CarouselCardProduct({required this.card});
 
-  final CardModel card;
+  final BankCard card;
 }
 
 class _CarouselAccountProduct extends _CarouselProduct {
@@ -896,24 +890,6 @@ class _Account extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Círculos decorativos
-          // Positioned(
-          //   right: -40,
-          //   bottom: -30,
-          //   child: _CircleBlob(
-          //     diameter: 160,
-          //     color: Colors.black.withValues(alpha: 0.15),
-          //   ),
-          // ),
-          // Positioned(
-          //   right: 40,
-          //   bottom: -20,
-          //   child: _CircleBlob(
-          //     diameter: 120,
-          //     color: Colors.black.withValues(alpha: 0.12),
-          //   ),
-          // ),
-
           // Contenido de la tarjeta
           Padding(
             padding: const EdgeInsets.all(16),

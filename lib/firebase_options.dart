@@ -50,22 +50,20 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDZpyiXrSmy7pMdm_s5VAbmLZgOolCYlWk',
-    appId: '1:895998651231:android:a79a815d8a573617b7a4ea',
-    messagingSenderId: '895998651231',
-    projectId: 'bankpick',
-    storageBucket: 'bankpick.firebasestorage.app',
+    apiKey: 'AIzaSyChoaPH-hBsX46cLvJ9t5eNQ4LuiXsGKos',
+    appId: '1:635106278442:android:d415118358459df0269753',
+    messagingSenderId: '635106278442',
+    projectId: 'bankpick-dev',
+    storageBucket: 'bankpick-dev.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA72-KZKXfzpUbb-ydZTfIJ3LDinuuozSo',
-    appId: '1:895998651231:ios:d26411ffdc5f6ab7b7a4ea',
-    messagingSenderId: '895998651231',
-    projectId: 'bankpick',
-    storageBucket: 'bankpick.firebasestorage.app',
+    apiKey: 'AIzaSyBgnv-1qjxG_otWYaAGVXjruAWioNFz9nI',
+    appId: '1:635106278442:ios:fcc127ff2ffe9352269753',
+    messagingSenderId: '635106278442',
+    projectId: 'bankpick-dev',
+    storageBucket: 'bankpick-dev.firebasestorage.app',
     iosBundleId: 'com.example.bankApp',
   );
-
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyA72-KZKXfzpUbb-ydZTfIJ3LDinuuozSo',
     appId: '1:895998651231:ios:d26411ffdc5f6ab7b7a4ea',

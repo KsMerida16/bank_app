@@ -47,12 +47,8 @@ class BodyWidget extends ConsumerStatefulWidget {
 
 class _BodyWidgetState extends ConsumerState<BodyWidget> {
   late bool showPassword;
-  final TextEditingController emailController = TextEditingController(
-    text: TemporalConsts.email,
-  );
-  final TextEditingController passwordController = TextEditingController(
-    text: TemporalConsts.password,
-  );
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {

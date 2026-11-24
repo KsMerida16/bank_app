@@ -2,11 +2,6 @@ import 'package:bank_app/features/settings/domain/entities/language_entity.dart'
 import 'package:flutter/material.dart';
 
 class LanguageTile extends StatelessWidget {
-  final LanguageEntity language;
-  final String displayName;
-  final bool isSelected;
-  final VoidCallback onTap;
-
   const LanguageTile({
     super.key,
     required this.language,
@@ -14,6 +9,11 @@ class LanguageTile extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
   });
+
+  final LanguageEntity language;
+  final String displayName;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   String get flag {
     switch (language.code) {

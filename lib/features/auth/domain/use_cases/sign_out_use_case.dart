@@ -1,13 +1,10 @@
-import 'package:bank_app/features/auth/data/repositories/authentication_repository_impl.dart';
 import 'package:bank_app/features/auth/domain/repositories/authentication_repository.dart';
 
 class SignOutUseCase {
-  SignOutUseCase({AuthenticationRepository? authenticationRepository})
-    : _authenticationRepository =
-          authenticationRepository ?? AuthenticationRepositoryImpl();
+  SignOutUseCase({required AuthenticationRepository authenticationRepository})
+    : _authenticationRepository = authenticationRepository;
+
   final AuthenticationRepository _authenticationRepository;
 
-  Future<void> call() async {
-    await _authenticationRepository.signOut();
-  }
+  Future<void> call() => _authenticationRepository.signOut();
 }

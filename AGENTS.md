@@ -18,7 +18,9 @@ Usa `specs/_template/` para crear un feature nuevo.
 - `lib/features/<feature>/{data,domain,presentation}` — un feature no importa a otro feature.
 - `lib/core/` — código compartido (errores, red, logging, navegación, entornos, notificaciones).
 - Dependencias: `presentation → domain ← data`. `domain` no importa Flutter, Firebase ni Dio.
-- Los use cases reciben sus dependencias por constructor; no instancian implementaciones.
+- Los use cases y repositorios reciben sus dependencias por constructor (`required`); nunca `?? Impl()`.
+- Las dependencias se cablean SOLO en `**/di/*_providers.dart` (Riverpod). Un notifier recibe use cases, no repos.
+- Data traduce toda excepción con `mapToFailure()`; domain/presentation solo manejan `Failure`.
 
 ## Comandos
 ```bash
@@ -33,6 +35,7 @@ flutter run -t lib/main_dev.dart                            # entorno dev
 
 ## Reglas para el agente
 - NUNCA usar `print`; usar `AppLogger` (`lib/core/logging/app_logger.dart`).
+- NUNCA lanzar `Exception('texto')`; lanzar un `Failure` (`lib/core/errors/failures.dart`).
 - NUNCA registrar ni persistir contraseñas, tokens, CVV ni números completos de tarjeta.
 - Todo texto visible al usuario va en `lib/l10n/*.arb` (en y es), no hardcodeado.
 - Imports siempre `package:bank_app/...` (regla `always_use_package_imports`).

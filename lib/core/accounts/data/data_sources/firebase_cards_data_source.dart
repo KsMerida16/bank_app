@@ -1,13 +1,13 @@
-import 'package:bank_app/core/constants/app_firebase_tables.dart';
 import 'package:bank_app/core/accounts/data/models/card_model.dart';
+import 'package:bank_app/core/constants/app_firebase_tables.dart';
+import 'package:bank_app/core/errors/error_mapper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseCardsDataSource {
-  final FirebaseFirestore _firestore;
+  FirebaseCardsDataSource({required FirebaseFirestore firestore})
+    : _firestore = firestore;
 
-  // ignore: sort_constructors_first
-  FirebaseCardsDataSource({FirebaseFirestore? firestore})
-    : _firestore = firestore ?? FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
 
   Future<List<CardModel>> getCardsByUserId(String userId) async {
     try {
@@ -19,9 +19,7 @@ class FirebaseCardsDataSource {
           .map((doc) => CardModel.fromJson(doc.data()))
           .toList();
     } catch (e) {
-      throw Exception(
-        'Error fetching cards from ${AppFirebaseCollections.cards} for uid=$userId: $e',
-      );
+      throw mapToFailure(e, context: 'cargar tarjetas');
     }
   }
 
@@ -31,7 +29,7 @@ class FirebaseCardsDataSource {
           .collection(AppFirebaseCollections.cards)
           .add(cardData.toJson());
     } catch (e) {
-      throw Exception('Error adding card: $e');
+      throw mapToFailure(e, context: 'agregar tarjeta');
     }
   }
 }

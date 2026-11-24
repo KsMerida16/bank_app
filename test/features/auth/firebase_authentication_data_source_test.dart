@@ -22,7 +22,7 @@ void main() {
     dataSource = FirebaseAuthenticationDataSource(firebaseAuth: auth);
   });
 
-  void stubSignIn() => when(
+  When<Future<fb.UserCredential>> stubSignIn() => when(
     () => auth.signInWithEmailAndPassword(
       email: any(named: 'email'),
       password: any(named: 'password'),

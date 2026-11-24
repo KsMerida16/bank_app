@@ -1,7 +1,6 @@
 import 'package:bank_app/core/errors/failures.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 /// Traduce cualquier excepción de infraestructura a un [Failure] tipado.
 ///

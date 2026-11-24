@@ -3,7 +3,7 @@ import 'package:bank_app/core/accounts/data/data_sources/firebase_cards_data_sou
 import 'package:bank_app/core/accounts/data/repositories/accounts_repository_impl.dart';
 import 'package:bank_app/core/accounts/data/repositories/cards_repository_impl.dart';
 import 'package:bank_app/core/accounts/domain/repositories/accounts_repository.dart';
-import 'package:bank_app/core/accounts/domain/repositories/cars_repository.dart';
+import 'package:bank_app/core/accounts/domain/repositories/cards_repository.dart';
 import 'package:bank_app/core/accounts/domain/use_cases/get_accounts_use_case.dart';
 import 'package:bank_app/core/accounts/domain/use_cases/get_cards_use_case.dart';
 import 'package:bank_app/core/catalogs/data/data_sources/firebase_catalogs_data_source.dart';

@@ -208,8 +208,8 @@ return $default(_that.accountUserId,_that.accountNumber,_that.accountType,_that.
 /// @nodoc
 
 
-class _Account extends Account {
-  const _Account({required this.accountUserId, required this.accountNumber, required this.accountType, required this.accountBalance}): super._();
+class _Account implements Account {
+  const _Account({required this.accountUserId, required this.accountNumber, required this.accountType, required this.accountBalance});
   
 
 @override final  String accountUserId;

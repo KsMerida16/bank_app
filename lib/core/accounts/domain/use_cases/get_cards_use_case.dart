@@ -1,5 +1,5 @@
-import 'package:bank_app/core/accounts/data/models/card_model.dart';
-import 'package:bank_app/core/accounts/domain/repositories/cars_repository.dart';
+import 'package:bank_app/core/accounts/domain/entities/bank_card.dart';
+import 'package:bank_app/core/accounts/domain/repositories/cards_repository.dart';
 
 class GetCardsUseCase {
   GetCardsUseCase({required CardsRepository cardsRepository})
@@ -7,7 +7,7 @@ class GetCardsUseCase {
 
   final CardsRepository _cardsRepository;
 
-  Future<List<CardModel>> execute(String userId) {
+  Future<List<BankCard>> execute(String userId) {
     return _cardsRepository.getCardsByUserId(userId);
   }
 }

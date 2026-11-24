@@ -32,7 +32,7 @@ void main() {
 
   test('login + perfil de Firestore -> User completo', () async {
     when(() => authDataSource.login(credentials)).thenAnswer((_) async => authModel);
-    when(() => usersDataSource.getUser('ana@bank.com')).thenAnswer(
+    when(() => usersDataSource.getUser('uid-1')).thenAnswer(
       (_) async => const UserModel(
         username: 'ana',
         email: 'ana@bank.com',
@@ -49,6 +49,8 @@ void main() {
 
     expect(user.fullName, 'Ana López');
     expect(user.gender, 'female');
+    // El perfil se busca por UID, no por correo.
+    verify(() => usersDataSource.getUser('uid-1')).called(1);
   });
 
   test('si el perfil falla, entra con los datos de Firebase Auth', () async {

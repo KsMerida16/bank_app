@@ -21,8 +21,7 @@ service cloud.firestore {
     }
 
     match /users/{id} {
-      allow read: if isSignedIn()
-        && resource.data.email == request.auth.token.email;
+      allow read: if isSignedIn() && request.auth.uid == id;
       allow write: if false;
     }
 

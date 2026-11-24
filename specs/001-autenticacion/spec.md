@@ -15,7 +15,7 @@ Permitir a un cliente iniciar y cerrar sesión de forma segura y proteger las ru
 - [x] Ninguna credencial aparece en logs (`AppLogger`, sin datos sensibles).
 - [ ] Al reiniciar la app, la sesión vigente de Firebase se restaura (`checkIfLogged` al arranque).
 - [ ] Si falla la carga del perfil, se informa al usuario en vez de entrar con datos parciales.
-- [ ] Búsqueda de perfil por `uid` (no por email).
+- [x] Búsqueda de perfil por `uid` (no por email).
 
 ## Fuera de alcance
 Login social (Google/Facebook), registro, biometría.

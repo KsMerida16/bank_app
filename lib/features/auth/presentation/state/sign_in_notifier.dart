@@ -27,11 +27,16 @@ class SignInNotifier extends StateNotifier<SignInState> {
   Future<void> checkIfLogged() async {
     state = SignInCheckingCacheState();
 
-    final isLogged = await _isSignedInUseCase.call();
+    try {
+      final isLogged = await _isSignedInUseCase.call();
 
-    if (isLogged) {
-      state = SignInSuccessState('Usuario', 'male', '');
-    } else {
+      if (isLogged) {
+        state = SignInSuccessState('Usuario', 'male', '');
+      } else {
+        state = SignInInitialState();
+      }
+    } catch (e) {
+      AppLogger.warning('No se pudo verificar la sesión: $e');
       state = SignInInitialState();
     }
   }

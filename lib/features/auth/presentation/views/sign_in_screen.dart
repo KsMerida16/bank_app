@@ -1,4 +1,3 @@
-import 'package:bank_app/core/constants/const.dart';
 import 'package:bank_app/core/navigation/router.dart';
 import 'package:bank_app/features/auth/presentation/state/sign_in_notifier.dart';
 import 'package:bank_app/features/auth/presentation/state/sign_in_state.dart';

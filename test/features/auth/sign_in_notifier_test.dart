@@ -30,17 +30,20 @@ void main() {
 
     test('con credenciales válidas pasa a SignInSuccessState', () async {
       when(
-        () => repository.signInWithEmailAndPassword('ana@bank.com', 'secret1'),
+        () => repository.signInWithEmailAndPassword(
+          'kylie.merida7747@gmail.com',
+          'secret1',
+        ),
       ).thenAnswer(
         (_) async => const User(
-          email: 'ana@bank.com',
+          email: 'kylie.merida7747@gmail.com',
           name: 'Ana',
           surname: 'López',
           gender: 'female',
         ),
       );
 
-      final ok = await notifier.login('ana@bank.com', 'secret1');
+      final ok = await notifier.login('kylie.merida7747@gmail.com', 'secret1');
 
       expect(ok, isTrue);
       expect(notifier.state, isA<SignInSuccessState>());
@@ -55,7 +58,7 @@ void main() {
         () => repository.signInWithEmailAndPassword(any(), any()),
       ).thenThrow(Exception('Invalid email or password'));
 
-      final ok = await notifier.login('ana@bank.com', 'mala');
+      final ok = await notifier.login('kylie.merida7747@gmail.com', 'mala');
 
       expect(ok, isFalse);
       expect(notifier.state, isA<SignInErrorState>());
@@ -83,13 +86,21 @@ void main() {
 
       expect(notifier.state, isA<SignInInitialState>());
     });
+
+    test('si verificar la sesión falla -> SignInInitialState', () async {
+      when(() => repository.isSignedIn()).thenThrow(Exception('boom'));
+
+      await notifier.checkIfLogged();
+
+      expect(notifier.state, isA<SignInInitialState>());
+    });
   });
 
   test('signOut regresa al estado inicial', () async {
     when(
       () => repository.signInWithEmailAndPassword(any(), any()),
     ).thenAnswer((_) async => const User(email: 'a@b.com', name: 'A'));
-    await notifier.login('a@b.com', 'x');
+    await notifier.login('kylie.merida7747@gmail.com', 'x');
 
     notifier.signOut();
 
